@@ -67,9 +67,9 @@
 include 'Toolkit_Version.php'; // Change: added as of version 1.11
 // Check for operation modes 2 or 3
 // i.e. $filename is defined, and $new_ps_file_info_array is not
-if ( (!isset( $new_ps_file_info_array ) ) &&
- ( isset( $filename ) ) &&
- ( is_string( $filename ) ) ) {
+if ( ( ! isset( $new_ps_file_info_array ) ) &&
+	( isset( $filename ) ) &&
+	( is_string( $filename ) ) ) {
 	// Hide any unknown EXIF tags
 	$GLOBALS['HIDE_UNKNOWN_TAGS'] = true;
 
@@ -102,7 +102,7 @@ if ( (!isset( $new_ps_file_info_array ) ) &&
 	( is_array( $default_ps_file_info_array ) ) ) {
 		// There are defaults defined
 		// Check if there is a default for the date defined
-		if ( (!array_key_exists( 'date', $default_ps_file_info_array ) ) ||
+		if ( ( ! array_key_exists( 'date', $default_ps_file_info_array ) ) ||
 		( ( array_key_exists( 'date', $default_ps_file_info_array ) ) &&
 		( $default_ps_file_info_array['date'] == '' ) ) ) {
 			// No default for the date defined
@@ -149,23 +149,23 @@ if ( (!isset( $new_ps_file_info_array ) ) &&
 				// Keywords or Supplemental Categories found
 				// Check if the File Info from the file is empty for this element
 				// and if there are default values in this array element
-				if ( ( count( $new_ps_file_info_array[$def_key] ) == 0 ) &&
+				if ( ( count( $new_ps_file_info_array[ $def_key ] ) == 0 ) &&
 				( is_array( $default_item ) ) &&
 				( count( $default_item ) >= 0 ) ) {
 					// The existing file info is empty, and there are
 					// defaults - add them
-					$new_ps_file_info_array[$def_key] = $default_item;
+					$new_ps_file_info_array[ $def_key ] = $default_item;
 				}
 			} // Otherwise, this is not an array element, just check if it is blank in the existing file info
-			elseif ( trim( $new_ps_file_info_array[$def_key] ) == '' ) {
+			elseif ( trim( $new_ps_file_info_array[ $def_key ] ) == '' ) {
 				// The existing file info is blank, add the default value
-				$new_ps_file_info_array[$def_key] = $default_item;
+				$new_ps_file_info_array[ $def_key ] = $default_item;
 			}
 		}
 	}
 } // Check for operation mode 4 - $new_ps_file_info_array and $filename are not defined,
-elseif ( ( (!isset( $new_ps_file_info_array ) ) || (!is_array( $new_ps_file_info_array ) ) ) &&
- ( (!isset( $filename ) ) || (!is_string( $filename ) ) ) ) {
+elseif ( ( ( ! isset( $new_ps_file_info_array ) ) || ( ! is_array( $new_ps_file_info_array ) ) ) &&
+	( ( ! isset( $filename ) ) || ( ! is_string( $filename ) ) ) ) {
 	// No filename or new_ps_file_info_array defined, create a blank file info array to display
 	$new_ps_file_info_array = array(
 		'title'					 => '',
@@ -274,7 +274,7 @@ elseif ( ( (!isset( $new_ps_file_info_array ) ) || (!is_array( $new_ps_file_info
 			<td>
 				<textarea name="keywords" rows=3 cols=37 wrap="off"><?php
 					foreach ( $new_ps_file_info_array['keywords'] as $keyword ) {
-						echo "$keyword&#xA;";
+					echo "$keyword&#xA;";
 					}
 					?></textarea>
 			</td>
@@ -357,7 +357,7 @@ elseif ( ( (!isset( $new_ps_file_info_array ) ) || (!is_array( $new_ps_file_info
 			<td>
 				<textarea name="supplementalcategories" rows=3 cols=37 wrap="off"><?php
 					foreach ( $new_ps_file_info_array['supplementalcategories'] as $supcat ) {
-						echo "$supcat&#xA;";
+					echo "$supcat&#xA;";
 					}
 					?>
 				</textarea>

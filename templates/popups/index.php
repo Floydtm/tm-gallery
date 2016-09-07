@@ -1,7 +1,7 @@
 <?php
 /**
  * Popup
- * 
+ *
  * @package templates/popup
  */
 ?>
@@ -16,11 +16,11 @@
 				<div class="tm-pg_library_popup-item" data-id="<?php echo $post['id'] ?>">
 					<a class="tm-pg_library_popup-item_link" href="#">
 						<figure>
-							<?php if ( !empty( $post['cover'] ) ): ?>
+							<?php if ( ! empty( $post['cover'] ) ) :  ?>
 								<div >
 									<img src="<?php echo $post['cover'][0] ?>" >
 								</div>
-							<?php else: ?>
+							<?php else : ?>
 								<div >
 									<img src="#" class="hide" >
 								</div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller image
- * 
+ *
  * @package classes/controllers
  */
 
@@ -18,14 +18,14 @@ class Controller_Image extends Controller {
 
 	/**
 	 * 	Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -52,7 +52,7 @@ class Controller_Image extends Controller {
 	 */
 	public function action_focus_point() {
 		$meta = $this( 'focal_point', true )->post_focal_point( $_POST );
-		if ( !$meta['success'] ) {
+		if ( ! $meta['success'] ) {
 			$this->send_json( $meta );
 		}
 		// get focal point image
@@ -68,11 +68,10 @@ class Controller_Image extends Controller {
 	public function action_upload_attachment() {
 		$id		 = $this( 'file' )->upload_file( $_FILES['admin-ajax'] );
 		$result	 = array();
-		if ( !empty( $id ) ) {
+		if ( ! empty( $id ) ) {
 			$result['success']	 = $this( 'file' )->add_attachment( $id );
 			$result['data']		 = $this( 'media' )->get_content( $id );
 		}
 		$this->send_json( $result );
 	}
-
 }

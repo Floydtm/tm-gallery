@@ -1,7 +1,7 @@
 <?php
 /**
  * Selected top bar
- * 
+ *
  * @package templates/photo-gallery/topbar
  */
 ?>

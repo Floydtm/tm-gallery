@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery editor sledebar
- * 
+ *
  * @package templates/gallery/slidebar
  */
 ?>

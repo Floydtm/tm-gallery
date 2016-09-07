@@ -1,7 +1,7 @@
 <?php
 /**
  * Image item
- * 
+ *
  * @package templates/frontend/grid/items
  */
 ?>

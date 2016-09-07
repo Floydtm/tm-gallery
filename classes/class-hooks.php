@@ -52,7 +52,7 @@ class Hooks extends Core {
 		// chery breadcrumbs
 		add_filter( 'cherry_breadcrumbs_custom_trail', array( Grid::get_instance(), 'cherry_breadcrumbs' ), 10, 2 );
 		// add ajax callback
-		if ( !$this->is_ajax() ) {
+		if ( ! $this->is_ajax() ) {
 			// in load theme
 			add_action( 'wp_head', array( Media::get_instance(), 'wp_head' ) );
 			// add styles in load theme
@@ -72,7 +72,7 @@ class Hooks extends Core {
 	 * Hooks for admin panel
 	 */
 	public function admin_init() {
-		if ( !$this->is_ajax() ) {
+		if ( ! $this->is_ajax() ) {
 			// add buttons to mce
 			add_filter( 'mce_external_plugins', array( Media::get_instance(), 'mce_external_plugins' ) );
 			add_filter( 'mce_buttons', array( Media::get_instance(), 'mce_buttons' ) );
@@ -131,7 +131,7 @@ class Hooks extends Core {
 		// Only for activate
 		if ( empty( $status ) ) {
 			foreach ( $check_array as $key => $value ) {
-				if ( !$value ) {
+				if ( ! $value ) {
 					switch ( $key ) {
 						case'php_min':
 							$error	 = true;
@@ -164,5 +164,4 @@ class Hooks extends Core {
 			update_option( 'tm_pg_plugin_notice', true );
 		}
 	}
-
 }

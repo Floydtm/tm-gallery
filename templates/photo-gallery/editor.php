@@ -1,7 +1,7 @@
 <?php
 /**
  * Photo editor
- * 
+ *
  * @package templates/photo-gallery
  */
 ?>

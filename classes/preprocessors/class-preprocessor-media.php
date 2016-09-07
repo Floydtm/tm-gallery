@@ -16,21 +16,21 @@ class Preprocessor_Media extends Preprocessor {
 
 	/**
 	 * Model type
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $type = 'media';
-	
+
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -82,5 +82,4 @@ class Preprocessor_Media extends Preprocessor {
 		) );
 		return $this->progress( $params, __FUNCTION__, $this->type );
 	}
-
 }

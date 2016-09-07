@@ -214,7 +214,7 @@ function get_photoshop_file_info( $Exif_array, $XMP_array, $IRB_array ) {
 				if ( $Item['children'][0]['children'] ) {
 					// Cycle through each Subject value and save them
 					foreach ( $Item['children'][0]['children'] as $keywords ) {
-						if ( !in_array( HTML_UTF8_Escape( $keywords['value'] ), $outputarray['keywords'] ) ) {
+						if ( ! in_array( HTML_UTF8_Escape( $keywords['value'] ), $outputarray['keywords'] ) ) {
 							if ( array_key_exists( 'value', $keywords ) ) {
 								$outputarray['keywords'][] = HTML_UTF8_Escape( $keywords['value'] );
 							}
@@ -345,7 +345,7 @@ function get_photoshop_file_info( $Exif_array, $XMP_array, $IRB_array ) {
 				if ( $Item['children'][0]['children'] ) {
 					foreach ( $Item['children'][0]['children'] as $sup_category ) {
 						if ( ( array_key_exists( 'value', $sup_category ) ) &&
-						(!in_array( HTML_UTF8_Escape( $sup_category['value'] ), $outputarray['supplementalcategories'] )) ) {
+						( ! in_array( HTML_UTF8_Escape( $sup_category['value'] ), $outputarray['supplementalcategories'] )) ) {
 							if ( array_key_exists( 'value', $sup_category ) ) {
 								$outputarray['supplementalcategories'][] = HTML_UTF8_Escape( $sup_category['value'] );
 							}
@@ -565,7 +565,7 @@ function get_photoshop_file_info( $Exif_array, $XMP_array, $IRB_array ) {
 				// Check if a Supplemental Category record has been found
 				if ( $record['IPTC_Type'] == '2:20' ) {
 					// A Supplemental Category record has been found, save it's value if the value doesn't already exist
-					if ( !in_array( $record['RecData'], $outputarray['supplementalcategories'] ) ) {
+					if ( ! in_array( $record['RecData'], $outputarray['supplementalcategories'] ) ) {
 						$outputarray['supplementalcategories'][] = strtr( $record['RecData'], array( "\x0a" => '', "\x0d" => '&#xA;' ) );
 					}
 				}
@@ -584,7 +584,7 @@ function get_photoshop_file_info( $Exif_array, $XMP_array, $IRB_array ) {
 				// Check if a Keywords record has been found
 				if ( $record['IPTC_Type'] == '2:25' ) {
 					// A Keywords record has been found, save it's value if the value doesn't already exist
-					if ( !in_array( $record['RecData'], $outputarray['keywords'] ) ) {
+					if ( ! in_array( $record['RecData'], $outputarray['keywords'] ) ) {
 						$outputarray['keywords'][] = strtr( $record['RecData'], array( "\x0a" => '', "\x0d" => '&#xA;' ) );
 					}
 				}
@@ -721,7 +721,7 @@ function put_photoshop_file_info( $jpeg_header_data, $new_ps_file_info_array,
 	// Cycle through each piece of the date
 	foreach ( $date_pieces as $piece ) {
 		// If the piece is not numeric, then the date is invalid.
-		if ( !is_numeric( $piece ) ) {
+		if ( ! is_numeric( $piece ) ) {
 			// INVALID DATE
 			// echo "Invalid Date - must be YYYY-MM-DD format<br>";
 			return false;
@@ -741,13 +741,13 @@ function put_photoshop_file_info( $jpeg_header_data, $new_ps_file_info_array,
 		if ( ( $valkey != 'supplementalcategories' ) && ( $valkey != 'keywords' ) ) {
 			// Not Keywords or Supplemental Categories
 			// Convert escaped HTML characters to UTF8 and remove carriage returns
-			$new_ps_file_info_array[$valkey] = strtr( HTML_UTF8_UnEscape( $val ), $trans );
+			$new_ps_file_info_array[ $valkey ] = strtr( HTML_UTF8_UnEscape( $val ), $trans );
 		} else {
 			// Either Keywords or Supplemental Categories
 			// Cycle through the array,
 			foreach ( $val as $subvalkey => $subval ) {
 				// Convert escaped HTML characters to UTF8 and remove carriage returns
-				$new_ps_file_info_array[$valkey][$subvalkey] = strtr( HTML_UTF8_UnEscape( $subval ), $trans );
+				$new_ps_file_info_array[ $valkey ][ $subvalkey ] = strtr( HTML_UTF8_UnEscape( $subval ), $trans );
 			}
 		}
 	}
@@ -801,7 +801,7 @@ function put_photoshop_file_info( $jpeg_header_data, $new_ps_file_info_array,
 	( array_key_exists( 34665, $new_Exif_array[0] ) ) &&
 	( array_key_exists( 0, $new_Exif_array[0][34665] ) ) ) {
 		// Replace "Date and Time of Original" if it doesn't exist
-		if ( !array_key_exists( 36867, $new_Exif_array[0][34665][0] ) ) {
+		if ( ! array_key_exists( 36867, $new_Exif_array[0][34665][0] ) ) {
 			$new_Exif_array[0][34665][0][36867] = array(
 				'Tag Name'	 => $GLOBALS['IFD_Tag_Definitions']['EXIF'][36867]['Name'],
 				'Tag Number' => 36867,
@@ -812,7 +812,7 @@ function put_photoshop_file_info( $jpeg_header_data, $new_ps_file_info_array,
 		}
 
 		// Replace "Date and Time when Digitized" if it doesn't exist
-		if ( !array_key_exists( 36868, $new_Exif_array[0][34665][0] ) ) {
+		if ( ! array_key_exists( 36868, $new_Exif_array[0][34665][0] ) ) {
 			$new_Exif_array[0][34665][0][36868] = array(
 				'Tag Name'	 => $GLOBALS['IFD_Tag_Definitions']['EXIF'][36868]['Name'],
 				'Tag Number' => 36868,
@@ -1218,7 +1218,7 @@ function put_photoshop_file_info( $jpeg_header_data, $new_ps_file_info_array,
 	// Find the XAP Rights Information within the XMP block
 	$XAPRights_block = find_XMP_block( $new_XMP_array, 'xapRights' );
 
-	if ( !empty( $XAPRights_block ) ) {
+	if ( ! empty( $XAPRights_block ) ) {
 		// The XAP Rights Marked tag should only be present if copyrightstatus is 'Copyrighted Work' or 'Public Domain'
 		// If copyrightstatus 'Unmarked' or anything else, the XAP Rights Marked tag should be missing
 		// Remove any existing XAP Rights Marked tags - they will be replaced
@@ -1458,7 +1458,7 @@ function get_Local_Timezone_Offset() {
  * **************************************************************************** */
 
 function XMP_Check( $reference_array, $check_array ) {
-	if ( !empty( $reference_array ) ) {
+	if ( ! empty( $reference_array ) ) {
 		// Cycle through each of the elements of the reference XMP array
 		foreach ( $reference_array as $valkey => $val ) {
 
@@ -1469,20 +1469,20 @@ function XMP_Check( $reference_array, $check_array ) {
 			if ( $tagpos === false ) {
 				// Tag not found - Add tag to array being checked
 				$tagpos					 = count( $check_array );
-				$check_array[$tagpos]	 = $val;
+				$check_array[ $tagpos ]	 = $val;
 			}
 
 			// Check if the reference tag has children
 			if ( array_key_exists( 'children', $val ) ) {
 				// Reference tag has children - these need to be checked too
 				// Determine if the array being checked has children for this tag
-				if ( !array_key_exists( 'children', $check_array[$tagpos] ) ) {
+				if ( ! array_key_exists( 'children', $check_array[ $tagpos ] ) ) {
 					// Array being checked has no children - add a blank children array
-					$check_array[$tagpos]['children'] = array();
+					$check_array[ $tagpos ]['children'] = array();
 				}
 
 				// Recurse, checking the children tags against the reference children
-				$check_array[$tagpos]['children'] = XMP_Check( $val['children'], $check_array[$tagpos]['children'] );
+				$check_array[ $tagpos ]['children'] = XMP_Check( $val['children'], $check_array[ $tagpos ]['children'] );
 			} else {
 				// No children - don't need to check anything else
 			}
@@ -1621,15 +1621,15 @@ function add_to_field( $field_array, $field, $value, $separator ) {
 	}
 
 	// Check if the value can be found anywhere within the existing value for this field
-	if ( stristr( $field_array[$field], $value ) == false ) {
+	if ( stristr( $field_array[ $field ], $value ) == false ) {
 		// Value could not be found
 		// Check if the existing value for the field is blank
-		if ( $field_array[$field] != '' ) {
+		if ( $field_array[ $field ] != '' ) {
 			// Existing value for field is not blank - append a separator
-			$field_array[$field] .= $separator;
+			$field_array[ $field ] .= $separator;
 		}
 		// Append the value to the field
-		$field_array[$field] .= $value;
+		$field_array[ $field ] .= $value;
 	}
 
 	// Return the File Info Array
@@ -1738,13 +1738,13 @@ function find_Photoshop_IRB_Resource( $IRB_array, $resource_ID ) {
  * **************************************************************************** */
 
 function find_XMP_item( &$Item_Array, $item_name ) {
-	if ( !empty( $Item_Array ) ) {
+	if ( ! empty( $Item_Array ) ) {
 		// Cycle through the top level of the XMP array
 		foreach ( $Item_Array as $Item_Key => $Item ) {
 			// Check this tag name against the required tag name
 			if ( $Item['tag'] == $item_name ) {
 				// The tag names match - return the item
-				return $Item_Array[$Item_Key];
+				return $Item_Array[ $Item_Key ];
 			}
 		}
 	}
@@ -1798,7 +1798,7 @@ function find_XMP_block( & $XMP_array, $block_name ) {
 					// Check if this attribute matches the namespace block name required
 					if ( $key == "xmlns:$block_name" ) {
 						// Namespace matches required block name - return it's children
-						return $XMP_array[0]['children'][0]['children'][$RDF_Key]['children'];
+						return $XMP_array[0]['children'][0]['children'][ $RDF_Key ]['children'];
 					}
 				}
 			}

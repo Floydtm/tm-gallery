@@ -18,14 +18,14 @@ class Shortcode_Grid extends Shortcode {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -44,5 +44,4 @@ class Shortcode_Grid extends Shortcode {
 		$data = new Gallery( $params['id'] , array( 'pagination', 'filter', 'grid', 'terms', 'img_count' ) );
 		return $this->get_view()->render_action_html( 'frontend/grid/index', $data, false );
 	}
-
 }

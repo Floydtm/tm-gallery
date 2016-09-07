@@ -1,7 +1,7 @@
 <?php
 /**
  * Image metadata class
- * 
+ *
  * @package classes/models
  */
 
@@ -40,7 +40,7 @@ class Image_metadata extends \tm_photo_gallery\classes\Model {
 	 * @return type
 	 */
 	public function get_img_meta_data( $filePath ) {
-		
+
 		// Retrieve the header information from the JPEG file
 		$jpeg_header_data		 = get_jpeg_header_data( $filePath );
 		// Retrieve EXIF information from the JPEG file
@@ -63,13 +63,13 @@ class Image_metadata extends \tm_photo_gallery\classes\Model {
 	 * @return bool
 	 */
 	public function set_img_meta_data( $filePath, $new_ps_file_info_array ) {
-		
+
 		$jpeg_header_data = get_jpeg_header_data( $filePath );
 		// Some characters are escaped with backslashes in HTML Posted variable
 		// Cycle through each of the HTML Posted variables, and strip out the slashes
 		foreach ( $new_ps_file_info_array as $var_key => $var_val ) {
 			if ( is_string( $var_val ) ) {
-				$new_ps_file_info_array[$var_key] = stripslashes( $var_val );
+				$new_ps_file_info_array[ $var_key ] = stripslashes( $var_val );
 			}
 		}
 
@@ -81,12 +81,12 @@ class Image_metadata extends \tm_photo_gallery\classes\Model {
 		}
 
 		// Keywords should be an array - explode it on newline boundarys
-		if ( !is_array( $new_ps_file_info_array['keywords'] ) ) {
+		if ( ! is_array( $new_ps_file_info_array['keywords'] ) ) {
 			$new_ps_file_info_array['keywords'] = explode( "\n", trim( $new_ps_file_info_array['keywords'] ) );
 		}
 
 		// Supplemental Categories should be an array - explode it on newline boundarys
-		if ( !is_array( $new_ps_file_info_array['supplementalcategories'] ) ) {
+		if ( ! is_array( $new_ps_file_info_array['supplementalcategories'] ) ) {
 			$new_ps_file_info_array['supplementalcategories'] = explode( "\n", trim( $new_ps_file_info_array['supplementalcategories'] ) );
 		}
 
@@ -110,5 +110,4 @@ class Image_metadata extends \tm_photo_gallery\classes\Model {
 		}
 		return $success;
 	}
-
 }

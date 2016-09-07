@@ -20,14 +20,14 @@ class Media extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
-	 * Get instance 
-	 * 
+	 * Get instance
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -63,25 +63,25 @@ class Media extends Model {
 			'post_type'		 => 'attachment',
 			'post_mime_type' => array( 'image/jpeg', 'image/gif', 'image/png' ),
 			'post_status'	 => array( 'publish', 'inherit', 'draft', 'private' ),
-			'posts_per_page' => !empty( $params['step'] ) ? $params['step'] : -1,
+			'posts_per_page' => ! empty( $params['step'] ) ? $params['step'] : -1,
 			'offset'		 => isset( $params['count'] ) ? $params['count'] : '',
-			'fields'		 => !empty( $params['fields'] ) ? $params['fields'] : '',
-			'date_query'	 => !empty( $params['year'] ) && !empty( $params['month'] ) ? array( 'year' => $params['year'], 'month' => $params['month'] ) : false,
-			'post__in'		 => !empty( $params['post__in'] ) ? $params['post__in'] : array(),
+			'fields'		 => ! empty( $params['fields'] ) ? $params['fields'] : '',
+			'date_query'	 => ! empty( $params['year'] ) && ! empty( $params['month'] ) ? array( 'year' => $params['year'], 'month' => $params['month'] ) : false,
+			'post__in'		 => ! empty( $params['post__in'] ) ? $params['post__in'] : array(),
 		);
 
 		// order by
-		if ( !empty( $params['orderby'] ) ) {
+		if ( ! empty( $params['orderby'] ) ) {
 			$args['orderby'] = $params['orderby'];
-			$args['order']	 = !empty( $params['order'] ) ? strtoupper( $params['order'] ) : 'DESC';
+			$args['order']	 = ! empty( $params['order'] ) ? strtoupper( $params['order'] ) : 'DESC';
 		} else {
 			$args['orderby'] = array( 'date' => 'DESC' );
 		}
 
 		// get set or album images
-		if ( !empty( $params['set'] ) && empty( $params['album'] ) ) {
+		if ( ! empty( $params['set'] ) && empty( $params['album'] ) ) {
 			$set_args = $this->get_set_params( array( 'set' => $params['set'] ) );
-			if ( !empty( $args ) && !empty( $set_args ) ) {
+			if ( ! empty( $args ) && ! empty( $set_args ) ) {
 				$args = array_merge( $args, $set_args );
 			}
 			$meta_query = array(
@@ -90,7 +90,7 @@ class Media extends Model {
 					'value'	 => $params['set'],
 				),
 			);
-			if ( !empty( $args['meta_query'] ) && empty( $params['in_set'] ) ) {
+			if ( ! empty( $args['meta_query'] ) && empty( $params['in_set'] ) ) {
 				$args['meta_query'] = array_merge( $args['meta_query'], $meta_query, array( 'relation' => 'OR' ) );
 			} else {
 				$args['meta_query'] = $meta_query;
@@ -98,13 +98,13 @@ class Media extends Model {
 		}
 
 		// order by captured
-		if ( !empty( $params['orderby'] ) && 'captured' === $params['orderby'] ) {
+		if ( ! empty( $params['orderby'] ) && 'captured' === $params['orderby'] ) {
 			$args['meta_key']	 = 'captured';
 			$args['orderby']	 = 'meta_value';
 		}
 
 		// get album
-		if ( !empty( $params['album'] ) ) {
+		if ( ! empty( $params['album'] ) ) {
 			$args['meta_query'] = array(
 				array(
 					'key'	 => self::$post_types['album'],
@@ -114,14 +114,14 @@ class Media extends Model {
 		}
 
 		// get images by tag
-		if ( !empty( $params['tag'] ) || !empty( $params['post_tag'] ) ) {
-			$tag				 = !empty( $params['tag'] ) ? $params['tag'] : $params['post_tag'];
+		if ( ! empty( $params['tag'] ) || ! empty( $params['post_tag'] ) ) {
+			$tag				 = ! empty( $params['tag'] ) ? $params['tag'] : $params['post_tag'];
 			$args['tax_query']	 = array( $this->get_term_params( $tag, 'tag' ) );
 		}
 
 		// get cat
-		if ( !empty( $params['cat'] ) || !empty( $params['category'] ) ) {
-			$cat				 = !empty( $params['cat'] ) ? $params['cat'] : $params['category'];
+		if ( ! empty( $params['cat'] ) || ! empty( $params['category'] ) ) {
+			$cat				 = ! empty( $params['cat'] ) ? $params['cat'] : $params['category'];
 			$args['tax_query']	 = array( $this->get_term_params( $cat, 'category' ) );
 		}
 		return $args;
@@ -129,13 +129,13 @@ class Media extends Model {
 
 	/**
 	 * Get term params
-	 * 
+	 *
 	 * @param type $id
 	 * @return type
 	 */
 	public function get_term_params( $id, $type ) {
 		return array(
-			'taxonomy'	 => self::$tax_names[$type],
+			'taxonomy'	 => self::$tax_names[ $type ],
 			'field'		 => 'id',
 			'terms'		 => $id,
 		);
@@ -152,12 +152,12 @@ class Media extends Model {
 	private function get_set_params( $params = array() ) {
 		$albums	 = get_posts( $this( 'album' )->get_content_params( array( 'set' => $params['set'], 'fields' => 'ids' ) ) );
 		$args	 = false;
-		if ( !empty( $albums ) ) {
+		if ( ! empty( $albums ) ) {
 			$args['meta_query'] = array(
 				array(
 					'key'		 => self::$post_types['album'],
 					'value'		 => $albums,
-					'compare'	 => 'IN'
+					'compare'	 => 'IN',
 				),
 			);
 		}
@@ -187,7 +187,7 @@ class Media extends Model {
 					$post_array['post_status']	 = $params['value'];
 					break;
 			}
-			if ( !empty( $post_array ) ) {
+			if ( ! empty( $post_array ) ) {
 				$return[] = wp_update_post( $post_array );
 			}
 		}
@@ -196,7 +196,7 @@ class Media extends Model {
 
 	/**
 	 * Update img count
-	 * 
+	 *
 	 * @param type $id
 	 * @return type
 	 */
@@ -234,32 +234,32 @@ class Media extends Model {
 				// delete album
 				case self::$post_types['album']:
 					$sets		 = $this->removeFromFolder( $id, 'set' );
-					$return[$id] = wp_delete_post( $id );
-					if ( !empty( $return[$id] ) ) {
-						$return[$id]->sets = $sets;
+					$return[ $id ] = wp_delete_post( $id );
+					if ( ! empty( $return[ $id ] ) ) {
+						$return[ $id ]->sets = $sets;
 					}
 					break;
 				// delete set
 				case self::$post_types['set']:
-					$return[$id] = wp_delete_post( $id );
+					$return[ $id ] = wp_delete_post( $id );
 					break;
 				// delete gallery
 				case self::$post_types['gallery']:
-					$return[$id] = wp_delete_post( $id );
+					$return[ $id ] = wp_delete_post( $id );
 					break;
 				// delete image
 				case self::$post_types['image']:
 					$albums		 = $this->removeFromFolder( $id, 'album' );
 					$sets		 = $this->removeFromFolder( $id, 'set' );
-					$return[$id] = $this( 'image' )->delete_image( $id );
-					if ( !empty( $return[$id] ) ) {
-						$return[$id]->albums = $albums;
-						$return[$id]->sets	 = $sets;
+					$return[ $id ] = $this( 'image' )->delete_image( $id );
+					if ( ! empty( $return[ $id ] ) ) {
+						$return[ $id ]->albums = $albums;
+						$return[ $id ]->sets	 = $sets;
 					}
 					break;
 				// delete post
 				default :
-					$return[$id] = wp_delete_post( $id );
+					$return[ $id ] = wp_delete_post( $id );
 					break;
 			}
 		}
@@ -268,14 +268,14 @@ class Media extends Model {
 
 	/**
 	 * Remove from folder
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $type
 	 */
 	public function removeFromFolder( $id, $type ) {
 		$folders = $this->get_folders( $id, $type );
 		$return	 = array();
-		if ( !empty( $folders ) ) {
+		if ( ! empty( $folders ) ) {
 			foreach ( $folders as $folder ) {
 				if ( $this( 'folder' )->is_equal_covers( get_post( $folder ), get_post( $id ) ) ) {
 					$return[] = $folder;
@@ -292,14 +292,14 @@ class Media extends Model {
 
 	/**
 	 * Get folders
-	 * 
+	 *
 	 * @param type $type
 	 * @return type
 	 */
 	public function get_folders( $id, $type = 'album' ) {
 		return get_posts( $this( $type )->get_content_params( array(
 			'img'	 => $id,
-			'fields' => 'ids'
+			'fields' => 'ids',
 		) ) );
 	}
 
@@ -312,22 +312,22 @@ class Media extends Model {
 	 */
 	public function get_content_data( $params = array() ) {
 		$data = array();
-		if ( !empty( $params['posts'] ) ) {
+		if ( ! empty( $params['posts'] ) ) {
 			// get content data
 			foreach ( $params['posts'] as $key => $id ) {
-				$data['posts'][$key] = $this->get_content( $id );
-				if ( !empty( $params['count'] ) ) {
-					$data['posts'][$key]['order'] = $params['count'] + $key;
+				$data['posts'][ $key ] = $this->get_content( $id );
+				if ( ! empty( $params['count'] ) ) {
+					$data['posts'][ $key ]['order'] = $params['count'] + $key;
 				}
 			}
 			// get step
-			if ( !empty( $params['step'] ) && count( $data['posts'] ) === (int) $params['step'] ) {
+			if ( ! empty( $params['step'] ) && count( $data['posts'] ) === (int) $params['step'] ) {
 				$data['count'] = $params['count'] + $params['step'];
 			}
 		}
 		// check if last step
-		if ( !empty( $data['posts'] ) ) {
-			if ( !empty( $params['step'] ) && count( $data['posts'] ) < $params['step'] ) {
+		if ( ! empty( $data['posts'] ) ) {
+			if ( ! empty( $params['step'] ) && count( $data['posts'] ) < $params['step'] ) {
 				$data['last'] = true;
 			} else {
 				$data['last'] = false;
@@ -340,12 +340,12 @@ class Media extends Model {
 
 	/**
 	 * Get content
-	 * 
+	 *
 	 * @param type $id
 	 */
 	function get_content( $id, $params = false ) {
 		$post = get_post( $id );
-		if ( !empty( $post ) ) {
+		if ( ! empty( $post ) ) {
 			switch ( $post->post_type ) {
 				case self::$post_types['image']:
 					$data	 = new Single_Image( $post->ID, $params );
@@ -360,5 +360,4 @@ class Media extends Model {
 		}
 		return get_object_vars( $data );
 	}
-
 }

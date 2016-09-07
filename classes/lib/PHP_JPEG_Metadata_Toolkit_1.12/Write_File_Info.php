@@ -94,7 +94,7 @@
 		// Some characters are escaped with backslashes in HTML Posted variable
 		// Cycle through each of the HTML Posted variables, and strip out the slashes
 		foreach ( $new_ps_file_info_array as $var_key => $var_val ) {
-			$new_ps_file_info_array[$var_key] = stripslashes( $var_val );
+			$new_ps_file_info_array[ $var_key ] = stripslashes( $var_val );
 		}
 
 		// Keywords should be an array - explode it on newline boundarys

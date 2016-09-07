@@ -1,7 +1,7 @@
 <?php
 /**
  * Cherry Breadcrumbs class
- * 
+ *
  * @package classes/shortcodes
  */
 
@@ -33,6 +33,7 @@ class Breadcrumbs extends \Cherry_Breadcrumbs {
 
 		/**
 		 * Filter final item array
+		 *
 		 * @since  4.0.0
 		 * @var    array
 		 */
@@ -45,21 +46,21 @@ class Breadcrumbs extends \Cherry_Breadcrumbs {
 	private function add_single_folder() {
 		global $post;
 		if ( get_option( 'permalink_structure' ) ) {
-			$post_parent = get_option( Core::PREFIX . "post_parent" );
-			$set_parent	 = get_option( Core::PREFIX . "set_parent" );
+			$post_parent = get_option( Core::PREFIX . 'post_parent' );
+			$set_parent	 = get_option( Core::PREFIX . 'set_parent' );
 		} else {
 			$post_parent = isset( $_GET['parent'] ) ? $_GET['parent'] : 0;
 			$set_parent	 = isset( $_GET['set'] ) ? $_GET['set'] : 0;
 		}
-		if ( !empty( $post_parent ) ) {
+		if ( ! empty( $post_parent ) ) {
 			$parent = get_post( $post_parent );
-			if ( !empty( $parent ) ) {
+			if ( ! empty( $parent ) ) {
 				$this->_add_item( 'link_format', $parent->post_title, get_permalink( $parent->ID ) );
 			}
 		}
-		if ( !empty( $set_parent ) && !empty($post_parent) ) {
+		if ( ! empty( $set_parent ) && ! empty( $post_parent ) ) {
 			$set = get_post( $set_parent );
-			if ( !empty( $set ) ) {
+			if ( ! empty( $set ) ) {
 				$this->_add_item( 'link_format', $set->post_title, get_permalink( $set->ID ) );
 			}
 		}
@@ -67,5 +68,4 @@ class Breadcrumbs extends \Cherry_Breadcrumbs {
 		$this->_add_item( 'target_format', get_the_title( $post->ID ) );
 		$this->page_title = false;
 	}
-
 }

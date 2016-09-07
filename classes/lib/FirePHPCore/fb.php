@@ -45,7 +45,7 @@ namespace tm_photo_gallery\classes\lib;
  * @package     FirePHPCore
  */
 
-if ( !class_exists( 'FirePHP' ) ) {
+if ( ! class_exists( 'FirePHP' ) ) {
 	require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'FirePHP.class.php';
 }
 
@@ -258,5 +258,4 @@ class FB {
 	public static function table( $Label, $Table ) {
 		return self::send( $Table, $Label, FirePHP::TABLE );
 	}
-
 }

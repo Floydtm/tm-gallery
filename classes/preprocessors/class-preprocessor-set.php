@@ -15,22 +15,22 @@ use tm_photo_gallery\classes\Preprocessor as Preprocessor;
 class Preprocessor_Set extends Preprocessor {
 
 	/**
-	 * Model type 
-	 * 
-	 * @var type 
+	 * Model type
+	 *
+	 * @var type
 	 */
 	private $type = 'set';
-	
+
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -53,5 +53,4 @@ class Preprocessor_Set extends Preprocessor {
 		) );
 		return $this->progress( $params, __FUNCTION__, $this->type );
 	}
-
 }

@@ -2,7 +2,7 @@
 
 /**
  * Controller Gallery
- * 
+ *
  * @package classes/controllers
  */
 
@@ -18,14 +18,14 @@ class Controller_Gallery extends Controller {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -125,7 +125,6 @@ class Controller_Gallery extends Controller {
 	 * Action load item
 	 */
 	public function action_load_item() {
-		
-	}
 
+	}
 }

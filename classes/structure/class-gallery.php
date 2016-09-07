@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery structure
- * 
+ *
  * @package classes\structure
  */
 
@@ -18,8 +18,8 @@ class Gallery extends Structure {
 
 	/**
 	 * Default args
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $default_args = array(
 		'pagination',
@@ -32,74 +32,74 @@ class Gallery extends Structure {
 
 	/**
 	 * Cover
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $cover;
 
 	/**
 	 * Types
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $types = array( 'img', 'album', 'set' );
 
 	/**
 	 * Childs array
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $childs_arr = array();
 
 	/**
 	 * Childs
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $childs = array(
 		'img'	 => array(),
 		'album'	 => array(),
-		'set'	 => array()
+		'set'	 => array(),
 	);
 
 	/**
 	 * All posts
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $posts = array();
 
 	/**
 	 * Img count
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $img_count = 0;
 
 	/**
 	 * Posts counts
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $posts_count = 0;
 
 	/**
 	 * Current term id
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $term_id = 0;
 
 	/*
 	 * Sortable terms
 	 *
-	 * @var type 
+     * @var type
 	 */
 	public $terms = array();
 
 	/**
 	 * Construct
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id, $args ) {
@@ -113,7 +113,7 @@ class Gallery extends Structure {
 	 * Init gallery
 	 */
 	public function init( $args = false ) {
-		$args = !is_array( $args ) ? $this->default_args : $args;
+		$args = ! is_array( $args ) ? $this->default_args : $args;
 		// get gallery cover
 		if ( in_array( 'cover', $args ) ) {
 			$this->cover = $this->get_cover();
@@ -141,7 +141,7 @@ class Gallery extends Structure {
 
 	/**
 	 * Get filter terms
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_filter_terms() {
@@ -150,13 +150,13 @@ class Gallery extends Structure {
 
 	/**
 	 * Get img count
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_img_count() {
 		$_img_count	 = 0;
 		$childs		 = $this->get_post_meta( 'terms' );
-		if ( !empty( $childs ) ) {
+		if ( ! empty( $childs ) ) {
 			foreach ( $childs as $type => $_childs ) {
 				foreach ( $_childs as $child ) {
 					if ( 'img' !== $type ) {
@@ -172,47 +172,47 @@ class Gallery extends Structure {
 
 	/**
 	 * Get childs
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_childs() {
 		$childs	 = $this->get_post_meta( 'terms' );
 		$return	 = $this->childs;
-		if ( !empty( $childs ) ) {
+		if ( ! empty( $childs ) ) {
 			foreach ( $childs as $type => $arr ) {
-				$return[$type] = array_map( 'intval', $arr );
+				$return[ $type ] = array_map( 'intval', $arr );
 			}
 		}
 		return $return;
 	}
 
 	/**
-	 * Set cover 
-	 * 
+	 * Set cover
+	 *
 	 * @return type
 	 */
 	public function get_cover() {
 		$image_downsize = '';
-		if ( !empty( $this->childs['set'] ) ) {
+		if ( ! empty( $this->childs['set'] ) ) {
 			foreach ( $this->childs['set'] as $id ) {
 				$image_downsize = $this->model( 'set' )->get_cover_img( $id, 'gallery' );
-				if ( !empty( $image_downsize ) ) {
+				if ( ! empty( $image_downsize ) ) {
 					break;
 				}
 			}
 		}
-		if ( empty( $image_downsize ) && !empty( $this->childs['album'] ) ) {
+		if ( empty( $image_downsize ) && ! empty( $this->childs['album'] ) ) {
 			foreach ( $this->childs['album'] as $id ) {
 				$image_downsize = $this->model( 'album' )->get_cover_img( $id, 'gallery' );
-				if ( !empty( $image_downsize ) ) {
+				if ( ! empty( $image_downsize ) ) {
 					break;
 				}
 			}
 		}
-		if ( empty( $image_downsize ) && !empty( $this->childs['img'] ) ) {
+		if ( empty( $image_downsize ) && ! empty( $this->childs['img'] ) ) {
 			foreach ( $this->childs['img'] as $id ) {
 				$image_downsize = image_downsize( $id, 'gallery' );
-				if ( !empty( $image_downsize ) ) {
+				if ( ! empty( $image_downsize ) ) {
 					break;
 				}
 			}
@@ -238,33 +238,33 @@ class Gallery extends Structure {
 
 	/**
 	 * Get posts count
-	 * 
+	 *
 	 * @return type
 	 */
 	public function get_posts_count() {
 		$return = 0;
 		foreach ( $this->types as $type ) {
-			$return += count( $this->childs[$type] );
+			$return += count( $this->childs[ $type ] );
 		}
 		return $return;
 	}
 
 	/**
 	 * Get all posts
-	 * 
+	 *
 	 * @return type
 	 */
 	public function get_all_posts() {
 		$return = array();
 		foreach ( $this->types as $type ) {
-			$return = array_merge( $return, $this->childs[$type] );
+			$return = array_merge( $return, $this->childs[ $type ] );
 		}
 		return $return;
 	}
 
 	/**
 	 * Get all posts
-	 * 
+	 *
 	 * @param type $pagination
 	 * @return type
 	 */
@@ -293,16 +293,16 @@ class Gallery extends Structure {
 		$_terms = array();
 		if ( $this->filter['show'] ) {
 			$posts = $this->get_posts();
-			$_terms = $this->model( 'term' )->get_posts_terms( $posts, Core::$tax_names[$this->filter['by']] );
+			$_terms = $this->model( 'term' )->get_posts_terms( $posts, Core::$tax_names[ $this->filter['by'] ] );
 		}
-		if ( !empty( $_terms ) ) {
+		if ( ! empty( $_terms ) ) {
 			// set curent gallery terms count
 			foreach ( $_terms as $key => $term ) {
 				$_posts = $this->sort_gallery_by_term_id( $term->term_id );
 				if ( empty( $_posts ) ) {
-					unset( $_terms[$key] );
+					unset( $_terms[ $key ] );
 				} else {
-					$_terms[$key]->count = count( $_posts );
+					$_terms[ $key ]->count = count( $_posts );
 				}
 			}
 		}
@@ -315,14 +315,14 @@ class Gallery extends Structure {
 	 * @param type $term_id
 	 */
 	public function sort_gallery_by_term_id( $term_id = 0, $pagination = false ) {
-		// check term id 
-		if ( Core::is_ajax() && !$term_id ) {
+		// check term id
+		if ( Core::is_ajax() && ! $term_id ) {
 			$term_id = $this->term_id;
 		} else {
 			$this->term_id = $term_id;
 		}
 		// sort gallery if isset term id
-		if ( !$term_id ) {
+		if ( ! $term_id ) {
 			$ids = $this->get_posts( $pagination );
 		} else {
 			$ids		 = array();
@@ -341,5 +341,4 @@ class Gallery extends Structure {
 		}
 		return $ids;
 	}
-
 }

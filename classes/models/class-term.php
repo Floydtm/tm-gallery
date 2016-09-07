@@ -2,7 +2,7 @@
 
 /**
  * Term Class
- * 
+ *
  * @package classes/models
  */
 
@@ -12,20 +12,20 @@ use tm_photo_gallery\classes\Model as Model;
 use tm_photo_gallery\classes\lib\FB;
 
 /**
- * Class Term 
+ * Class Term
  */
 class Term extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -37,34 +37,34 @@ class Term extends Model {
 
 	/**
 	 * Hook get_object_terms
-	 * 
+	 *
 	 * @param array $terms
-	 * @param type $object_id_array
-	 * @param type $taxonomy_array
-	 * @param type $args
+	 * @param type  $object_id_array
+	 * @param type  $taxonomy_array
+	 * @param type  $args
 	 * @return boolean
 	 */
 	public function get_object_terms( array $terms, $object_id_array, $taxonomy_array, $args ) {
 		// check isset taxonomy array in plugin terms
-		if ( !array_diff( $taxonomy_array, array_values( self::$tax_names ) ) ) {
+		if ( ! array_diff( $taxonomy_array, array_values( self::$tax_names ) ) ) {
 			return $terms;
 		}
 		// set term count
-		if ( !empty( $terms ) ) {
+		if ( ! empty( $terms ) ) {
 			$args['images_per_page'] = isset( $args['images_per_page'] ) ? $args['images_per_page'] : -1;
 			$args['offset']			 = isset( $args['offset'] ) ? $args['offset'] : 0;
 			$terms					 = $this->get_pagination_arr( $terms, (int) $args['images_per_page'], (int) $args['offset'] );
 			foreach ( $terms as $i => $term ) {
-				if ( !empty( $term ) && is_object( $term ) ) {
+				if ( ! empty( $term ) && is_object( $term ) ) {
 					switch ( $term->taxonomy ) {
 						case self::$tax_names['tag']:
-							if ( empty( $terms[$i]->count ) ) {
-								$terms[$i]->count = $this->get_posts_count( $terms[$i]->term_id, 'tag' );
+							if ( empty( $terms[ $i ]->count ) ) {
+								$terms[ $i ]->count = $this->get_posts_count( $terms[ $i ]->term_id, 'tag' );
 							}
 							break;
 						case self::$tax_names['category']:
-							if ( empty( $terms[$i]->count ) ) {
-								$terms[$i]->count = $this->get_posts_count( $terms[$i]->term_id, 'cat' );
+							if ( empty( $terms[ $i ]->count ) ) {
+								$terms[ $i ]->count = $this->get_posts_count( $terms[ $i ]->term_id, 'cat' );
 							}
 							break;
 					}
@@ -87,7 +87,7 @@ class Term extends Model {
 
 	/**
 	 * Get posts by term id
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $type
 	 * @return type
@@ -98,7 +98,7 @@ class Term extends Model {
 			'post_status'	 => 'any',
 			'posts_per_page' => -1,
 			'fields'		 => 'ids',
-			'tax_query'		 => array( $this( 'media' )->get_term_params( $id, $type ) )
+			'tax_query'		 => array( $this( 'media' )->get_term_params( $id, $type ) ),
 		) );
 	}
 
@@ -112,7 +112,7 @@ class Term extends Model {
 	public function get_term( $params ) {
 		$params['field'] = empty( $params['field'] ) ? 'name' : $params['field'];
 		$term			 = get_term_by( $params['field'], trim( $params['value'] ), $params['type'], ARRAY_A );
-		if ( !$term ) {
+		if ( ! $term ) {
 			$term = wp_insert_term( $params['value'], $params['type'] );
 		}
 		return $term;
@@ -131,10 +131,10 @@ class Term extends Model {
 		switch ( $params['termType'] ) {
 			case 'set':
 			case 'album':
-				$termArgs[$params['termType']]	 = $params[$params['termType']];
-				$post							 = get_post( $params[$params['termType']] );
-				$taxonomy						 = self::$tax_names[$params['termType'] . 's'];
-				$term							 = $this->get_term( array( 'value' => $params[$params['termType']], 'type' => $taxonomy, 'field' => 'name' ) );
+				$termArgs[ $params['termType'] ]	 = $params[ $params['termType'] ];
+				$post							 = get_post( $params[ $params['termType'] ] );
+				$taxonomy						 = self::$tax_names[ $params['termType'] . 's' ];
+				$term							 = $this->get_term( array( 'value' => $params[ $params['termType'] ], 'type' => $taxonomy, 'field' => 'name' ) );
 				if ( is_array( $term ) ) {
 					$term['count']	 = count( get_posts( $this( 'media' )->get_content_params( $termArgs ) ) );
 					$term['name']	 = $term['slug']	 = $post->post_title;
@@ -157,13 +157,13 @@ class Term extends Model {
 				break;
 			case 'tag':
 			case 'cat':
-				$termArgs[$params['termType']]	 = $params[$params['termType']];
+				$termArgs[ $params['termType'] ]	 = $params[ $params['termType'] ];
 				if ( 'tag' === $params['termType'] ) {
 					$taxonomy = self::$tax_names['tag'];
 				} else {
 					$taxonomy = self::$tax_names['category'];
 				}
-				$term		 = get_term( $params[$params['termType']], $taxonomy );
+				$term		 = get_term( $params[ $params['termType'] ], $taxonomy );
 				$term->count = count( get_posts( $this( 'media' )->get_content_params( $termArgs ) ) );
 				break;
 		}
@@ -200,7 +200,7 @@ class Term extends Model {
 			// explode values to array
 			$params['value'] = is_array( $params['value'] ) ? $params['value'] : explode( ',', $params['value'] );
 			foreach ( $params['value'] as $value ) {
-				$params['field'] = !empty( $params['field'] ) ? $params['field'] : 'name';
+				$params['field'] = ! empty( $params['field'] ) ? $params['field'] : 'name';
 				$value			 = 'term_taxonomy_id' == $params['field'] ? (int) ($value) : $value;
 				// get new term
 				$term			 = $this->get_term( array( 'value' => $value, 'type' => $params['type'], 'field' => $params['field'] ) );
@@ -213,7 +213,7 @@ class Term extends Model {
 							if ( is_wp_error( $post_term ) ) {
 								continue;
 							} else {
-								if ( (int) ($post_term->term_id) != (int) ($term['term_id']) && !empty( $params[self::ACTION] ) && 'set_term' != $params[self::ACTION] ) {
+								if ( (int) ($post_term->term_id) != (int) ($term['term_id']) && ! empty( $params[ self::ACTION ] ) && 'set_term' != $params[ self::ACTION ] ) {
 									$new_terms[] = (int) ($post_term->term_id);
 								}
 							}
@@ -221,18 +221,18 @@ class Term extends Model {
 					}
 				}
 				// add term if action not delete term
-				if ( empty( $params[self::ACTION] ) || 'delete_term' != $params[self::ACTION] ) {
+				if ( empty( $params[ self::ACTION ] ) || 'delete_term' != $params[ self::ACTION ] ) {
 					$new_terms[] = (int) ($term['term_id']);
 				}
 			}
 			// return all post terms
-			if ( !is_wp_error( wp_set_object_terms( $id, $new_terms, $params['type'] ) ) ) {
+			if ( ! is_wp_error( wp_set_object_terms( $id, $new_terms, $params['type'] ) ) ) {
 				$success = true;
 			} else {
 				$success = false;
 				break;
 			}
-			$result[$key] = wp_get_object_terms( $id, $params['type'] );
+			$result[ $key ] = wp_get_object_terms( $id, $params['type'] );
 		}
 
 		return $this->get_arr( $result, $success );
@@ -240,13 +240,13 @@ class Term extends Model {
 
 	/**
 	 * Remove post term
-	 * 
+	 *
 	 * @param type $params
 	 */
 	public function remove_post_term( $params ) {
 		$return = wp_delete_term( $params['id'], $params['type'] );
-		$success = false; 
-		if ( !is_wp_error( $return ) ) {
+		$success = false;
+		if ( ! is_wp_error( $return ) ) {
 			$success = true;
 		}
 		return $this->get_arr( $return, $success );
@@ -263,7 +263,7 @@ class Term extends Model {
 		$success		 = false;
 		$params['field'] = empty( $params['field'] ) ? 'name' : $params['field'];
 		$term			 = get_term_by( $params['field'], $params['value'], $params['type'], ARRAY_A );
-		if ( !empty( $term ) ) {
+		if ( ! empty( $term ) ) {
 			$success = wp_delete_term( $term['term_taxonomy_id'], $params['type'] );
 		}
 		return $success;
@@ -277,7 +277,7 @@ class Term extends Model {
 	 */
 	function get_posts_terms( $ids, $type ) {
 		$terms = wp_get_object_terms( $ids, $type );
-		if ( !is_wp_error( $terms ) ) {
+		if ( ! is_wp_error( $terms ) ) {
 			return $terms;
 		}
 	}
@@ -292,7 +292,7 @@ class Term extends Model {
 	public function search_term( $params ) {
 		$taxonomy	 = sanitize_key( $params['tax'] );
 		$tax		 = get_taxonomy( $taxonomy );
-		if ( !$tax ) {
+		if ( ! $tax ) {
 			return false;
 		}
 		$s		 = wp_unslash( $params['q'] );
@@ -302,7 +302,7 @@ class Term extends Model {
 		}
 		if ( false !== strpos( $s, ',' ) ) {
 			$s	 = explode( ',', $s );
-			$s	 = $s[count( $s ) - 1];
+			$s	 = $s[ count( $s ) - 1 ];
 		}
 		$s		 = trim( $s );
 		$results = get_terms( $taxonomy, array( 'name__like' => $s, 'fields' => 'all', 'hide_empty' => false ) );
@@ -319,9 +319,8 @@ class Term extends Model {
 					),
 				),
 			);
-			$results[$key]->count	 = count( get_posts( $args ) );
+			$results[ $key ]->count	 = count( get_posts( $args ) );
 		}
 		return $results;
 	}
-
 }

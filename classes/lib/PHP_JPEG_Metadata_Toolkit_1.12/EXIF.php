@@ -79,13 +79,13 @@
  * **************************************************************************** */
 
 
-if ( !isset( $GLOBALS['HIDE_UNKNOWN_TAGS'] ) ) {
+if ( ! isset( $GLOBALS['HIDE_UNKNOWN_TAGS'] ) ) {
 	$GLOBALS['HIDE_UNKNOWN_TAGS'] = false;
 }
-if ( !isset( $GLOBALS['SHOW_BINARY_DATA_HEX'] ) ) {
+if ( ! isset( $GLOBALS['SHOW_BINARY_DATA_HEX'] ) ) {
 	$GLOBALS['SHOW_BINARY_DATA_HEX'] = false;
 }
-if ( !isset( $GLOBALS['SHOW_BINARY_DATA_TEXT'] ) ) {
+if ( ! isset( $GLOBALS['SHOW_BINARY_DATA_TEXT'] ) ) {
 	$GLOBALS['SHOW_BINARY_DATA_TEXT'] = false;
 }
 
@@ -143,10 +143,10 @@ function get_EXIF_JPEG( $filename ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP1 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP1' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP1' ) == 0 ) {
 			// And if it has the EXIF label,
-			if ( ( strncmp( $jpeg_header_data[$i]['SegData'], "Exif\x00\x00", 6 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "Exif\x00\xFF", 6 ) == 0 ) ) { // For some reason, some files have a faulty EXIF name which has a 0xFF in it
+			if ( ( strncmp( $jpeg_header_data[ $i ]['SegData'], "Exif\x00\x00", 6 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "Exif\x00\xFF", 6 ) == 0 ) ) { // For some reason, some files have a faulty EXIF name which has a 0xFF in it
 				// Save the location of the EXIF segment
 				$EXIF_Location = $i;
 			}
@@ -162,13 +162,13 @@ function get_EXIF_JPEG( $filename ) {
 	$filehnd = @fopen( $filename, 'rb' );
 
 	// Check if the file opened successfully
-	if ( !$filehnd ) {
+	if ( ! $filehnd ) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
 		return false;
 	}
 
-	fseek( $filehnd, $jpeg_header_data[$EXIF_Location]['SegDataStart'] + 6 );
+	fseek( $filehnd, $jpeg_header_data[ $EXIF_Location ]['SegDataStart'] + 6 );
 
 	// Decode the Exif segment into an array and return it
 	$exif_data = process_TIFF_Header( $filehnd, 'TIFF' );
@@ -223,12 +223,12 @@ function put_EXIF_JPEG( $exif_data, $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP1 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP1' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP1' ) == 0 ) {
 			// And if it has the EXIF label,
-			if ( ( strncmp( $jpeg_header_data[$i]['SegData'], "Exif\x00\x00", 6 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "Exif\x00\xFF", 6 ) == 0 ) ) { // For some reason, some files have a faulty EXIF name which has a 0xFF in it
+			if ( ( strncmp( $jpeg_header_data[ $i ]['SegData'], "Exif\x00\x00", 6 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "Exif\x00\xFF", 6 ) == 0 ) ) { // For some reason, some files have a faulty EXIF name which has a 0xFF in it
 				// Found a preexisting EXIF block - Replace it with the new one and return.
-				$jpeg_header_data[$i]['SegData'] = $packed_data;
+				$jpeg_header_data[ $i ]['SegData'] = $packed_data;
 				return $jpeg_header_data;
 			}
 		}
@@ -242,7 +242,7 @@ function put_EXIF_JPEG( $exif_data, $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// Check if we have found an APP segment at or below APP3,
-		if ( ( $jpeg_header_data[$i]['SegType'] >= 0xE0 ) && ( $jpeg_header_data[$i]['SegType'] <= 0xE3 ) ) {
+		if ( ( $jpeg_header_data[ $i ]['SegType'] >= 0xE0 ) && ( $jpeg_header_data[ $i ]['SegType'] <= 0xE3 ) ) {
 			// Found an APP segment at or below APP12
 			$highest_APP = $i;
 		}
@@ -307,10 +307,10 @@ function get_Meta_JPEG( $filename ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP3 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP3' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP3' ) == 0 ) {
 			// And if it has the Meta label,
-			if ( ( strncmp( $jpeg_header_data[$i]['SegData'], "Meta\x00\x00", 6 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "META\x00\x00", 6 ) == 0 ) ) {
+			if ( ( strncmp( $jpeg_header_data[ $i ]['SegData'], "Meta\x00\x00", 6 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "META\x00\x00", 6 ) == 0 ) ) {
 				// Save the location of the Meta segment
 				$Meta_Location = $i;
 			}
@@ -326,13 +326,13 @@ function get_Meta_JPEG( $filename ) {
 	$filehnd = @fopen( $filename, 'rb' );
 
 	// Check if the file opened successfully
-	if ( !$filehnd ) {
+	if ( ! $filehnd ) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
 		return false;
 	}
 
-	fseek( $filehnd, $jpeg_header_data[$Meta_Location]['SegDataStart'] + 6 );
+	fseek( $filehnd, $jpeg_header_data[ $Meta_Location ]['SegDataStart'] + 6 );
 
 	// Decode the Meta segment into an array and return it
 	$meta = process_TIFF_Header( $filehnd, 'Meta' );
@@ -392,12 +392,12 @@ function put_Meta_JPEG( $meta_data, $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP1 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP3' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP3' ) == 0 ) {
 			// And if it has the Meta label,
-			if ( ( strncmp( $jpeg_header_data[$i]['SegData'], "Meta\x00\x00", 6 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "META\x00\x00", 6 ) == 0 ) ) {
+			if ( ( strncmp( $jpeg_header_data[ $i ]['SegData'], "Meta\x00\x00", 6 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "META\x00\x00", 6 ) == 0 ) ) {
 				// Found a preexisting Meta block - Replace it with the new one and return.
-				$jpeg_header_data[$i]['SegData'] = $packed_data;
+				$jpeg_header_data[ $i ]['SegData'] = $packed_data;
 				return $jpeg_header_data;
 			}
 		}
@@ -410,7 +410,7 @@ function put_Meta_JPEG( $meta_data, $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// Check if we have found an APP segment at or below APP3,
-		if ( ( $jpeg_header_data[$i]['SegType'] >= 0xE0 ) && ( $jpeg_header_data[$i]['SegType'] <= 0xE3 ) ) {
+		if ( ( $jpeg_header_data[ $i ]['SegType'] >= 0xE0 ) && ( $jpeg_header_data[ $i ]['SegType'] <= 0xE3 ) ) {
 			// Found an APP segment at or below APP12
 			$highest_APP = $i;
 		}
@@ -465,7 +465,7 @@ function get_EXIF_TIFF( $filename ) {
 	$filehnd = @fopen( $filename, 'rb' );
 
 	// Check if the file opened successfully
-	if ( !$filehnd ) {
+	if ( ! $filehnd ) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
 		return false;
@@ -552,7 +552,7 @@ function Interpret_EXIF_to_HTML( $Exif_array, $filename ) {
 		$output_str .= "<h3  class=\"EXIF_Secondary_Heading\">Image File Directory (IFD) $i Information</h2>\n";
 
 		// Interpret the IFD to html and add it to the output
-		$output_str .= interpret_IFD( $Exif_array[$i], $filename, $Exif_array['Byte_Align'] );
+		$output_str .= interpret_IFD( $Exif_array[ $i ], $filename, $Exif_array['Byte_Align'] );
 		$i++;
 	}
 
@@ -698,10 +698,10 @@ function get_IFD_Array_Packed_Data( $ifd_data, $Zero_IFD_offset, $Byte_Align ) {
 		// Check if this IFD is the last one
 		if ( $ifdno == $ifd_count - 1 ) {
 			// This IFD is the last one, get it's packed data
-			$packed_data .= get_IFD_Packed_Data( $ifd_data[$ifdno], $Zero_IFD_offset + strlen( $packed_data ), $Byte_Align, false );
+			$packed_data .= get_IFD_Packed_Data( $ifd_data[ $ifdno ], $Zero_IFD_offset + strlen( $packed_data ), $Byte_Align, false );
 		} else {
 			// This IFD is NOT the last one, get it's packed data
-			$packed_data .= get_IFD_Packed_Data( $ifd_data[$ifdno], $Zero_IFD_offset + strlen( $packed_data ), $Byte_Align, true );
+			$packed_data .= get_IFD_Packed_Data( $ifd_data[ $ifdno ], $Zero_IFD_offset + strlen( $packed_data ), $Byte_Align, true );
 		}
 	}
 
@@ -1184,7 +1184,7 @@ function read_IFD_universal( $filehnd, $Tiff_offset, $Byte_Align,
 		}
 
 		// Total Data size is the Data Count multiplied by the size of the Data Type
-		$Total_Data_Size = $GLOBALS['IFD_Data_Sizes'][$Data_Type] * $Data_Count;
+		$Total_Data_Size = $GLOBALS['IFD_Data_Sizes'][ $Data_Type ] * $Data_Count;
 
 		$Data_Start_pos = -1;
 
@@ -1220,7 +1220,7 @@ function read_IFD_universal( $filehnd, $Tiff_offset, $Byte_Align,
 		if ( ( $Data_Type != 2 ) && ( $Data_Type != 7 ) ) {
 			// The data type is Numerical, Read the data items from the data block
 			for ( $j = 0; $j < $Data_Count; $j++ ) {
-				$Part_Data_Str	 = substr( $DataStr, $j * $GLOBALS['IFD_Data_Sizes'][$Data_Type], $GLOBALS['IFD_Data_Sizes'][$Data_Type] );
+				$Part_Data_Str	 = substr( $DataStr, $j * $GLOBALS['IFD_Data_Sizes'][ $Data_Type ], $GLOBALS['IFD_Data_Sizes'][ $Data_Type ] );
 				$Data_Array[]	 = get_IFD_Data_Type( $Part_Data_Str, $Data_Type, $Byte_Align );
 			}
 		} elseif ( $Data_Type == 2 ) {
@@ -1237,40 +1237,40 @@ function read_IFD_universal( $filehnd, $Tiff_offset, $Byte_Align,
 		}
 
 		// If this is a Sub-IFD entry,
-		if ( ( array_key_exists( $Tag_No, $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name] ) ) &&
-		( 'SubIFD' == $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No]['Type'] ) ) {
+		if ( ( array_key_exists( $Tag_No, $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ] ) ) &&
+		( 'SubIFD' == $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ]['Type'] ) ) {
 			// This is a Sub-IFD entry, go and process the data forming Sub-IFD and use its output array as the new data for this entry
 			fseek( $filehnd, $Tiff_offset + $Data_Array[0] );
-			$Data_Array = read_Multiple_IFDs( $filehnd, $Tiff_offset, $Byte_Align, $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No]['Tags Name'] );
+			$Data_Array = read_Multiple_IFDs( $filehnd, $Tiff_offset, $Byte_Align, $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ]['Tags Name'] );
 		}
 
 		$desc	 = '';
 		$units	 = '';
 
 		// Check if this tag exists in the list of tag definitions,
-		if ( array_key_exists( $Tag_No, $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name] ) ) {
+		if ( array_key_exists( $Tag_No, $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ] ) ) {
 
-			if ( array_key_exists( 'Description', $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No] ) ) {
-				$desc = $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No]['Description'];
+			if ( array_key_exists( 'Description', $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ] ) ) {
+				$desc = $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ]['Description'];
 			}
 
-			if ( array_key_exists( 'Units', $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No] ) ) {
-				$units = $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No]['Units'];
+			if ( array_key_exists( 'Units', $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ] ) ) {
+				$units = $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ]['Units'];
 			}
 
 			// Tag exists in definitions, append details to output array
-			$OutputArray[$Tag_No] = array(
+			$OutputArray[ $Tag_No ] = array(
 				'Tag Number'		 => $Tag_No,
-				'Tag Name'			 => $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No]['Name'],
+				'Tag Name'			 => $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ]['Name'],
 				'Tag Description'	 => $desc,
 				'Data Type'			 => $Data_Type,
-				'Type'				 => $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag_No]['Type'],
+				'Type'				 => $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag_No ]['Type'],
 				'Units'				 => $units,
 				'Data'				 => $Data_Array,
 			);
 		} else {
 			// Tag doesnt exist in definitions, append unknown details to output array
-			$OutputArray[$Tag_No] = array(
+			$OutputArray[ $Tag_No ] = array(
 				'Tag Number'		 => $Tag_No,
 				'Tag Name'			 => 'Unknown Tag #' . $Tag_No,
 				'Tag Description'	 => '',
@@ -1284,59 +1284,59 @@ function read_IFD_universal( $filehnd, $Tiff_offset, $Byte_Align,
 		// Some information of type "Unknown" (type 7) might require information about
 		// how it's position and byte alignment in order to be decoded
 		if ( $Data_Type == 7 ) {
-			$OutputArray[$Tag_No]['Offset']		 = $Data_Start_pos;
-			$OutputArray[$Tag_No]['Byte Align']	 = $Byte_Align;
+			$OutputArray[ $Tag_No ]['Offset']		 = $Data_Start_pos;
+			$OutputArray[ $Tag_No ]['Byte Align']	 = $Byte_Align;
 		}
 
 		//
 		// Special Data handling
 		//
 		// Check if this is a Print Image Matching entry
-		if ( $OutputArray[$Tag_No]['Type'] == 'PIM' ) {
+		if ( $OutputArray[ $Tag_No ]['Type'] == 'PIM' ) {
 			// This is a Print Image Matching entry, decode it.
-			$OutputArray[$Tag_No] = Decode_PIM( $OutputArray[$Tag_No], $Tag_Definitions_Name );
+			$OutputArray[ $Tag_No ] = Decode_PIM( $OutputArray[ $Tag_No ], $Tag_Definitions_Name );
 		}
 
 		// Interpret the entry into a text string using a custom interpreter
-		$text_val = get_Tag_Text_Value( $OutputArray[$Tag_No], $Tag_Definitions_Name );
+		$text_val = get_Tag_Text_Value( $OutputArray[ $Tag_No ], $Tag_Definitions_Name );
 
 		// Check if a text string was generated
 		if ( $text_val !== false ) {
 			// A string was generated, append it to the output array entry
-			$OutputArray[$Tag_No]['Text Value']	 = $text_val;
-			$OutputArray[$Tag_No]['Decoded']	 = true;
+			$OutputArray[ $Tag_No ]['Text Value']	 = $text_val;
+			$OutputArray[ $Tag_No ]['Decoded']	 = true;
 		} else {
 			// A string was NOT generated, append a generic string to the output array entry
-			$OutputArray[$Tag_No]['Text Value']	 = get_IFD_value_as_text( $OutputArray[$Tag_No] ) . ' ' . $units;
-			$OutputArray[$Tag_No]['Decoded']	 = false;
+			$OutputArray[ $Tag_No ]['Text Value']	 = get_IFD_value_as_text( $OutputArray[ $Tag_No ] ) . ' ' . $units;
+			$OutputArray[ $Tag_No ]['Decoded']	 = false;
 		}
 
 		// Check if this entry is the Maker Note
 		if ( ( $Tag_Definitions_Name == 'EXIF' ) && ( $Tag_No == 37500 ) ) {
 
 			// Save some extra information which will allow Makernote Decoding with the output array entry
-			$OutputArray[$Tag_No]['Offset']		 = $Data_Start_pos;
-			$OutputArray[$Tag_No]['Tiff Offset'] = $Tiff_offset;
-			$OutputArray[$Tag_No]['ByteAlign']	 = $Byte_Align;
+			$OutputArray[ $Tag_No ]['Offset']		 = $Data_Start_pos;
+			$OutputArray[ $Tag_No ]['Tiff Offset'] = $Tiff_offset;
+			$OutputArray[ $Tag_No ]['ByteAlign']	 = $Byte_Align;
 
 			// Save a pointer to this entry for Maker note processing later
-			$GLOBALS['Maker_Note_Tag'] = & $OutputArray[$Tag_No];
+			$GLOBALS['Maker_Note_Tag'] = & $OutputArray[ $Tag_No ];
 		}
 
 		// Check if this is a IPTC/NAA Record within the EXIF IFD
 		if ( ( ( $Tag_Definitions_Name == 'EXIF' ) || ( $Tag_Definitions_Name == 'TIFF' ) ) &&
 		( $Tag_No == 33723 ) ) {
 			// This is a IPTC/NAA Record, interpret it and put result in the data for this entry
-			$OutputArray[$Tag_No]['Data']	 = get_IPTC( $DataStr );
-			$OutputArray[$Tag_No]['Decoded'] = true;
+			$OutputArray[ $Tag_No ]['Data']	 = get_IPTC( $DataStr );
+			$OutputArray[ $Tag_No ]['Decoded'] = true;
 		}
 		// Change: Check for embedded XMP as of version 1.11
 		// Check if this is a XMP Record within the EXIF IFD
 		if ( ( ( $Tag_Definitions_Name == 'EXIF' ) || ( $Tag_Definitions_Name == 'TIFF' ) ) &&
 		( $Tag_No == 700 ) ) {
 			// This is a XMP Record, interpret it and put result in the data for this entry
-			$OutputArray[$Tag_No]['Data']	 = read_XMP_array_from_text( $DataStr );
-			$OutputArray[$Tag_No]['Decoded'] = true;
+			$OutputArray[ $Tag_No ]['Data']	 = read_XMP_array_from_text( $DataStr );
+			$OutputArray[ $Tag_No ]['Decoded'] = true;
 		}
 
 		// Change: Check for embedded IRB as of version 1.11
@@ -1344,8 +1344,8 @@ function read_IFD_universal( $filehnd, $Tiff_offset, $Byte_Align,
 		if ( ( ( $Tag_Definitions_Name == 'EXIF' ) || ( $Tag_Definitions_Name == 'TIFF' ) ) &&
 		( $Tag_No == 34377 ) ) {
 			// This is a Photoshop IRB Record, interpret it and put result in the data for this entry
-			$OutputArray[$Tag_No]['Data']	 = unpack_Photoshop_IRB_Data( $DataStr );
-			$OutputArray[$Tag_No]['Decoded'] = true;
+			$OutputArray[ $Tag_No ]['Data']	 = unpack_Photoshop_IRB_Data( $DataStr );
+			$OutputArray[ $Tag_No ]['Decoded'] = true;
 		}
 
 		// Exif Thumbnail
@@ -1487,8 +1487,8 @@ function get_Tag_Text_Value( $Tag, $Tag_Definitions_Name ) {
 		}
 	} elseif ( $Tag['Type'] == 'Numeric' ) {
 		// Format is numeric - return default text value with any required units text appended
-		if ( array_key_exists( 'Units', $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag['Tag Number']] ) ) {
-			$units = $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag['Tag Number']]['Units'];
+		if ( array_key_exists( 'Units', $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag['Tag Number'] ] ) ) {
+			$units = $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag['Tag Number'] ]['Units'];
 		} else {
 			$units = '';
 		}
@@ -1508,9 +1508,9 @@ function get_Tag_Text_Value( $Tag, $Tag_Definitions_Name ) {
 		}
 
 		// Check if the data value exists in the lookup table for this IFD entry
-		if ( array_key_exists( $first_val, $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag['Tag Number']] ) ) {
+		if ( array_key_exists( $first_val, $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag['Tag Number'] ] ) ) {
 			// Data value exists in lookup table - return the matching string
-			return $GLOBALS['IFD_Tag_Definitions'][$Tag_Definitions_Name][$Tag['Tag Number']][$first_val];
+			return $GLOBALS['IFD_Tag_Definitions'][ $Tag_Definitions_Name ][ $Tag['Tag Number'] ][ $first_val ];
 		} else {
 			// Data value doesnt exist in lookup table - return explanation string
 			return "Unknown Reserved value $first_val ";
@@ -1738,7 +1738,7 @@ function interpret_IFD( $IFD_array, $filename ) {
 
 	// Check if this is an EXIF IFD and if there is a makernote present
 	if ( ( $IFD_array['Tags Name'] === 'EXIF' ) &&
-	(!array_key_exists( 37500, $IFD_array ) ) ) {
+	( ! array_key_exists( 37500, $IFD_array ) ) ) {
 
 		// This is an EXIF IFD but NO makernote is present - Add a message to the output
 		$extra_IFD_str .= '<h3 class="EXIF_Secondary_Heading">No Makernote Present</h3>';
@@ -1748,7 +1748,7 @@ function interpret_IFD( $IFD_array, $filename ) {
 	foreach ( $IFD_array as $Tag_ID => $Exif_Tag ) {
 
 		// Ignore the non numeric elements - they aren't tags
-		if ( !is_numeric( $Tag_ID ) ) {
+		if ( ! is_numeric( $Tag_ID ) ) {
 			// Skip Tags Name
 		} // Check if the Tag has been decoded successfully
 		elseif ( $Exif_Tag['Decoded'] == true ) {

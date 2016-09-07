@@ -1,7 +1,7 @@
 <?php
 /**
  * Folder class
- * 
+ *
  * @package classes/models
  */
 
@@ -20,14 +20,14 @@ class Folder extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -86,7 +86,7 @@ class Folder extends Model {
 		$return	 = array();
 		foreach ( $types as $name => $value ) {
 			if ( $value ) {
-				$return[$name] = $this( $state )->get_cover_img( $id, $name );
+				$return[ $name ] = $this( $state )->get_cover_img( $id, $name );
 			}
 		}
 		return $return;
@@ -94,10 +94,10 @@ class Folder extends Model {
 
 	/**
 	 * Get content
-	 * 
+	 *
 	 * @param type $params['id'] - folder id.
 	 * @param type $params['type'] - folder type.
-	 * 
+	 *
 	 * @return type
 	 */
 	public function get_content( $params ) {
@@ -106,7 +106,7 @@ class Folder extends Model {
 			'tags',
 			'categories',
 			'img_count',
-			'cover_id'
+			'cover_id',
 		);
 		if ( 'album' == $params['type'] ) {
 			$args[] = 'sets';
@@ -134,11 +134,11 @@ class Folder extends Model {
 		);
 		$id			 = wp_insert_post( $new_post, true );
 		$success	 = is_wp_error( $id ) ? false : true;
-		if ( $success && !empty( $params['parent'] ) ) {
+		if ( $success && ! empty( $params['parent'] ) ) {
 			$this( 'folder' )->set_folder_content( array(
 				'id'	 => $params['parent'],
 				'value'	 => $id,
-				'action' => 'add_to_folder'
+				'action' => 'add_to_folder',
 			) );
 		}
 		$return['id']		 = $id;
@@ -148,14 +148,14 @@ class Folder extends Model {
 
 	/**
 	 * Render cover
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $img_type
 	 * @return type
 	 */
 	public function render_cover( $id, $folder_type, $img_type ) {
 		$image	 = false;
-		$posts	 = get_post_meta( $id, self::$post_types[$folder_type], false );
+		$posts	 = get_post_meta( $id, self::$post_types[ $folder_type ], false );
 		$images	 = array();
 		foreach ( $posts as $post_id ) {
 			$post = get_post( $post_id );
@@ -168,7 +168,7 @@ class Folder extends Model {
 					break;
 			}
 		}
-		if ( !empty( $images ) ) {
+		if ( ! empty( $images ) ) {
 			$post_id = end( $images );
 			$image	 = image_downsize( $post_id, $img_type );
 			$this->update_post_meta( $id, 'cover_img', $post_id );
@@ -178,7 +178,7 @@ class Folder extends Model {
 
 	/**
 	 * Set folder content
-	 * 
+	 *
 	 * @param['id'] - folder id.
 	 * @param['type'] - folder type.
 	 * @param['value'] - child id.
@@ -193,7 +193,7 @@ class Folder extends Model {
 		$meta = get_post_meta( $post->ID, $post->post_type, false );
 		switch ( $params['action'] ) {
 			case 'add_to_folder':
-				if ( !in_array( strval( $value_post->ID ), $meta ) ) {
+				if ( ! in_array( strval( $value_post->ID ), $meta ) ) {
 					add_post_meta( $post->ID, $post->post_type, $value_post->ID );
 					$meta = get_post_meta( $post->ID, $post->post_type, false );
 				}
@@ -204,12 +204,12 @@ class Folder extends Model {
 					if ( $this->is_equal_covers( $post, $value_post ) ) {
 						$this->update_cover( array(
 							'parent_id'	 => $post->ID,
-							'id'		 => 0
+							'id'		 => 0,
 						) );
 					}
 					delete_post_meta( $post->ID, $post->post_type, $value_post->ID );
 					$key = array_search( $value_post->ID, $meta );
-					unset( $meta[$key] );
+					unset( $meta[ $key ] );
 				}
 				break;
 		}
@@ -218,7 +218,7 @@ class Folder extends Model {
 
 	/**
 	 * Is equal covers
-	 * 
+	 *
 	 * @param \WP_Post $post
 	 * @param \WP_Post $value_post
 	 */
@@ -230,12 +230,11 @@ class Folder extends Model {
 		} else {
 			$cover_value = $value_post->ID;
 		}
-		// if covers equals 
+		// if covers equals
 		$return = false;
 		if ( $cover == $cover_value ) {
 			$return = true;
 		}
 		return $return;
 	}
-
 }

@@ -14,21 +14,21 @@ class Preprocessor_Focal_point extends \tm_photo_gallery\classes\Preprocessor {
 
 	/**
 	 * Model type
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $type = 'focal_point';
-	
+
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -55,5 +55,4 @@ class Preprocessor_Focal_point extends \tm_photo_gallery\classes\Preprocessor {
 		) );
 		return $this->progress( $params, __FUNCTION__, $this->type );
 	}
-
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Breadcrumbs
- * 
+ *
  * @package templates/photo-gallery
  */
 ?>

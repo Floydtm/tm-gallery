@@ -279,7 +279,7 @@ function xml_get_children( &$input_xml_array, &$item_num ) {
 	// Cycle through all the elements of the input XML array
 	while ( $item_num < count( $input_xml_array ) ) {
 		// Retrieve the current array element
-		$v = &$input_xml_array[$item_num++];
+		$v = &$input_xml_array[ $item_num++ ];
 
 		// Check what type of XML array element this is, and process accordingly
 		switch ( $v['type'] ) {

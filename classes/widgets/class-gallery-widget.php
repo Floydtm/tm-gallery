@@ -79,5 +79,4 @@ class Gallery_widget extends \WP_Widget {
 		$title = apply_filters( 'widget_title', $instance['gallery_id'] );
 		echo Shortcode::get_instance()->show_shortcode( array( 'gallery_id' => $instance['gallery_id'] ) );
 	}
-
 }

@@ -105,7 +105,7 @@ if ( array_key_exists( 34665, $Exif_array[0] ) ) {
 		}
 	}
 } else {
-	
+
 }
 
 return;

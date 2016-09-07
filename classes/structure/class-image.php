@@ -1,6 +1,6 @@
 <?php
 /**
- * Image structure  
+ * Image structure
  *
  * @package classes/structure
  */
@@ -18,8 +18,8 @@ class Image extends Structure {
 
 	/**
 	 * Default args
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $default_args = array(
 		'albums',
@@ -29,68 +29,68 @@ class Image extends Structure {
 		'focus_point',
 		'thumbnails',
 		'filename',
-		'image'
+		'image',
 	);
 
 	/**
 	 * Albums
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $albums;
 
 	/**
 	 * Sets
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $sets;
 
 	/**
 	 * Categories
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $categories;
 
 	/**
 	 * Tags
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $tags;
 
 	/**
 	 * Focus point
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $focus_point;
 
 	/**
 	 * Thumbnails
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $thumbnails;
 
 	/**
 	 * Filename
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $filename;
 
 	/**
 	 * Get full image
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $image;
 
 	/**
 	 * Construct
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id, $args ) {
@@ -99,12 +99,12 @@ class Image extends Structure {
 	}
 
 	/**
-	 * Init 
-	 * 
+	 * Init
+	 *
 	 * @param type $args
 	 */
 	public function init( $args = false ) {
-		$args = !is_array( $args ) ? $this->default_args : $args;
+		$args = ! is_array( $args ) ? $this->default_args : $args;
 		// get alums
 		if ( in_array( 'albums', $args ) ) {
 			$this->albums = $this->model( 'media' )->get_folders( $this->id, 'album' );
@@ -133,10 +133,9 @@ class Image extends Structure {
 		if ( in_array( 'filename', $args ) ) {
 			$this->filename = wp_basename( get_attached_file( $this->id ) );
 		}
-		// get full image 
+		// get full image
 		if ( in_array( 'image', $args ) ) {
 			$this->image = $this->model( 'image' )->get_thumbnail( $this->id, 'full' );
 		}
 	}
-
 }

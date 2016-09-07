@@ -36,7 +36,7 @@ class Media extends Core {
 		'toplevel_page_tm_pg_media',
 		'post.php',
 		'post-new.php',
-		'tm-photo-gallery_page_gallery'
+		'tm-photo-gallery_page_gallery',
 	);
 
 	/**
@@ -98,7 +98,7 @@ class Media extends Core {
 	public function admin_enqueue_scripts( $hook ) {
 		$this->add_admin_css( $hook );
 		$this->add_admin_js( $hook );
-		//$this->add_admin_min_js( $hook );
+		// $this->add_admin_min_js( $hook );
 	}
 
 	/**
@@ -142,7 +142,7 @@ class Media extends Core {
 
 	/**
 	 * Add admin js
-	 * 
+	 *
 	 * @param type $hook
 	 */
 	private function add_admin_js( $hook ) {
@@ -153,16 +153,16 @@ class Media extends Core {
 			wp_enqueue_script( 'jquery-effects-fade' );
 			wp_enqueue_script( 'jquery-ui-draggable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
-			wp_enqueue_script( "plupload-handlers" );
-			wp_enqueue_script( "wp-plupload" );
-			wp_enqueue_script( "wp-util" );
-			wp_enqueue_script( "media-editor" );
+			wp_enqueue_script( 'plupload-handlers' );
+			wp_enqueue_script( 'wp-plupload' );
+			wp_enqueue_script( 'wp-util' );
+			wp_enqueue_script( 'media-editor' );
 			// include global scripts
 			$this->enqueue_script( 'registry-factory', 'lib/registry-factory.js' );
 			// include admin script
 			$this->enqueue_script( 'common', 'admin/common.js' );
-			wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'admin_lang', require(TM_PG_CONFIGS_PATH . 'language-admin-js.php') );
-			wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'options', require(TM_PG_CONFIGS_PATH . 'options-js.php') );
+			wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'admin_lang', require( TM_PG_CONFIGS_PATH . 'language-admin-js.php' ) );
+			wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'options', require( TM_PG_CONFIGS_PATH . 'options-js.php' ) );
 			// include constructor
 			$this->enqueue_script( 'constructor', 'admin/constructor.js' );
 			$this->enqueue_script( 'js-noty', 'admin/lib/jquery.noty.packaged.min.js' );
@@ -179,35 +179,35 @@ class Media extends Core {
 					wp_enqueue_media();
 					// include upload hooks
 					$this->enqueue_script( 'uploader', 'admin/uploader.js' );
-					$this->enqueue_script( "grid", 'admin/photo-gallery/models/grid.js' );
-					$this->enqueue_script( "image", 'admin/photo-gallery/models/image.js' );
-					$this->enqueue_script( "tag", 'admin/photo-gallery/models/tag.js' );
-					$this->enqueue_script( "category", 'admin/photo-gallery/models/category.js' );
-					$this->enqueue_script( "folder", 'admin/photo-gallery/models/folder.js' );
-					$this->enqueue_script( "album", 'admin/photo-gallery/models/album.js' );
-					$this->enqueue_script( "set", 'admin/photo-gallery/models/set.js' );
-					$this->enqueue_script( "term", 'admin/photo-gallery/models/term.js' );
-					$this->enqueue_script( "cover", 'admin/photo-gallery/models/cover.js' );
-					$this->enqueue_script( "pg-editor", 'admin/photo-gallery/components/editor.js', array( 'jquery', 'underscore', 'backbone' ) );
-					$this->enqueue_script( "pg-folder-content", 'admin/photo-gallery/components/folder.js' );
-					$this->enqueue_script( "pg-popup", 'admin/photo-gallery/components/popup.js' );
-					$this->enqueue_script( "pg-right", 'admin/photo-gallery/components/right.js' );
-					$this->enqueue_script( "pg-top-bar", 'admin/photo-gallery/components/top-bar.js' );
-					$this->enqueue_script( "pg-content", 'admin/photo-gallery/components/content.js' );
+					$this->enqueue_script( 'grid', 'admin/photo-gallery/models/grid.js' );
+					$this->enqueue_script( 'image', 'admin/photo-gallery/models/image.js' );
+					$this->enqueue_script( 'tag', 'admin/photo-gallery/models/tag.js' );
+					$this->enqueue_script( 'category', 'admin/photo-gallery/models/category.js' );
+					$this->enqueue_script( 'folder', 'admin/photo-gallery/models/folder.js' );
+					$this->enqueue_script( 'album', 'admin/photo-gallery/models/album.js' );
+					$this->enqueue_script( 'set', 'admin/photo-gallery/models/set.js' );
+					$this->enqueue_script( 'term', 'admin/photo-gallery/models/term.js' );
+					$this->enqueue_script( 'cover', 'admin/photo-gallery/models/cover.js' );
+					$this->enqueue_script( 'pg-editor', 'admin/photo-gallery/components/editor.js', array( 'jquery', 'underscore', 'backbone' ) );
+					$this->enqueue_script( 'pg-folder-content', 'admin/photo-gallery/components/folder.js' );
+					$this->enqueue_script( 'pg-popup', 'admin/photo-gallery/components/popup.js' );
+					$this->enqueue_script( 'pg-right', 'admin/photo-gallery/components/right.js' );
+					$this->enqueue_script( 'pg-top-bar', 'admin/photo-gallery/components/top-bar.js' );
+					$this->enqueue_script( 'pg-content', 'admin/photo-gallery/components/content.js' );
 					$this->enqueue_script( 'pg-media-popup', 'admin/photo-gallery/components/media-popup.js' );
 					break;
 				case 'tm-photo-gallery_page_gallery':
-					$this->enqueue_script( "gallery", 'admin/gallery/list/models/gallery.js' );
-					$this->enqueue_script( "grid", 'admin/gallery/list/models/grid.js' );
-					$this->enqueue_script( "gl-editor-display", 'admin/gallery/editor/components/display.js' );
-					$this->enqueue_script( "gl-editor-filters", 'admin/gallery/editor/components/filters.js' );
-					$this->enqueue_script( "gl-editor-pagination", 'admin/gallery/editor/components/pagination.js' );
-					$this->enqueue_script( "gl-editor-grid", 'admin/gallery/editor/components/grid.js' );
-					$this->enqueue_script( "gl-right", 'admin/gallery/editor/components/right.js' );
-					$this->enqueue_script( "gl-editor", 'admin/gallery/editor/editor.js' );
-					$this->enqueue_script( "gl-top-bar", 'admin/gallery/list/components/top-bar.js' );
-					$this->enqueue_script( "gl-editor-top-bar", 'admin/gallery/editor/components/top-bar.js' );
-					$this->enqueue_script( "gl-content", 'admin/gallery/list/components/content.js' );
+					$this->enqueue_script( 'gallery', 'admin/gallery/list/models/gallery.js' );
+					$this->enqueue_script( 'grid', 'admin/gallery/list/models/grid.js' );
+					$this->enqueue_script( 'gl-editor-display', 'admin/gallery/editor/components/display.js' );
+					$this->enqueue_script( 'gl-editor-filters', 'admin/gallery/editor/components/filters.js' );
+					$this->enqueue_script( 'gl-editor-pagination', 'admin/gallery/editor/components/pagination.js' );
+					$this->enqueue_script( 'gl-editor-grid', 'admin/gallery/editor/components/grid.js' );
+					$this->enqueue_script( 'gl-right', 'admin/gallery/editor/components/right.js' );
+					$this->enqueue_script( 'gl-editor', 'admin/gallery/editor/editor.js' );
+					$this->enqueue_script( 'gl-top-bar', 'admin/gallery/list/components/top-bar.js' );
+					$this->enqueue_script( 'gl-editor-top-bar', 'admin/gallery/editor/components/top-bar.js' );
+					$this->enqueue_script( 'gl-content', 'admin/gallery/list/components/content.js' );
 					break;
 			}
 		}
@@ -215,7 +215,7 @@ class Media extends Core {
 
 	/**
 	 * Add admin js
-	 * 
+	 *
 	 * @param type $hook
 	 */
 	private function add_admin_min_js( $hook ) {
@@ -226,10 +226,10 @@ class Media extends Core {
 			wp_enqueue_script( 'jquery-effects-fade' );
 			wp_enqueue_script( 'jquery-ui-draggable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
-			wp_enqueue_script( "plupload-handlers" );
-			wp_enqueue_script( "wp-plupload" );
-			wp_enqueue_script( "wp-util" );
-			wp_enqueue_script( "media-editor" );
+			wp_enqueue_script( 'plupload-handlers' );
+			wp_enqueue_script( 'wp-plupload' );
+			wp_enqueue_script( 'wp-util' );
+			wp_enqueue_script( 'media-editor' );
 			// include constructor
 			$this->enqueue_script( 'js-noty', 'admin/lib/jquery.noty.packaged.min.js' );
 			$this->enqueue_script( 'js-noty-layout', 'admin/lib/tm-topRight.noty.min.js' );
@@ -242,19 +242,19 @@ class Media extends Core {
 					$this->enqueue_script( 'registry-factory', 'lib/registry-factory.js' );
 					// include admin script
 					$this->enqueue_script( 'common', 'admin/common.js' );
-					wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'admin_lang', require(TM_PG_CONFIGS_PATH . 'language-admin-js.php') );
-					wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'options', require(TM_PG_CONFIGS_PATH . 'options-js.php') );
+					wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'admin_lang', require( TM_PG_CONFIGS_PATH . 'language-admin-js.php' ) );
+					wp_localize_script( self::PREFIX . 'common', Core::PREFIX . 'options', require( TM_PG_CONFIGS_PATH . 'options-js.php' ) );
 					break;
 				case 'toplevel_page_tm_pg_media':
 					wp_enqueue_media();
 					$this->enqueue_script( 'photo-gallery', 'min/photo-gallery.min.js' );
-					wp_localize_script( self::PREFIX . 'photo-gallery', Core::PREFIX . 'admin_lang', require(TM_PG_CONFIGS_PATH . 'language-admin-js.php') );
-					wp_localize_script( self::PREFIX . 'photo-gallery', Core::PREFIX . 'options', require(TM_PG_CONFIGS_PATH . 'options-js.php') );
+					wp_localize_script( self::PREFIX . 'photo-gallery', Core::PREFIX . 'admin_lang', require( TM_PG_CONFIGS_PATH . 'language-admin-js.php' ) );
+					wp_localize_script( self::PREFIX . 'photo-gallery', Core::PREFIX . 'options', require( TM_PG_CONFIGS_PATH . 'options-js.php' ) );
 					break;
 				case 'tm-photo-gallery_page_gallery':
 					$this->enqueue_script( 'gallery', 'min/gallery.min.js' );
-					wp_localize_script( self::PREFIX . 'gallery', Core::PREFIX . 'admin_lang', require(TM_PG_CONFIGS_PATH . 'language-admin-js.php') );
-					wp_localize_script( self::PREFIX . 'gallery', Core::PREFIX . 'options', require(TM_PG_CONFIGS_PATH . 'options-js.php') );
+					wp_localize_script( self::PREFIX . 'gallery', Core::PREFIX . 'admin_lang', require( TM_PG_CONFIGS_PATH . 'language-admin-js.php' ) );
+					wp_localize_script( self::PREFIX . 'gallery', Core::PREFIX . 'options', require( TM_PG_CONFIGS_PATH . 'options-js.php' ) );
 					break;
 			}
 		}
@@ -262,7 +262,7 @@ class Media extends Core {
 
 	/**
 	 * Add admin css
-	 * 
+	 *
 	 * @param type $hook
 	 */
 	private function add_admin_css( $hook ) {
@@ -300,7 +300,7 @@ class Media extends Core {
 	 * @param array $params - params.
 	 */
 	private function add_shortcode_js( array $params ) {
-		if ( !empty( $params['id'] ) ) {
+		if ( ! empty( $params['id'] ) ) {
 			// include global scripts
 			$this->enqueue_script( 'registry-factory', 'lib/registry-factory.js' );
 			$this->enqueue_script( 'lightgallery', 'frontend/lib/lightgallery.min.js' );
@@ -346,7 +346,7 @@ class Media extends Core {
 			'supports'	 => array( 'title', 'editor', 'comments', 'page-attributes' ),
 			'slug'		 => self::$post_types['gallery'],
 			'taxonomies' => array( self::$tax_names['category'], self::$tax_names['tag'] ),
-			'public'	 => false
+			'public'	 => false,
 		)
 		);
 	}
@@ -384,7 +384,7 @@ class Media extends Core {
 	 */
 	public function template_include( $template ) {
 		global $post;
-		if ( !empty( $post ) && is_single() && in_array( get_post_type(), self::$post_types ) ) {
+		if ( ! empty( $post ) && is_single() && in_array( get_post_type(), self::$post_types ) ) {
 			if ( basename( $template ) != "single-{$post->post_type}.php" ) {
 				$path = TM_PG_TEMPLATES_PATH . "single-{$post->post_type}.php";
 				if ( file_exists( $path ) ) {
@@ -403,8 +403,8 @@ class Media extends Core {
 			$post_parent = get_query_var( 'post_parent' );
 			$set_parent	 = get_query_var( 'set_parent' );
 			if ( $post_parent || $set_parent ) {
-				update_option( Core::PREFIX . "post_parent", $post_parent );
-				update_option( Core::PREFIX . "set_parent", $set_parent );
+				update_option( Core::PREFIX . 'post_parent', $post_parent );
+				update_option( Core::PREFIX . 'set_parent', $set_parent );
 				$name		 = get_query_var( 'name' );
 				$post_type	 = get_query_var( 'post_type' );
 				wp_redirect( home_url( "/$post_type/$name/" ) );
@@ -459,7 +459,7 @@ class Media extends Core {
 			$version = $this->get_version();
 		}
 		// check url path
-		if ( !preg_match( '/^http/', $path ) ) {
+		if ( ! preg_match( '/^http/', $path ) ) {
 			$path = TM_PG_JS_URL . $path;
 		}
 		return wp_enqueue_script( self::PREFIX . $name, $path, $parent, $version, true );
@@ -477,10 +477,9 @@ class Media extends Core {
 			$version = $this->get_version();
 		}
 		// check url path
-		if ( !preg_match( '/^http/', $path ) ) {
+		if ( ! preg_match( '/^http/', $path ) ) {
 			$path = TM_PG_CSS_URL . $path;
 		}
 		return wp_enqueue_style( self::PREFIX . $name, $path, $parent, $version );
 	}
-
 }

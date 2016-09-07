@@ -1,7 +1,7 @@
 <?php
 /**
  * Frontend grid pagination
- * 
+ *
  * @package templates/frontend/grid/actions
  */
 ?>

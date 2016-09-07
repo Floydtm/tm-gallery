@@ -1,7 +1,7 @@
 <?php
 /**
  * Focal point
- * 
+ *
  * @package classes/models
  */
 
@@ -19,14 +19,14 @@ class Focal_point extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -38,7 +38,7 @@ class Focal_point extends Model {
 
 	/**
 	 * Crop image by focal poin and view size
-	 * 
+	 *
 	 * @global type $_wp_additional_image_sizes
 	 * @param type $id
 	 * @param type $size
@@ -50,11 +50,11 @@ class Focal_point extends Model {
 		$filePath	 = get_attached_file( $id );
 		global $_wp_additional_image_sizes;
 		$result		 = false;
-		$viewWidth	 = $_wp_additional_image_sizes[$size]['width'];
-		$viewHeight	 = $_wp_additional_image_sizes[$size]['height'];
+		$viewWidth	 = $_wp_additional_image_sizes[ $size ]['width'];
+		$viewHeight	 = $_wp_additional_image_sizes[ $size ]['height'];
 		// get wp image object
 		$image		 = wp_get_image_editor( $filePath );
-		if ( !is_wp_error( $image ) ) {
+		if ( ! is_wp_error( $image ) ) {
 			$imd_size = $image->get_size();
 			if ( $imd_size['width'] > $viewWidth || $imd_size['height'] > $viewHeight ) {
 				$thumbPath	 = $this( 'image' )->get_thumbnail_path( $id, $size );
@@ -67,7 +67,7 @@ class Focal_point extends Model {
 				} else {
 					$view_prop = $viewWidth / $viewHeight;
 				}
-				if ( !$focal_point || ($org_prop == $view_prop) ) {
+				if ( ! $focal_point || ($org_prop == $view_prop) ) {
 					$image->resize( $viewWidth, $viewHeight, true );
 				} else {
 					if ( $view_prop > $org_prop ) {
@@ -104,10 +104,10 @@ class Focal_point extends Model {
 				$image->set_quality( 80 );
 				// save image
 				$save_data = $image->save( $thumbPath );
-				if ( !is_wp_error( $save_data ) ) {
+				if ( ! is_wp_error( $save_data ) ) {
 					unset( $save_data['path'] );
 					// update attachment meta data
-					$metadata['sizes'][$size]	 = $save_data;
+					$metadata['sizes'][ $size ]	 = $save_data;
 					$result						 = wp_update_attachment_metadata( $id, $metadata );
 				} else {
 					FB::warn( $save_data, 'error' );
@@ -126,7 +126,7 @@ class Focal_point extends Model {
 		$success		 = false;
 		unset( $params['action'] );
 		unset( $params['controller'] );
-		unset( $params[self::PREFIX . 'action'] );
+		unset( $params[ self::PREFIX . 'action' ] );
 		// callculate new point
 		$point			 = new Point( $params['x'], $params['y'] );
 		$size			 = new Size( $params['width'], $params['height'] );
@@ -142,7 +142,7 @@ class Focal_point extends Model {
 		global $_wp_additional_image_sizes;
 		foreach ( $_wp_additional_image_sizes as $key => $size ) {
 			if ( $key != 'copy' && $size ) {
-				unset( $_wp_additional_image_sizes[$key] );
+				unset( $_wp_additional_image_sizes[ $key ] );
 			}
 		}
 		wp_update_attachment_metadata( $params['id'], wp_generate_attachment_metadata( $params['id'], $filePath ) );
@@ -156,10 +156,10 @@ class Focal_point extends Model {
 
 	/**
 	 * Calculate focal point
-	 * 
-	 * @param type $id
+	 *
+	 * @param type  $id
 	 * @param Point $point
-	 * @param Size $size
+	 * @param Size  $size
 	 * @return type
 	 */
 	public function calculate_focal_point( $id, Point $point, Size $size ) {
@@ -171,10 +171,10 @@ class Focal_point extends Model {
 
 	/**
 	 * Rotate point
-	 * 
+	 *
 	 * @param Point $point
-	 * @param type $angle
-	 * @param Size $size
+	 * @param type  $angle
+	 * @param Size  $size
 	 * @return Point
 	 */
 	public function rotatePoint( Point $point, $angle, Size $size ) {
@@ -187,12 +187,11 @@ class Focal_point extends Model {
 
 	/**
 	 * Convert to radian
-	 *  
+	 *
 	 * @param type $angle
 	 * @return type
 	 */
 	private function angleToRadian( $angle ) {
 		return $angle * (pi() / 180);
 	}
-
 }

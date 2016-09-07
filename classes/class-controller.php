@@ -19,7 +19,8 @@ class Controller extends Core {
 	 * Construct
 	 */
 	public function __construct() {
-		/*if ( !function_exists( 'wp_get_current_user' ) ) {
+		/*
+ if ( !function_exists( 'wp_get_current_user' ) ) {
 			include_once ABSPATH . 'wp-includes/pluggable.php';
 		}*/
 	}
@@ -57,12 +58,11 @@ class Controller extends Core {
 	 * @param array $data - data
 	 */
 	public function send_json( $data ) {
-		if ( is_array( $data ) && isset( $data['success'] ) && !$data['success'] ) {
+		if ( is_array( $data ) && isset( $data['success'] ) && ! $data['success'] ) {
 			FB::error( $data, 'controler error' );
 			wp_send_json_error( $data );
 		} else {
 			wp_send_json_success( $data['data'] );
 		}
 	}
-
 }

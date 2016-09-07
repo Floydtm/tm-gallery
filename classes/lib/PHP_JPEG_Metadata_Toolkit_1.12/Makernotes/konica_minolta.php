@@ -212,18 +212,18 @@ function get_Minolta_Text_Value( $Exif_Tag, $Tag_Definitions_Name ) {
 				if ( array_key_exists( $i, ($GLOBALS['Minolta_Camera_Setting_Definitions'] ) ) === true ) {
 					// Setting is in definitions array
 					// Get some of the information from the settings definitions array
-					$tagname = $GLOBALS['Minolta_Camera_Setting_Definitions'][$i]['Name'];
+					$tagname = $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ]['Name'];
 					$units	 = '';
-					if ( array_key_exists( 'Units', $GLOBALS['Minolta_Camera_Setting_Definitions'][$i] ) ) {
-						$units = $GLOBALS['Minolta_Camera_Setting_Definitions'][$i]['Units'];
+					if ( array_key_exists( 'Units', $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ] ) ) {
+						$units = $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ]['Units'];
 					}
 					// Check what type of field the setting is, and process accordingly
-					if ( $GLOBALS['Minolta_Camera_Setting_Definitions'][$i]['Type'] == 'Lookup' ) {
+					if ( $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ]['Type'] == 'Lookup' ) {
 						// This is a lookup table field
 						// Check if the value read is in the lookup table
-						if ( array_key_exists( $value, $GLOBALS['Minolta_Camera_Setting_Definitions'][$i] ) ) {
+						if ( array_key_exists( $value, $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ] ) ) {
 							// Value is in the lookup table - Add it to the text
-							$output_str .= $tagname . ': ' . $GLOBALS['Minolta_Camera_Setting_Definitions'][$i][$value] . "\n";
+							$output_str .= $tagname . ': ' . $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ][ $value ] . "\n";
 						} else {
 							// Value is Not in the lookup table
 							// Add a message if the user has requested to see unknown tags
@@ -231,10 +231,10 @@ function get_Minolta_Text_Value( $Exif_Tag, $Tag_Definitions_Name ) {
 								$output_str .= $tagname . ": Unknown Reserved Value $value\n";
 							}
 						}
-					} elseif ( $GLOBALS['Minolta_Camera_Setting_Definitions'][$i]['Type'] == 'Numeric' ) {
+					} elseif ( $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ]['Type'] == 'Numeric' ) {
 						// This is a numeric type add it as is to the output, with units
 						$output_str .= $tagname . ": $value $units\n";
-					} elseif ( $GLOBALS['Minolta_Camera_Setting_Definitions'][$i]['Type'] == 'Special' ) {
+					} elseif ( $GLOBALS['Minolta_Camera_Setting_Definitions'][ $i ]['Type'] == 'Special' ) {
 						// This is a special setting, Process it according to the setting number
 						switch ( $i ) {
 							case 9:   // Apex Film Speed Value

@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller_Folder
- * 
+ *
  * @package classes/controllers
  */
 
@@ -16,14 +16,14 @@ class Controller_Folder extends Controller {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -86,7 +86,7 @@ class Controller_Folder extends Controller {
 		$result = $this( 'folder', true )->set_folder_content( array(
 			'id'	 => $_POST['id'],
 			'value'	 => $_POST['value'],
-			'action' => $_POST[self::ACTION]
+			'action' => $_POST[ self::ACTION ],
 		) );
 		$this->send_json( $result );
 	}
@@ -98,9 +98,8 @@ class Controller_Folder extends Controller {
 		$result = $this( 'folder', true )->set_folder_content( array(
 			'id'	 => $_POST['id'],
 			'value'	 => $_POST['value'],
-			'action' => $_POST[self::ACTION]
+			'action' => $_POST[ self::ACTION ],
 		) );
 		$this->send_json( $result );
 	}
-
 }

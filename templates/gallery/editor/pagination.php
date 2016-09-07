@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery editor pagination
- * 
+ *
  * @package templates/gallery/editor
  */
 ?>

@@ -2,7 +2,7 @@
 
 /**
  * Album class
- * 
+ *
  * @package classes/models
  */
 
@@ -17,14 +17,14 @@ class Album extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 *  
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -49,13 +49,13 @@ class Album extends Model {
 			'order'			 => 'DESC',
 			'orderby'		 => 'date',
 			'posts_per_page' => -1,
-			'post__in'		 => !empty( $params['post__in'] ) ? $params['post__in'] : array(),
+			'post__in'		 => ! empty( $params['post__in'] ) ? $params['post__in'] : array(),
 		);
-		if ( !empty( $params['fields'] ) ) {
+		if ( ! empty( $params['fields'] ) ) {
 			$args['fields'] = $params['fields'];
 		}
 		// get albums by attachment ID
-		if ( !empty( $params['img'] ) ) {
+		if ( ! empty( $params['img'] ) ) {
 			$args['meta_query'] = array(
 				array(
 					'key'	 => self::$post_types['album'],
@@ -63,7 +63,7 @@ class Album extends Model {
 				),
 			);
 		}
-		if ( !empty( $params['set'] ) ) {
+		if ( ! empty( $params['set'] ) ) {
 			$args['meta_query'] = array(
 				array(
 					'key'	 => self::$post_types['set'],
@@ -77,10 +77,10 @@ class Album extends Model {
 	/**
 	 * Get albums
 	 *
-	 * @param array $params['set_id'] - set id.
-	 * @param array $params['img_type'] - image type.
-	 * @param type  $params['img_count'] - images type.
-	 * @param boolean  $params['show_all'] - show_all.
+	 * @param array   $params['set_id'] - set id.
+	 * @param array   $params['img_type'] - image type.
+	 * @param type    $params['img_count'] - images type.
+	 * @param boolean $params['show_all'] - show_all.
 	 *
 	 * @return type
 	 */
@@ -89,27 +89,27 @@ class Album extends Model {
 		$album_args			 = $this( 'album' )->get_content_params( array( 'fields' => 'ids' ) );
 		$ids				 = get_posts( $album_args );
 		$albums				 = array();
-		if ( !empty( $ids ) ) {
+		if ( ! empty( $ids ) ) {
 			foreach ( $ids as $key => $id ) {
 				if ( isset( $params['show_all'] ) ) {
-					$albums[$key] = $this( 'media' )->get_content( $id, array(
+					$albums[ $key ] = $this( 'media' )->get_content( $id, array(
 						'cover_img',
 						'tags',
 						'categories',
 						'sets',
 						'img_count',
-						'cover_id'
+						'cover_id',
 					) );
 				} else {
 					$set = $this( 'set' )->get_set_by_album_id( $id );
 					if ( $set == $params['set_id'] ) {
-						$albums[$key] = $this( 'media' )->get_content( $id, array(
+						$albums[ $key ] = $this( 'media' )->get_content( $id, array(
 							'cover_img',
 							'tags',
 							'categories',
 							'sets',
 							'img_count',
-							'cover_id'
+							'cover_id',
 						) );
 					}
 				}
@@ -121,7 +121,7 @@ class Album extends Model {
 
 	/**
 	 * Save img count
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function get_img_count( $id ) {
@@ -137,9 +137,9 @@ class Album extends Model {
 	public function get_cover_img( $id, $type ) {
 		$image_id	 = $this( 'folder' )->get_cover( $id );
 		$image		 = array();
-		if ( !empty( $image_id ) ) {
+		if ( ! empty( $image_id ) ) {
 			$post = get_post( $image_id, ARRAY_A );
-			if ( !empty( $post ) ) {
+			if ( ! empty( $post ) ) {
 				$image = image_downsize( $image_id, $type );
 			} else {
 				$image = $this( 'folder' )->render_cover( $id, 'album', $type );
@@ -159,5 +159,4 @@ class Album extends Model {
 	public function get_content_ids( $id ) {
 		return get_posts( $this( 'media' )->get_content_params( array( 'album' => $id, 'fields' => 'ids' ) ) );
 	}
-
 }

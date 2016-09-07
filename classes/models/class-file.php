@@ -1,7 +1,7 @@
 <?php
 /**
  * File class
- * 
+ *
  * @package classes/models
  */
 
@@ -17,21 +17,21 @@ class File extends Model {
 
 	/**
 	 * Allowed image array
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $allowed_image_array;
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -43,13 +43,13 @@ class File extends Model {
 
 	/**
 	 * Get
-	 * 
+	 *
 	 * @param type $name
 	 * @return type
 	 * @throws \Exception
 	 */
 	public function __get( $name ) {
-		if ( !empty( $this->$name ) ) {
+		if ( ! empty( $this->$name ) ) {
 			return $this->$name;
 		} else {
 			throw new \Exception( 'Undefined property ' . $name . ' referenced.' );
@@ -85,7 +85,7 @@ class File extends Model {
 		global $_wp_additional_image_sizes;
 		foreach ( $_wp_additional_image_sizes as $key => $size ) {
 			if ( $key != 'copy' && $size ) {
-				unset( $_wp_additional_image_sizes[$key] );
+				unset( $_wp_additional_image_sizes[ $key ] );
 			}
 		}
 		$attachment_metadata = wp_generate_attachment_metadata( $post_ID, $image );
@@ -118,7 +118,7 @@ class File extends Model {
 	 * @return bool
 	 */
 	public function create_dir( $path, $chmod = '0666', $recursive = false ) {
-		if ( !is_dir( $path ) ) {
+		if ( ! is_dir( $path ) ) {
 			$return = @mkdir( $path, $chmod, $recursive );
 		} else {
 			$return = false;
@@ -140,7 +140,7 @@ class File extends Model {
 			foreach ( $name as $item ) {
 				$filePath			 = ABSPATH . 'wp-content/plugins/' . $item . '/' . $item . '.php';
 				$pluginObject		 = get_plugin_data( $filePath );
-				$versions["$item"]	 = $pluginObject['Version'];
+				$versions[ "$item" ]	 = $pluginObject['Version'];
 			}
 			$return = $versions;
 		} else {
@@ -164,7 +164,7 @@ class File extends Model {
 			global $_wp_additional_image_sizes;
 			foreach ( $_wp_additional_image_sizes as $key => $size ) {
 				if ( $size && $key != 'copy' ) {
-					unset( $_wp_additional_image_sizes[$key] );
+					unset( $_wp_additional_image_sizes[ $key ] );
 				}
 			}
 			$wp_meta = wp_generate_attachment_metadata( $id, $file );
@@ -182,7 +182,7 @@ class File extends Model {
 	public function array_to_xml( $data, &$xml ) {
 		foreach ( $data as $key => $value ) {
 			if ( is_array( $value ) ) {
-				if ( !is_numeric( $key ) ) {
+				if ( ! is_numeric( $key ) ) {
 					$sub_node = $xml->addChild( "$key" );
 					$this->array_to_xml( $value, $sub_node );
 				} else {
@@ -190,7 +190,7 @@ class File extends Model {
 					$this->array_to_xml( $value, $sub_node );
 				}
 			} else {
-				if ( !empty( $value ) ) {
+				if ( ! empty( $value ) ) {
 					$xml->addChild( "$key", htmlspecialchars( "$value" ) );
 				} else {
 					$xml->addChild( "$key", '0' );
@@ -201,7 +201,7 @@ class File extends Model {
 
 	/**
 	 * Update attachment data
-	 * 
+	 *
 	 * @param type $imageMeta
 	 * @param type $id
 	 * @param type $metaData
@@ -210,13 +210,13 @@ class File extends Model {
 	 */
 	public function update_attachment_data( $imageMeta, $id, $metaData, $name,
 										 $file ) {
-		if ( !empty( $imageMeta ) ) {
+		if ( ! empty( $imageMeta ) ) {
 			$postUpdate = array( 'ID' => $id );
-			if ( !empty( $imageMeta['title'] ) ) {
+			if ( ! empty( $imageMeta['title'] ) ) {
 				// Post title
 				$postUpdate['post_title'] = trim( $imageMeta['title'] );
 			}
-			if ( !empty( $imageMeta['caption'] ) ) {
+			if ( ! empty( $imageMeta['caption'] ) ) {
 				// Post content
 				$postUpdate['post_content'] = trim( $imageMeta['caption'] );
 			}
@@ -236,19 +236,19 @@ class File extends Model {
 				$this( 'term' )->set_post_terms( array(
 					'id'	 => $id,
 					'value'	 => $tags,
-					'type'	 => self::$tax_names['tag']
+					'type'	 => self::$tax_names['tag'],
 				) );
 			}
 
 			$this->update_post_meta( $id, 'captured', $postUpdate['captured'] );
 			$this->update_post_meta( $id, 'uploaded', time() );
 			// add image to album or set
-			if ( !empty( $_REQUEST['folder'] ) ) {
+			if ( ! empty( $_REQUEST['folder'] ) ) {
 				$folder = get_post( $_REQUEST['folder'] );
 				$this( 'folder' )->set_folder_content( array(
 					'id'	 => $folder->ID,
 					'value'	 => $id,
-					'action' => 'add_to_folder'
+					'action' => 'add_to_folder',
 				) );
 			}
 		}
@@ -263,7 +263,7 @@ class File extends Model {
 	 * @return \WP_Error
 	 */
 	function upload_file( $file, $parent = 0, $time = false ) {
-		if ( !$time ) {
+		if ( ! $time ) {
 			$time = current_time( 'mysql' );
 		}
 		$uploads = wp_upload_dir( $time );
@@ -271,7 +271,7 @@ class File extends Model {
 		$url	 = $uploads['url'] . '/' . $file['name'];
 		if ( preg_match( '/^image/i', $file['type'] ) ) {
 			$image = wp_get_image_editor( $file['tmp_name'] );
-			if ( !is_wp_error( $image ) ) {
+			if ( ! is_wp_error( $image ) ) {
 				// save image
 				$data		 = $image->save( $path );
 				$mime_type	 = $data['mime-type'];
@@ -334,7 +334,7 @@ class File extends Model {
 					if ( ($key == '@attributes') && ($key) ) {
 						$result = $res;
 					} else {
-						$result[$key] = $res;
+						$result[ $key ] = $res;
 					}
 				}
 			}
@@ -356,7 +356,7 @@ class File extends Model {
 			$params['folder'] = 0;
 		}
 		$uploader_data['max_upload_size'] = wp_max_upload_size();
-		if ( !$uploader_data['max_upload_size'] ) {
+		if ( ! $uploader_data['max_upload_size'] ) {
 			$uploader_data['max_upload_size'] = 0;
 		}
 		$post_params = array(
@@ -365,7 +365,7 @@ class File extends Model {
 			'controller'	 => 'image',
 			'action'		 => 'tm_pg',
 			'tm_pg_action'	 => 'upload_attachment',
-			'tm_pg_nonce'	 => wp_create_nonce( 'tm_pg_nonce' )
+			'tm_pg_nonce'	 => wp_create_nonce( 'tm_pg_nonce' ),
 		);
 
 		$plupload_init = array(
@@ -384,15 +384,14 @@ class File extends Model {
 		$uploader_data['plupload_init']	 = apply_filters( 'plupload_init', $plupload_init );
 		// Verify size is an int. If not return default value.
 		$uploader_data['large_size_h']	 = absint( get_option( 'large_size_h' ) );
-		if ( !$uploader_data['large_size_h'] ) {
+		if ( ! $uploader_data['large_size_h'] ) {
 			$uploader_data['large_size_h'] = 1024;
 		}
 		$uploader_data['large_size_w'] = absint( get_option( 'large_size_w' ) );
-		if ( !$uploader_data['large_size_w'] ) {
+		if ( ! $uploader_data['large_size_w'] ) {
 			$uploader_data['large_size_w'] = 1024;
 		}
 
 		return $uploader_data;
 	}
-
 }

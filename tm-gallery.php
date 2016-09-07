@@ -53,14 +53,14 @@ class TM_Photo_Gallery {
 
 	/**
 	 * instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * init
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -82,7 +82,7 @@ class TM_Photo_Gallery {
 	 * On activation plugin
 	 */
 	public static function on_activation() {
-		if ( !current_user_can( 'activate_plugins' ) ) {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
 		// do_action('admin_notices');
@@ -94,7 +94,7 @@ class TM_Photo_Gallery {
 	 * On deactivation plugin
 	 */
 	public static function on_deactivation() {
-		if ( !current_user_can( 'activate_plugins' ) ) {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
 		Core::get_instance()->deactivate_plugin();
@@ -105,10 +105,10 @@ class TM_Photo_Gallery {
 	 * On uninstall
 	 */
 	public static function on_uninstall() {
-		if ( !current_user_can( 'activate_plugins' ) ) {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
-		self::include_all();	
+		self::include_all();
 		Core::get_instance()->delete_plugin();
 		flush_rewrite_rules();
 	}
@@ -182,5 +182,4 @@ class TM_Photo_Gallery {
 		 */
 		require_once TM_PG_CLASSES_PATH . 'class-structure.php';
 	}
-
 }

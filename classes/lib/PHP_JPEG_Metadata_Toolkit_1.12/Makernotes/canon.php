@@ -217,11 +217,11 @@ function get_Canon_Text_Value( $Exif_Tag, $Tag_Definitions_Name ) {
 							$output_str .= "Flash FP sync enabled\n";
 						}
 					} elseif ( array_key_exists( $offset, $GLOBALS['Canon_Camera_Settings_1_Tag_Values'] ) ) {
-						if ( array_key_exists( $value, $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][$offset] ) ) {
-							$output_str .= $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][$offset]['Name'] . ': ' . $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][$offset][$value] . "\n";
+						if ( array_key_exists( $value, $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][ $offset ] ) ) {
+							$output_str .= $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][ $offset ]['Name'] . ': ' . $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][ $offset ][ $value ] . "\n";
 						} else {
 							if ( $GLOBALS['HIDE_UNKNOWN_TAGS'] == false ) {
-								$output_str .= $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][$offset]['Name'] . ": Unknown Value ($value)\n";
+								$output_str .= $GLOBALS['Canon_Camera_Settings_1_Tag_Values'][ $offset ]['Name'] . ": Unknown Value ($value)\n";
 							}
 						}
 					} else {
@@ -265,11 +265,11 @@ function get_Canon_Text_Value( $Exif_Tag, $Tag_Definitions_Name ) {
 					} elseif ( $offset == 19 ) {
 						$output_str .= "Subject distance: $value (units either mm or cm)\n";
 					} elseif ( array_key_exists( $offset, $GLOBALS['Canon_Camera_Settings_2_Tag_Values'] ) ) {
-						if ( array_key_exists( $value, $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][$offset] ) ) {
-							$output_str .= $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][$offset]['Name'] . ': ' . $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][$offset][$value] . "\n";
+						if ( array_key_exists( $value, $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][ $offset ] ) ) {
+							$output_str .= $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][ $offset ]['Name'] . ': ' . $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][ $offset ][ $value ] . "\n";
 						} else {
 							if ( $GLOBALS['HIDE_UNKNOWN_TAGS'] == false ) {
-								$output_str .= $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][$offset]['Name'] . ": Unknown Value ($value)\n";
+								$output_str .= $GLOBALS['Canon_Camera_Settings_2_Tag_Values'][ $offset ]['Name'] . ": Unknown Value ($value)\n";
 							}
 						}
 					} else {
@@ -308,13 +308,13 @@ function get_Canon_Text_Value( $Exif_Tag, $Tag_Definitions_Name ) {
 				if ( array_key_exists( $funcno, $GLOBALS['Canon_Custom_Functions_Tag_Values'] ) ) {
 					// Function Exists in lookup table,
 					// Check if value exists for this function in the lookup table
-					if ( array_key_exists( $funcval, $GLOBALS['Canon_Custom_Functions_Tag_Values'][$funcno] ) ) {
+					if ( array_key_exists( $funcval, $GLOBALS['Canon_Custom_Functions_Tag_Values'][ $funcno ] ) ) {
 						// Value exists - Add it to the output text
-						$output_str .= $GLOBALS['Canon_Custom_Functions_Tag_Values'][$funcno]['Name'] . ': ' . $GLOBALS['Canon_Custom_Functions_Tag_Values'][$funcno][$funcval] . "\n";
+						$output_str .= $GLOBALS['Canon_Custom_Functions_Tag_Values'][ $funcno ]['Name'] . ': ' . $GLOBALS['Canon_Custom_Functions_Tag_Values'][ $funcno ][ $funcval ] . "\n";
 					} else {
 						if ( $GLOBALS['HIDE_UNKNOWN_TAGS'] == false ) {
 							// Value doesn't exist - Add a message to the output text
-							$output_str .= $GLOBALS['Canon_Custom_Functions_Tag_Values'][$funcno]['Name'] . ": Unknown Value ($value)\n";
+							$output_str .= $GLOBALS['Canon_Custom_Functions_Tag_Values'][ $funcno ]['Name'] . ": Unknown Value ($value)\n";
 						}
 					}
 				} else {

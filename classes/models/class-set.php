@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Model Set class 
+ * Model Set class
  *
  * @package classes/models
  */
@@ -17,14 +17,14 @@ class Set extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -44,7 +44,7 @@ class Set extends Model {
 	public function get_set_by_album_id( $id ) {
 		$return	 = 0;
 		$terms	 = get_the_terms( $id, self::$tax_names['set'] );
-		if ( !empty( $terms ) && !empty( $terms[0]->name ) ) {
+		if ( ! empty( $terms ) && ! empty( $terms[0]->name ) ) {
 			$return = $terms[0]->name;
 		}
 		return $return;
@@ -52,7 +52,7 @@ class Set extends Model {
 
 	/**
 	 * Get content query parameters
-	 * 
+	 *
 	 * @param type $params
 	 * @return type
 	 */
@@ -63,11 +63,11 @@ class Set extends Model {
 			'order'			 => 'DESC',
 			'orderby'		 => 'date',
 			'posts_per_page' => -1,
-			'fields'		 => !empty( $params['fields'] ) ? $params['fields'] : '',
-			'post__in'		 => !empty( $params['post__in'] ) ? $params['post__in'] : array(),
+			'fields'		 => ! empty( $params['fields'] ) ? $params['fields'] : '',
+			'post__in'		 => ! empty( $params['post__in'] ) ? $params['post__in'] : array(),
 		);
 		// get albums by attachment ID
-		if ( !empty( $params['img'] ) ) {
+		if ( ! empty( $params['img'] ) ) {
 			$args['meta_query'] = array(
 				array(
 					'key'	 => self::$post_types['set'],
@@ -80,7 +80,7 @@ class Set extends Model {
 
 	/**
 	 * Get img count
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function get_img_count( $id ) {
@@ -88,7 +88,7 @@ class Set extends Model {
 		$posts	 = get_post_meta( $id, self::$post_types['set'], false );
 		foreach ( $posts as $post_id ) {
 			$post = get_post( $post_id );
-			if ( !empty( $post ) ) {
+			if ( ! empty( $post ) ) {
 				switch ( $post->post_type ) {
 					case self::$post_types['image']:
 						$total++;
@@ -112,12 +112,12 @@ class Set extends Model {
 		// get albums
 		$albums	 = get_posts( $this( 'album' )->get_content_params( array(
 			'set'	 => $id,
-			'fields' => 'ids'
+			'fields' => 'ids',
 		) ) );
 		$images	 = get_posts( $this( 'media' )->get_content_params( array(
 			'set'	 => $id,
 			'fields' => 'ids',
-			'in_set' => true
+			'in_set' => true,
 		) ) );
 		return array_merge( $albums, $images );
 	}
@@ -131,14 +131,14 @@ class Set extends Model {
 		$ids		 = get_posts( $set_args );
 		// build sets
 		$sets		 = array();
-		if ( !empty( $ids ) ) {
+		if ( ! empty( $ids ) ) {
 			foreach ( $ids as $key => $id ) {
-				$sets[$key] = $this( 'media' )->get_content( $id, array(
+				$sets[ $key ] = $this( 'media' )->get_content( $id, array(
 					'cover_img',
 					'tags',
 					'categories',
 					'img_count',
-					'cover_id'
+					'cover_id',
 				) );
 			}
 		}
@@ -147,7 +147,7 @@ class Set extends Model {
 
 	/**
 	 * Get cover img
-	 * 
+	 *
 	 * @param type $id - set id.
 	 * @param type $type - thumbnail type.
 	 * @return type
@@ -155,9 +155,9 @@ class Set extends Model {
 	public function get_cover_img( $id, $type ) {
 		$post_id = $this( 'folder' )->get_cover( $id );
 		$image	 = false;
-		if ( !empty( $post_id ) ) {
+		if ( ! empty( $post_id ) ) {
 			$post = get_post( $post_id, ARRAY_A );
-			if ( !empty( $post ) ) {
+			if ( ! empty( $post ) ) {
 				if ( $post['post_type'] == self::$post_types['album'] ) {
 					$image = $this( 'album' )->get_cover_img( $post_id, $type );
 				} else {
@@ -171,5 +171,4 @@ class Set extends Model {
 		}
 		return $image;
 	}
-
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller Media
- * 
+ *
  * @package classes/controllers
  */
 
@@ -17,14 +17,14 @@ class Controller_Media extends Controller {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -54,7 +54,7 @@ class Controller_Media extends Controller {
 		$posts							 = get_posts( $this( 'media' )->get_content_params( array(
 			'count'	 => $_post['count'],
 			'step'	 => $_post['step'],
-			'fields' => 'ids'
+			'fields' => 'ids',
 		) ) );
 		$data							 = $this( 'media' )->get_content_data( array(
 			'posts'	 => $posts,
@@ -88,7 +88,7 @@ class Controller_Media extends Controller {
 	public function action_uploader() {
 		$up_data		 = array(
 			'nonce'			 => $_POST['nonce'],
-			'uploader_data'	 => $this( 'file' )->init_uploader_data( $_POST )
+			'uploader_data'	 => $this( 'file' )->init_uploader_data( $_POST ),
 		);
 		$data['html']	 = $this->get_view()->render_html( 'photo-gallery/uploader', $up_data, false );
 		$this->send_json( $this( 'model' )->get_arr( $data, true ) );
@@ -115,7 +115,7 @@ class Controller_Media extends Controller {
 	}
 
 	/**
-	 * Action load item 
+	 * Action load item
 	 */
 	public function action_load_data() {
 		if ( empty( $_POST['ids'] ) ) {
@@ -125,7 +125,7 @@ class Controller_Media extends Controller {
 		$posts	 = array();
 		foreach ( $ids as $id ) {
 			$post = $this( 'media' )->get_content( $id );
-			if ( !empty( $_POST['parent'] ) && empty( $post ) ) {
+			if ( ! empty( $_POST['parent'] ) && empty( $post ) ) {
 				$this( 'folder' )->set_folder_content( array(
 					'id'	 => $_POST['parent'],
 					'action' => 'delete_from_folder',
@@ -137,5 +137,4 @@ class Controller_Media extends Controller {
 
 		$this->send_json( $this( 'model' )->get_arr( $posts, true ) );
 	}
-
 }

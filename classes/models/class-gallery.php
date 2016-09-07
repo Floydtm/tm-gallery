@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery model
- * 
+ *
  * @package classes\models
  */
 
@@ -17,14 +17,14 @@ class Gallery extends Model {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -43,7 +43,7 @@ class Gallery extends Model {
 
 	/**
 	 * Get gallereies
-	 * 
+	 *
 	 * @param type $params
 	 * @return type
 	 */
@@ -51,7 +51,7 @@ class Gallery extends Model {
 		// get all galleries
 		$args	 = $this->get_content_params( $params );
 		$posts	 = get_posts( $args );
-		if ( !empty( $posts ) ) {
+		if ( ! empty( $posts ) ) {
 			// get galleries by params
 			$return = $this->get_content_data( array( 'posts' => $posts ) );
 		} else {
@@ -71,13 +71,13 @@ class Gallery extends Model {
 			if ( is_array( $ids ) ) {
 				foreach ( $ids as $id ) {
 					$post = get_post( $id );
-					if ( !empty( $post ) ) {
-						$posts[$id] = $post;
+					if ( ! empty( $post ) ) {
+						$posts[ $id ] = $post;
 					}
 				}
 				$posts = $this->get_content_data( array( 'posts' => $posts ) );
 			} else {
-				$posts[$ids] = get_post( $ids );
+				$posts[ $ids ] = get_post( $ids );
 				$posts		 = $this->get_content_data( array( 'posts' => $posts ) );
 			}
 			return $posts['data'];
@@ -95,15 +95,15 @@ class Gallery extends Model {
 		$success = true;
 		$this->delete_post_meta( $params['id'], 'terms' );
 		$status	 = $this->update_post_meta( $params['id'], 'terms', $params['content'] );
-		if ( !empty( $params['grid'] ) ) {
+		if ( ! empty( $params['grid'] ) ) {
 			$this->delete_post_meta( $params['id'], 'grid' );
 			$this->update_post_meta( $params['id'], 'grid', $params['grid'] );
 		}
-		if ( !empty( $params['filter'] ) ) {
+		if ( ! empty( $params['filter'] ) ) {
 			$this->delete_post_meta( $params['id'], 'filter' );
 			$this->update_post_meta( $params['id'], 'filter', $params['filter'] );
 		}
-		if ( !empty( $params['pagination'] ) ) {
+		if ( ! empty( $params['pagination'] ) ) {
 			$this->delete_post_meta( $params['id'], 'pagination' );
 			$this->update_post_meta( $params['id'], 'pagination', $params['pagination'] );
 		}
@@ -124,13 +124,13 @@ class Gallery extends Model {
 	public function post_gallery( $params ) {
 		$return	 = array();
 		$args	 = array(
-			'ID'			 => !empty( $params['id'] ) ? $params['id'] : null,
+			'ID'			 => ! empty( $params['id'] ) ? $params['id'] : null,
 			'post_type'		 => self::$post_types['gallery'],
 			'post_title'	 => $params['title'],
 			'post_author'	 => get_current_user_id(),
 			'post_status'	 => 'publish',
 		);
-		$id		 = !empty( $params['id'] ) ? wp_update_post( $args ) : wp_insert_post( $args, true );
+		$id		 = ! empty( $params['id'] ) ? wp_update_post( $args ) : wp_insert_post( $args, true );
 		$success = is_wp_error( $id ) ? false : true;
 		if ( $success ) {
 			$gallery = new Single_Gallery( $id, false );
@@ -147,7 +147,7 @@ class Gallery extends Model {
 	 * @return array
 	 */
 	public function get_content_params( $params = array() ) {
-		if ( !empty( $params['type'] ) ) {
+		if ( ! empty( $params['type'] ) ) {
 			switch ( $params['type'] ) {
 				case 'trash':
 					$params['post_status']	 = 'trash';
@@ -159,11 +159,11 @@ class Gallery extends Model {
 		}
 		$args = array(
 			'post_type'		 => self::$post_types['gallery'],
-			'post_status'	 => !empty( $params['post_status'] ) ? $params['post_status'] : array( 'publish', 'draft' ),
-			'order'			 => !empty( $params['order'] ) ? $params['order'] : 'DESC',
-			'orderby'		 => !empty( $params['orderby'] ) ? $params['orderby'] : 'date',
+			'post_status'	 => ! empty( $params['post_status'] ) ? $params['post_status'] : array( 'publish', 'draft' ),
+			'order'			 => ! empty( $params['order'] ) ? $params['order'] : 'DESC',
+			'orderby'		 => ! empty( $params['orderby'] ) ? $params['orderby'] : 'date',
 			'posts_per_page' => -1,
-			'date_query'	 => !empty( $params['year'] ) && !empty( $params['month'] ) ? array( 'year' => $params['year'], 'month' => $params['month'] ) : false,
+			'date_query'	 => ! empty( $params['year'] ) && ! empty( $params['month'] ) ? array( 'year' => $params['year'], 'month' => $params['month'] ) : false,
 		);
 		if ( isset( $params['fields'] ) ) {
 			$args['fields'] = $params['fields'];
@@ -172,7 +172,7 @@ class Gallery extends Model {
 		if ( isset( $params['date_query'] ) ) {
 			// $args["suppress_filters"] = false;
 			foreach ( $params['date_query'] as $key => $value ) {
-				$args['date_query'][$key] = $value;
+				$args['date_query'][ $key ] = $value;
 			}
 		}
 		return $args;
@@ -189,9 +189,9 @@ class Gallery extends Model {
 	public function get_content_data( $params ) {
 		$return = array();
 		foreach ( $params['posts'] as $key => $post ) {
-			if ( !is_wp_error( $post ) ) {
+			if ( ! is_wp_error( $post ) ) {
 				$gallery		 = new Single_Gallery( $post->ID, false );
-				$return[$key]	 = get_object_vars( $gallery );
+				$return[ $key ]	 = get_object_vars( $gallery );
 			}
 		}
 		return $this->get_arr( $return, true );
@@ -199,7 +199,7 @@ class Gallery extends Model {
 
 	/**
 	 * Get pagination
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $name
 	 * @return type
@@ -207,8 +207,8 @@ class Gallery extends Model {
 	public function get_gallery_pagination( $id, $name = false ) {
 		$pagination	 = $this->get_post_meta( $id, 'pagination', true );
 		$return		 = false;
-		if ( !empty( $name ) ) {
-			$return = $pagination[$name];
+		if ( ! empty( $name ) ) {
+			$return = $pagination[ $name ];
 		} else {
 			$return = empty( $pagination ) ? array() : $pagination;
 		}
@@ -250,24 +250,23 @@ class Gallery extends Model {
 		$return			 = array();
 		$params['ids']	 = explode( ',', $params['ids'] );
 		foreach ( $params['ids'] as $id ) {
-			switch ( $params[self::ACTION] ) {
+			switch ( $params[ self::ACTION ] ) {
 				case 'public':
 					$success	 = wp_untrash_post( $id );
 					$gallery	 = new Single_Gallery( $id, false );
-					$return[$id] = get_object_vars( $gallery );
+					$return[ $id ] = get_object_vars( $gallery );
 					break;
 				case 'trash':
 					$success	 = wp_trash_post( $id );
 					$gallery	 = new Single_Gallery( $id, false );
-					$return[$id] = get_object_vars( $gallery );
+					$return[ $id ] = get_object_vars( $gallery );
 					break;
 				case 'delete':
 					$success	 = true;
-					$return[$id] = $this( 'media' )->delete_post( array( 'id' => $id ) );
+					$return[ $id ] = $this( 'media' )->delete_post( array( 'id' => $id ) );
 					break;
 			}
 		}
 		return $this->get_arr( $return, $success );
 	}
-
 }

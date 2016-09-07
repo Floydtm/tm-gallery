@@ -1,7 +1,7 @@
 <?php
 /**
  * Widget module
- * 
+ *
  * @package classes/modules
  */
 
@@ -16,14 +16,14 @@ class Widget extends Module {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -43,5 +43,4 @@ class Widget extends Module {
 	public function register() {
 		register_widget( 'tm_photo_gallery\classes\widgets\Gallery_widget' );
 	}
-
 }

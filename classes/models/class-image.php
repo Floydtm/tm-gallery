@@ -46,7 +46,7 @@ class Image extends Model {
 	 * Construct
 	 */
 	public function __construct() {
-		if ( !self::$sizes ) {
+		if ( ! self::$sizes ) {
 			self::$sizes = include TM_PG_CONFIGS_PATH . 'img-sizes.php';
 		}
 	}
@@ -69,7 +69,7 @@ class Image extends Model {
 
 	/**
 	 * Get size
-	 * 
+	 *
 	 * @param type $size
 	 * @param type $key
 	 * @return type
@@ -77,10 +77,10 @@ class Image extends Model {
 	public static function get_size( $size, $key = false ) {
 		$sizes	 = self::get_sizes();
 		$return	 = false;
-		if ( $key && !empty( $sizes[$size][$key] ) ) {
-			$return = $sizes[$size][$key];
-		} elseif ( !empty( $sizes[$size] ) ) {
-			$return = $sizes[$size];
+		if ( $key && ! empty( $sizes[ $size ][ $key ] ) ) {
+			$return = $sizes[ $size ][ $key ];
+		} elseif ( ! empty( $sizes[ $size ] ) ) {
+			$return = $sizes[ $size ];
 		}
 		return $return;
 	}
@@ -99,11 +99,11 @@ class Image extends Model {
 			foreach ( $sizes as $key => $size ) {
 				if ( is_array( $size['type'] ) ) {
 					if ( in_array( $type, $size['type'] ) ) {
-						$return[$key] = $size;
+						$return[ $key ] = $size;
 					}
 				} else {
 					if ( $size['type'] == $type ) {
-						$return[$key] = $size;
+						$return[ $key ] = $size;
 					}
 				}
 			}
@@ -113,7 +113,7 @@ class Image extends Model {
 
 	/**
 	 * Get images
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $type
 	 * @return type
@@ -121,10 +121,10 @@ class Image extends Model {
 	public function get_thumbnails( $id, $type = 'img' ) {
 		$sizes	 = $this->get_sizes_by_type( $type );
 		$images	 = array();
-		if ( !empty( $sizes ) ) {
+		if ( ! empty( $sizes ) ) {
 			foreach ( $sizes as $key => $value ) {
 				if ( $value ) {
-					$images[$key] = $this->get_thumbnail( $id, $key );
+					$images[ $key ] = $this->get_thumbnail( $id, $key );
 				}
 			}
 		}
@@ -133,7 +133,7 @@ class Image extends Model {
 
 	/**
 	 * Get thumbnail
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $size
 	 */
@@ -143,7 +143,7 @@ class Image extends Model {
 			return array(
 				'height' => $downsize[2],
 				'width'	 => $downsize[1],
-				'url'	 => $downsize[0]
+				'url'	 => $downsize[0],
 			);
 		}
 	}
@@ -164,8 +164,8 @@ class Image extends Model {
 	/**
 	 * Hook Get image thumbnail
 	 *
-	 * @param int $downsize - downsize.
-	 * @param int $id - id.
+	 * @param int    $downsize - downsize.
+	 * @param int    $id - id.
 	 * @param string $size - size.
 	 *
 	 * @return array|bool
@@ -173,12 +173,12 @@ class Image extends Model {
 	public function image_downsize( $downsize, $id, $size = 'medium' ) {
 		$return		 = array();
 		$metadata	 = wp_get_attachment_metadata( $id );
-		if ( !empty( $metadata['file'] ) ) {
+		if ( ! empty( $metadata['file'] ) ) {
 			$img_url			 = wp_get_attachment_url( $id );
 			$img_url_basename	 = wp_basename( $img_url );
 			$intermediate		 = image_get_intermediate_size( $id, $size );
 			// check thumbnail was created
-			if ( !empty( $intermediate ) && !empty( $intermediate['file'] ) ) {
+			if ( ! empty( $intermediate ) && ! empty( $intermediate['file'] ) ) {
 				$return[0]	 = str_replace( $img_url_basename, $intermediate['file'], $img_url );
 				$return[1]	 = $intermediate['width'];
 				$return[2]	 = $intermediate['height'];
@@ -214,15 +214,15 @@ class Image extends Model {
 	public function get_thumbnail_path( $id, $size = 'copy' ) {
 		$metadata	 = wp_get_attachment_metadata( $id );
 		$file		 = get_attached_file( $id );
-		if ( !empty( $metadata ) && !empty( $metadata['sizes'][$size]['file'] ) ) {
-			$file_name = $metadata['sizes'][$size]['file'];
+		if ( ! empty( $metadata ) && ! empty( $metadata['sizes'][ $size ]['file'] ) ) {
+			$file_name = $metadata['sizes'][ $size ]['file'];
 		} else {
 			// get global img sizes
 			global $_wp_additional_image_sizes;
 			$ext		 = pathinfo( $file, PATHINFO_EXTENSION );
 			$name		 = basename( $file, '.' . $ext );
-			$width		 = $_wp_additional_image_sizes[$size]['width'];
-			$height		 = $_wp_additional_image_sizes[$size]['height'];
+			$width		 = $_wp_additional_image_sizes[ $size ]['width'];
+			$height		 = $_wp_additional_image_sizes[ $size ]['height'];
 			$file_name	 = "$name-{$width}x{$height}.$ext";
 		}
 		$dir	 = pathinfo( $file, PATHINFO_DIRNAME );
@@ -232,7 +232,7 @@ class Image extends Model {
 
 	/**
 	 * Generate image thumbnail
-	 * 
+	 *
 	 * @global \tm_photo_gallery\classes\models\type $_wp_additional_image_sizes
 	 * @param type $id
 	 * @param type $size
@@ -244,11 +244,11 @@ class Image extends Model {
 		$return		 = false;
 		$img_type	 = $this->get_size( $size, 'type' );
 		$img_type	 = is_array( $img_type ) ? $img_type : array( $img_type );
-		if ( empty( $_wp_additional_image_sizes[$size] ) || in_array( 'copy', $img_type ) ) {
+		if ( empty( $_wp_additional_image_sizes[ $size ] ) || in_array( 'copy', $img_type ) ) {
 			$this->add_image_sizes();
 			global $_wp_additional_image_sizes;
 		}
-		if ( !empty( $_wp_additional_image_sizes[$size] ) && !in_array( 'copy', $img_type ) ) {
+		if ( ! empty( $_wp_additional_image_sizes[ $size ] ) && ! in_array( 'copy', $img_type ) ) {
 			$return = $this( 'focal_point' )->crop_image( $id, $size );
 		}
 		return $return;
@@ -256,7 +256,7 @@ class Image extends Model {
 
 	/**
 	 * Crop image
-	 * 
+	 *
 	 * @global \tm_photo_gallery\classes\models\type $_wp_additional_image_sizes
 	 * @param type $id
 	 * @param type $size
@@ -266,11 +266,11 @@ class Image extends Model {
 	public function crop_image( $id, $size, $filePath ) {
 		global $_wp_additional_image_sizes;
 		$return		 = false;
-		$viewWidth	 = $_wp_additional_image_sizes[$size]['width'];
-		$viewHeight	 = $_wp_additional_image_sizes[$size]['height'];
+		$viewWidth	 = $_wp_additional_image_sizes[ $size ]['width'];
+		$viewHeight	 = $_wp_additional_image_sizes[ $size ]['height'];
 		$thumbPath	 = $this->get_thumbnail_path( $id, $size );
 		$image		 = wp_get_image_editor( $filePath );
-		if ( !is_wp_error( $image ) ) {
+		if ( ! is_wp_error( $image ) ) {
 			$metadata					 = wp_get_attachment_metadata( $id );
 			$image->resize( $viewWidth, $viewHeight, true );
 			$image->set_quality( 80 );
@@ -278,7 +278,7 @@ class Image extends Model {
 			$save_data					 = $image->save( $thumbPath );
 			unset( $save_data['path'] );
 			// update attachment meta data
-			$metadata['sizes'][$size]	 = $save_data;
+			$metadata['sizes'][ $size ]	 = $save_data;
 			$return						 = wp_update_attachment_metadata( $id, $metadata );
 		}
 		return $return;
@@ -286,7 +286,7 @@ class Image extends Model {
 
 	/**
 	 * Image Rotate
-	 * 
+	 *
 	 * @global \tm_photo_gallery\classes\models\type $_wp_additional_image_sizes
 	 * @param type $params['id'] - id image.
 	 * @param type $params['angle'] - angle.
@@ -301,11 +301,11 @@ class Image extends Model {
 			$filePath	 = get_attached_file( $id );
 			$image		 = wp_get_image_editor( $filePath );
 			$success	 = false;
-			if ( !is_wp_error( $image ) ) {
-				//$old_size	 = $image->get_size();
+			if ( ! is_wp_error( $image ) ) {
+				// $old_size  = $image->get_size();
 				// rotate image
 				$image->rotate( (int) $params['angle'] );
-				//$new_size	 = $image->get_size();
+				// $new_size  = $image->get_size();
 				// save rotate original file
 				$image->save( $filePath );
 				// delete all thubnails
@@ -314,7 +314,7 @@ class Image extends Model {
 				global $_wp_additional_image_sizes;
 				foreach ( $_wp_additional_image_sizes as $key => $size ) {
 					if ( $key != 'copy' && $size ) {
-						unset( $_wp_additional_image_sizes[$key] );
+						unset( $_wp_additional_image_sizes[ $key ] );
 					}
 				}
 				// generate image meta data
@@ -324,12 +324,13 @@ class Image extends Model {
 				// save new focal point
 				if ( $focal_point ) {
 					// rotate focus point
-					/* $point				 = new Point( $focal_point['xPos'], $focal_point['yPos'] );
-					  $old_size			 = new Size( $old_size['width'], $old_size['height'] );
-					  $new_size			 = new Size( $new_size['width'], $new_size['height'] );
-					  $_point				 = new Point( $point->X - ($new_size->width / 2), $point->Y - ($new_size->height / 2) );
-					  $new_point			 = $this->rotatePoint( $_point, $params['angle'], $new_size );
-					  $focal_point['xPos'] = $new_point->X;
+					/*
+  $point                = new Point( $focal_point['xPos'], $focal_point['yPos'] );
+                      $old_size          = new Size( $old_size['width'], $old_size['height'] );
+                      $new_size          = new Size( $new_size['width'], $new_size['height'] );
+                      $_point                = new Point( $point->X - ($new_size->width / 2), $point->Y - ($new_size->height / 2) );
+                      $new_point             = $this->rotatePoint( $_point, $params['angle'], $new_size );
+                      $focal_point['xPos'] = $new_point->X;
 					  $focal_point['yPos'] = $new_point->Y; */
 					// rotate position
 					$this->update_post_meta( $id, 'focal_point', '' );
@@ -354,10 +355,10 @@ class Image extends Model {
 		$metadata			 = wp_get_attachment_metadata( $id );
 		$metadata['sizes']	 = array_merge( $metadata['sizes'], self::get_sizes() );
 		foreach ( $metadata['sizes'] as $size => $val ) {
-			if ( !in_array( $size, $except ) && $val ) {
+			if ( ! in_array( $size, $except ) && $val ) {
 				$path = $this->get_thumbnail_path( $id, $size );
 				if ( file_exists( $path ) ) {
-					unset( $metadata['sizes'][$size] );
+					unset( $metadata['sizes'][ $size ] );
 					unlink( $path );
 				}
 			}
@@ -370,7 +371,7 @@ class Image extends Model {
 
 	/**
 	 * Delete image
-	 * 
+	 *
 	 * @param type $id
 	 * @return type
 	 */
@@ -418,7 +419,7 @@ class Image extends Model {
 		}
 		if ( $success ) {
 			$path = $this->get_thumbnail_path( $params['id'], 'copy' );
-			if ( !file_exists( $path ) ) {
+			if ( ! file_exists( $path ) ) {
 				$success = $this( 'file' )->add_attachment( $params['id'] );
 			} else {
 				$success = true;
@@ -433,8 +434,8 @@ class Image extends Model {
 		}
 		if ( $params['index'] != (int) $params['count'] ) {
 			$params['index'] ++;
-			if ( !empty( $posts[$params['index']] ) ) {
-				$params['id'] = $posts[$params['index']];
+			if ( ! empty( $posts[ $params['index'] ] ) ) {
+				$params['id'] = $posts[ $params['index'] ];
 			} else {
 				update_option( 'tm_pg_first_activated', 0 );
 				$params['id'] = 0;
@@ -464,7 +465,7 @@ class Image extends Model {
 
 	/**
 	 * Import Next Gen images
-	 * 
+	 *
 	 * @global type $wpdb
 	 * @param type $id
 	 * @return boolean
@@ -481,7 +482,7 @@ class Image extends Model {
 		"WHERE {$wpdb->prefix}ngg_pictures.extras_post_id = %s", $id
 		)
 		);
-		if ( !empty( $ng_obj ) ) {
+		if ( ! empty( $ng_obj ) ) {
 			$ng_obj	 = $ng_obj[0];
 			// render img size
 			$path	 = ABSPATH . $ng_obj->path . '\\' . $ng_obj->filename;
@@ -499,5 +500,4 @@ class Image extends Model {
 		}
 		return $return;
 	}
-
 }

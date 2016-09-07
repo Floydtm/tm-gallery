@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery filter
- * 
+ *
  * @package classes\structure
  */
 
@@ -16,35 +16,35 @@ class Filter {
 
 	/**
 	 * Filter content
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $content;
 
 	/**
 	 * Show filter
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $show = 1;
 
 	/**
 	 * Filter type
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $type = 'line';
 
 	/**
 	 * Filter by
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $by = 'category';
 
 	/**
 	 * Contruct
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id ) {
@@ -56,32 +56,31 @@ class Filter {
 
 	/**
 	 * Get padding
-	 * 
+	 *
 	 * @param type $id
 	 * @return int
 	 */
 	private function get_show() {
-		return !empty($this->content) && is_string( $this->content['show'] ) ? (int) ($this->content['show']) : 1;
+		return ! empty( $this->content ) && is_string( $this->content['show'] ) ? (int) ($this->content['show']) : 1;
 	}
 
 	/**
 	 * Get colums
-	 * 
+	 *
 	 * @param type $id
 	 * @return int
 	 */
 	private function get_by() {
-		return !empty($this->content) && !empty( $this->content['by'] ) ? $this->content['by'] : 'category';
+		return ! empty( $this->content ) && ! empty( $this->content['by'] ) ? $this->content['by'] : 'category';
 	}
 
 	/**
 	 * Get type
-	 * 
+	 *
 	 * @param type $id
 	 * @return type
 	 */
 	private function get_type() {
-		return !empty($this->content) && !empty( $this->content['type'] ) ? $this->content['type'] : 'line';
+		return ! empty( $this->content ) && ! empty( $this->content['type'] ) ? $this->content['type'] : 'line';
 	}
-
 }

@@ -82,12 +82,12 @@ function get_XMP_text( $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP1 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP1' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP1' ) == 0 ) {
 			// And if it has the Adobe XMP/RDF label (http://ns.adobe.com/xap/1.0/\x00) ,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "http://ns.adobe.com/xap/1.0/\x00", 29 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "http://ns.adobe.com/xap/1.0/\x00", 29 ) == 0 ) {
 				// Found a XMP/RDF block
 				// Return the XMP text
-				$xmp_data = substr( $jpeg_header_data[$i]['SegData'], 29 );
+				$xmp_data = substr( $jpeg_header_data[ $i ]['SegData'], 29 );
 
 				return $xmp_data;
 			}
@@ -132,11 +132,11 @@ function put_XMP_text( $jpeg_header_data, $newXMP ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP1 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP1' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP1' ) == 0 ) {
 			// And if it has the Adobe XMP/RDF label (http://ns.adobe.com/xap/1.0/\x00) ,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "http://ns.adobe.com/xap/1.0/\x00", 29 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "http://ns.adobe.com/xap/1.0/\x00", 29 ) == 0 ) {
 				// Found a preexisting XMP/RDF block - Replace it with the new one and return.
-				$jpeg_header_data[$i]['SegData'] = "http://ns.adobe.com/xap/1.0/\x00" . $newXMP;
+				$jpeg_header_data[ $i ]['SegData'] = "http://ns.adobe.com/xap/1.0/\x00" . $newXMP;
 				return $jpeg_header_data;
 			}
 		}
@@ -146,7 +146,7 @@ function put_XMP_text( $jpeg_header_data, $newXMP ) {
 	// Change: changed to initialise $i properly as of revision 1.04
 	$i = 0;
 	// Loop until a block is found that isn't an APP0 or APP1
-	while ( ( $jpeg_header_data[$i]['SegName'] == 'APP0' ) || ( $jpeg_header_data[$i]['SegName'] == 'APP1' ) ) {
+	while ( ( $jpeg_header_data[ $i ]['SegName'] == 'APP0' ) || ( $jpeg_header_data[ $i ]['SegName'] == 'APP1' ) ) {
 		$i++;
 	}
 
@@ -474,7 +474,7 @@ function Interpret_RDF_Item( $Item ) {
 	// Check if the item has is in the lookup table of tag captions
 	if ( array_key_exists( $Item['tag'], $GLOBALS['XMP_tag_captions'] ) ) {
 		// Item is in list of captions, get the caption
-		$tag_caption = $GLOBALS['XMP_tag_captions'][$Item['tag']];
+		$tag_caption = $GLOBALS['XMP_tag_captions'][ $Item['tag'] ];
 	} else {
 		// Item has no caption - make one
 		$tag_caption = 'Unknown field ' . $Item['tag'];
@@ -646,7 +646,7 @@ function interpret_RDF_collection( $item ) {
 		// Cycle through each of the sub-items
 		foreach ( $item['children'] as $list_item ) {
 			// Check that the sub item has a tag, and don't process it if it doesn't
-			if ( !array_key_exists( 'tag', $list_item ) ) {
+			if ( ! array_key_exists( 'tag', $list_item ) ) {
 				continue 1;
 			}
 

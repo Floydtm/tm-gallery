@@ -105,8 +105,8 @@ function get_IPTC( $Data_Str ) {
 		// Add the IPTC record to the output array
 		$OutputArray[] = array(
 			'IPTC_Type'	 => $iptctype,
-			'RecName'	 => $GLOBALS['IPTC_Entry_Names'][$iptctype],
-			'RecDesc'	 => $GLOBALS['IPTC_Entry_Descriptions'][$iptctype],
+			'RecName'	 => $GLOBALS['IPTC_Entry_Names'][ $iptctype ],
+			'RecDesc'	 => $GLOBALS['IPTC_Entry_Descriptions'][ $iptctype ],
 			'RecData'	 => substr( $Data_Str, $pos, $iptc_raw['IPTC_Size'] ),
 		);
 
@@ -224,7 +224,7 @@ function Interpret_IPTC_to_HTML( $IPTC_info ) {
 						// Lookup file format from lookup-table
 						if ( array_key_exists( $formatno, $GLOBALS['IPTC_File Formats'] ) ) {
 							// Entry was found in lookup table - add it to HTML
-							$output_str .= '<tr class="IPTC_Table_Row"><td class="IPTC_Caption_Cell">File Format</td><td class="IPTC_Value_Cell">' . $GLOBALS['IPTC_File Formats'][$formatno] . "</td></tr>\n";
+							$output_str .= '<tr class="IPTC_Table_Row"><td class="IPTC_Caption_Cell">File Format</td><td class="IPTC_Value_Cell">' . $GLOBALS['IPTC_File Formats'][ $formatno ] . "</td></tr>\n";
 						} else {
 							// No matching entry was found in lookup table - add message to html
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">File Format</td><td class=\"IPTC_Value_Cell\">Unknown File Format ($formatno)</td></tr>\n";
@@ -309,10 +309,10 @@ function Interpret_IPTC_to_HTML( $IPTC_info ) {
 						}
 
 						// Lookup current objectdata colour
-						if ( $GLOBALS['ImageType_Names'][$IPTC_Record['RecData']{1}] == '' ) {
+						if ( $GLOBALS['ImageType_Names'][ $IPTC_Record['RecData']{1} ] == '' ) {
 							$output_str .= ', Unknown : ' . nl2br( HTML_UTF8_Escape( $IPTC_Record['RecData']{1} ) );
 						} else {
-							$output_str .= ', ' . nl2br( HTML_UTF8_Escape( $GLOBALS['ImageType_Names'][$IPTC_Record['RecData']{1}] ) );
+							$output_str .= ', ' . nl2br( HTML_UTF8_Escape( $GLOBALS['ImageType_Names'][ $IPTC_Record['RecData']{1} ] ) );
 						}
 						$output_str .= "</td></tr>\n";
 						break;

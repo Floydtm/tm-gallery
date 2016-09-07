@@ -16,14 +16,14 @@ class Model extends Core {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -64,7 +64,7 @@ class Model extends Core {
 		$data = array();
 		foreach ( $params['data'] as $meta_key => $value ) {
 			$success						 = $this->update_post_meta( $params['id'], $meta_key, $value );
-			$data[$params['id']][$meta_key]	 = $this->get_arr( $value, $success );
+			$data[ $params['id'] ][ $meta_key ]	 = $this->get_arr( $value, $success );
 		}
 		return $this->get_arr( $data, true );
 	}
@@ -82,8 +82,8 @@ class Model extends Core {
 			'type'			 => 'monthly',
 			'format'		 => 'option',
 			'echo'			 => 0,
-			'post_type'		 => !empty( $params['post_type'] ) ? $params['post_type'] : '',
-			'post_status'	 => !empty( $params['post_status'] ) ? $params['post_status'] : '',
+			'post_type'		 => ! empty( $params['post_type'] ) ? $params['post_type'] : '',
+			'post_status'	 => ! empty( $params['post_status'] ) ? $params['post_status'] : '',
 		) );
 		return str_replace( $domain, '', $arhives );
 	}
@@ -100,11 +100,10 @@ class Model extends Core {
 		$return	 = array();
 		$count	 = $per_page > 0 ? (int) $per_page + (int) $offset : count( $arr );
 		for ( $i = $offset; $i < $count; $i++ ) {
-			if ( !empty( $arr[$i] ) ) {
-				$return[$i] = $arr[$i];
+			if ( ! empty( $arr[ $i ] ) ) {
+				$return[ $i ] = $arr[ $i ];
 			}
 		}
 		return $return;
 	}
-
 }

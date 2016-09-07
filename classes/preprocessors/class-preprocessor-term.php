@@ -16,22 +16,22 @@ use tm_photo_gallery\classes\Preprocessor as Preprocessor;
 class Preprocessor_Term extends Preprocessor {
 
 	/**
-	 * Model type 
-	 * 
-	 * @var type 
+	 * Model type
+	 *
+	 * @var type
 	 */
 	private $type = 'term';
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -59,7 +59,7 @@ class Preprocessor_Term extends Preprocessor {
 
 	/**
 	 * Remove post term
-	 * 
+	 *
 	 * @param type $params
 	 */
 	public function remove_post_term( $params = array() ) {
@@ -69,5 +69,4 @@ class Preprocessor_Term extends Preprocessor {
 		) );
 		return $this->progress( $params, __FUNCTION__, $this->type );
 	}
-
 }

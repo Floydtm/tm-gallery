@@ -1,7 +1,7 @@
 <?php
 /**
  * Album grid
- * 
+ *
  * @package templates/photo-gallery/grid/models
  */
 ?>

@@ -67,7 +67,7 @@
  * **************************************************************************** */
 
 // Change: as of version 1.11 - added to ensure the HIDE_UNKNOWN_TAGS variable is set even if EXIF.php is not included
-if ( !isset( $GLOBALS['HIDE_UNKNOWN_TAGS'] ) ) {
+if ( ! isset( $GLOBALS['HIDE_UNKNOWN_TAGS'] ) ) {
 	$GLOBALS['HIDE_UNKNOWN_TAGS'] = false;
 }
 
@@ -104,11 +104,11 @@ function get_Photoshop_IRB( $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP13 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP13' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP13' ) == 0 ) {
 			// And if it has the photoshop label,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "Photoshop 3.0\x00", 14 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "Photoshop 3.0\x00", 14 ) == 0 ) {
 				// join it to the other previous IRB data
-				$joined_IRB .= substr( $jpeg_header_data[$i]['SegData'], 14 );
+				$joined_IRB .= substr( $jpeg_header_data[ $i ]['SegData'], 14 );
 			}
 		}
 	}
@@ -166,9 +166,9 @@ function put_Photoshop_IRB( $jpeg_header_data, $new_IRB_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP13 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP13' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP13' ) == 0 ) {
 			// And if it has the photoshop label,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "Photoshop 3.0\x00", 14 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "Photoshop 3.0\x00", 14 ) == 0 ) {
 				// Delete the block information - it needs to be rebuilt
 				array_splice( $jpeg_header_data, $i, 1 );
 			}
@@ -184,7 +184,7 @@ function put_Photoshop_IRB( $jpeg_header_data, $new_IRB_data ) {
 	// when there are no APP segments present
 	// Cycle through the header segments in reverse order (to find where to put the APP13 block - after any APP0 to APP12 blocks)
 	$i = count( $jpeg_header_data ) - 1;
-	while ( ( $i >= 0 ) && ( ( $jpeg_header_data[$i]['SegType'] > 0xED ) || ( $jpeg_header_data[$i]['SegType'] < 0xE0 ) ) ) {
+	while ( ( $i >= 0 ) && ( ( $jpeg_header_data[ $i ]['SegType'] > 0xED ) || ( $jpeg_header_data[ $i ]['SegType'] < 0xE0 ) ) ) {
 		$i--;
 	}
 
@@ -206,7 +206,7 @@ function put_Photoshop_IRB( $jpeg_header_data, $new_IRB_data ) {
 
 	// Write the last block of packed output data to an APP13 segment - Note array_splice doesn't work with multidimensional arrays, hence inserting a blank string
 	array_splice( $jpeg_header_data, $i + 1, 0, '' );
-	$jpeg_header_data[$i + 1] = array(
+	$jpeg_header_data[ $i + 1 ] = array(
 		'SegType'	 => 0xED,
 		'SegName'	 => 'APP13',
 		'SegDesc'	 => $GLOBALS['JPEG_Segment_Descriptions'][0xED],
@@ -254,9 +254,9 @@ function get_Photoshop_IPTC( $Photoshop_IRB_data ) {
 	// Cycle through the Photoshop 8BIM records looking for the IPTC-NAA record
 	for ( $i = 0; $i < count( $Photoshop_IRB_data ); $i++ ) {
 		// Check if each record is a IPTC record (which has id 0x0404)
-		if ( $Photoshop_IRB_data[$i]['ResID'] == 0x0404 ) {
+		if ( $Photoshop_IRB_data[ $i ]['ResID'] == 0x0404 ) {
 			// We've found an IPTC block - Decode it
-			$IPTC_Data_Out = get_IPTC( $Photoshop_IRB_data[$i]['ResData'] );
+			$IPTC_Data_Out = get_IPTC( $Photoshop_IRB_data[ $i ]['ResData'] );
 		}
 	}
 
@@ -306,7 +306,7 @@ function put_Photoshop_IPTC( $Photoshop_IRB_data, $new_IPTC_block ) {
 	// Cycle through the 8BIM records looking for the IPTC-NAA record
 	for ( $i = 0; $i < count( $Photoshop_IRB_data ); $i++ ) {
 		// Check if each record is a IPTC record (which has id 0x0404)
-		if ( $Photoshop_IRB_data[$i]['ResID'] == 0x0404 ) {
+		if ( $Photoshop_IRB_data[ $i ]['ResID'] == 0x0404 ) {
 			// We've found an IPTC block - save the position
 			$iptc_block_pos = $i;
 		}
@@ -319,7 +319,7 @@ function put_Photoshop_IPTC( $Photoshop_IRB_data, $new_IPTC_block ) {
 	}
 
 	// Write the new IRB resource to the Photoshop IRB array with no data
-	$Photoshop_IRB_data[$iptc_block_pos] = array(
+	$Photoshop_IRB_data[ $iptc_block_pos ] = array(
 		'ResID'				 => 0x0404,
 		'ResName'			 => $GLOBALS['Photoshop_ID_Names'][0x0404],
 		'ResDesc'			 => $GLOBALS['Photoshop_ID_Descriptions'][0x0404],
@@ -393,7 +393,7 @@ function Interpret_IRB_to_HTML( $IRB_array, $filename ) {
 			// Check if the entry is a known Photoshop IRB resource
 			// Get the Name of the Resource
 			if ( array_key_exists( $IRB_Resource['ResID'], $GLOBALS['Photoshop_ID_Names'] ) ) {
-				$Resource_Name = $GLOBALS['Photoshop_ID_Names'][$IRB_Resource['ResID']];
+				$Resource_Name = $GLOBALS['Photoshop_ID_Names'][ $IRB_Resource['ResID'] ];
 			} else {
 				// Change: Added check for $GLOBALS['HIDE_UNKNOWN_TAGS'] to allow hiding of unknown resources as of 1.11
 				if ( $GLOBALS['HIDE_UNKNOWN_TAGS'] == true ) {
@@ -933,7 +933,7 @@ function unpack_Photoshop_IRB_Data( $IRB_Data ) {
 			$ResDesc = 'ID Info : Path Information (saved paths).';
 		} else {
 			if ( array_key_exists( $ID, $GLOBALS['Photoshop_ID_Descriptions'] ) ) {
-				$ResDesc = $GLOBALS['Photoshop_ID_Descriptions'][$ID];
+				$ResDesc = $GLOBALS['Photoshop_ID_Descriptions'][ $ID ];
 			} else {
 				$ResDesc = '';
 			}
@@ -941,7 +941,7 @@ function unpack_Photoshop_IRB_Data( $IRB_Data ) {
 
 		// Get the Name of the Resource
 		if ( array_key_exists( $ID, $GLOBALS['Photoshop_ID_Names'] ) ) {
-			$ResName = $GLOBALS['Photoshop_ID_Names'][$ID];
+			$ResName = $GLOBALS['Photoshop_ID_Names'][ $ID ];
 		} else {
 			$ResName = '';
 		}

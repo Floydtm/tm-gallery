@@ -19,14 +19,14 @@ class Preprocessor extends GUMP {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -62,13 +62,13 @@ class Preprocessor extends GUMP {
 	public function call_controller( $page = 'controller' ) {
 		$path = TM_PG_PLUGIN_PATH;
 		// if controller exists
-		if ( 'controller' != $page || !file_exists( "{$path}controllers/Controller-{$page}.class.php" ) ) {
+		if ( 'controller' != $page || ! file_exists( "{$path}controllers/Controller-{$page}.class.php" ) ) {
 			$ControllerName = 'Controller_' . ucfirst( $page );
 			if ( class_exists( $ControllerName ) ) {
 				die( "Wrong controller {$path}controllers/Controller-{$page}.class.php" );
 			}
 		}
-		$action_request	 = isset( $_REQUEST[Core::ACTION] ) ? $_REQUEST[Core::ACTION] : $_REQUEST['action'];
+		$action_request	 = isset( $_REQUEST[ Core::ACTION ] ) ? $_REQUEST[ Core::ACTION ] : $_REQUEST['action'];
 		$action			 = 'action_' . $action_request;
 		$controller		 = Core::get_instance()->get_state()->get_controller( $page );
 		// if metod exists
@@ -90,7 +90,7 @@ class Preprocessor extends GUMP {
 	public function add_error_log( $data = array(), $type = 'callback',
 								$error = false, $call_stack = false ) {
 		FB::error( $error, 'error log' );
-		if ( !$call_stack ) {
+		if ( ! $call_stack ) {
 			$call_stack = debug_backtrace();
 		}
 		// creating object of SimpleXMLElement
@@ -98,20 +98,20 @@ class Preprocessor extends GUMP {
 		$state		 = Core::get_instance();
 		// get current logs
 		$logs		 = $state( 'file' )->get_array_from_XML( TM_PG_PLUGIN_PATH . 'log/logs.xml' );
-		$logs		 = !is_array( $logs ) ? array() : $logs;
+		$logs		 = ! is_array( $logs ) ? array() : $logs;
 		// save settings
 		$time		 = time();
 		$settings	 = array();
 		if ( $type == 'callback' ) {
-			$settings["time_$time"]['request'] = base64_encode( serialize( $_REQUEST ) );
+			$settings[ "time_$time" ]['request'] = base64_encode( serialize( $_REQUEST ) );
 		}
-		$settings["time_$time"]['date']	 = date( 'Y-m-d H:i:s' );
-		$settings["time_$time"]['type']	 = $type;
+		$settings[ "time_$time" ]['date']	 = date( 'Y-m-d H:i:s' );
+		$settings[ "time_$time" ]['type']	 = $type;
 		if ( $error ) {
-			$settings["time_$time"]['error'] = base64_encode( serialize( $error ) );
+			$settings[ "time_$time" ]['error'] = base64_encode( serialize( $error ) );
 		}
-		$settings["time_$time"]['data']		 = base64_encode( serialize( $data ) );
-		$settings["time_$time"]['callstack'] = base64_encode( serialize( $call_stack ) );
+		$settings[ "time_$time" ]['data']		 = base64_encode( serialize( $data ) );
+		$settings[ "time_$time" ]['callstack'] = base64_encode( serialize( $call_stack ) );
 		$logs								 = array_merge( $logs, $settings );
 		// function call to convert array to xml
 		$state( 'file' )->array_to_xml( $logs, $xml );
@@ -158,88 +158,87 @@ class Preprocessor extends GUMP {
 
 			// Let's fetch explicit field names if they exist
 			if ( array_key_exists( $e['field'], self::$fields ) ) {
-				$field = self::$fields[$e['field']];
+				$field = self::$fields[ $e['field'] ];
 			}
 
 			switch ( $e['rule'] ) {
 				case 'mismatch' :
-					$resp[$e['field']]	 = "There is no validation rule for $field";
+					$resp[ $e['field'] ]	 = "There is no validation rule for $field";
 					break;
 				case 'validate_required':
-					$resp[$e['field']]	 = "The $field field is required";
+					$resp[ $e['field'] ]	 = "The $field field is required";
 					break;
 				case 'validate_valid_email':
-					$resp[$e['field']]	 = "The $field field is required to be a valid email address";
+					$resp[ $e['field'] ]	 = "The $field field is required to be a valid email address";
 					break;
 				case 'validate_max_len':
-					$resp[$e['field']]	 = "The $field field needs to be $param or shorter in length";
+					$resp[ $e['field'] ]	 = "The $field field needs to be $param or shorter in length";
 					break;
 				case 'validate_min_len':
-					$resp[$e['field']]	 = "The $field field needs to be $param or longer in length";
+					$resp[ $e['field'] ]	 = "The $field field needs to be $param or longer in length";
 					break;
 				case 'validate_exact_len':
-					$resp[$e['field']]	 = "The $field field needs to be exactly $param characters in length";
+					$resp[ $e['field'] ]	 = "The $field field needs to be exactly $param characters in length";
 					break;
 				case 'validate_alpha':
-					$resp[$e['field']]	 = "The $field field may only contain alpha characters(a-z)";
+					$resp[ $e['field'] ]	 = "The $field field may only contain alpha characters(a-z)";
 					break;
 				case 'validate_alpha_numeric':
-					$resp[$e['field']]	 = "The $field field may only contain alpha-numeric characters";
+					$resp[ $e['field'] ]	 = "The $field field may only contain alpha-numeric characters";
 					break;
 				case 'validate_alpha_dash':
-					$resp[$e['field']]	 = "The $field field may only contain alpha characters &amp; dashes";
+					$resp[ $e['field'] ]	 = "The $field field may only contain alpha characters &amp; dashes";
 					break;
 				case 'validate_numeric':
-					$resp[$e['field']]	 = "The $field field may only contain numeric characters";
+					$resp[ $e['field'] ]	 = "The $field field may only contain numeric characters";
 					break;
 				case 'validate_integer':
-					$resp[$e['field']]	 = "The $field field may only contain a numeric value";
+					$resp[ $e['field'] ]	 = "The $field field may only contain a numeric value";
 					break;
 				case 'validate_boolean':
-					$resp[$e['field']]	 = "The $field field may only contain a true or false value";
+					$resp[ $e['field'] ]	 = "The $field field may only contain a true or false value";
 					break;
 				case 'validate_float':
-					$resp[$e['field']]	 = "The $field field may only contain a float value";
+					$resp[ $e['field'] ]	 = "The $field field may only contain a float value";
 					break;
 				case 'validate_valid_url':
-					$resp[$e['field']]	 = "The $field field is required to be a valid URL";
+					$resp[ $e['field'] ]	 = "The $field field is required to be a valid URL";
 					break;
 				case 'validate_url_exists':
-					$resp[$e['field']]	 = "The $field URL does not exist";
+					$resp[ $e['field'] ]	 = "The $field URL does not exist";
 					break;
 				case 'validate_valid_ip':
-					$resp[$e['field']]	 = "The $field field needs to contain a valid IP address";
+					$resp[ $e['field'] ]	 = "The $field field needs to contain a valid IP address";
 					break;
 				case 'validate_valid_cc':
-					$resp[$e['field']]	 = "The $field field needs to contain a valid credit card number";
+					$resp[ $e['field'] ]	 = "The $field field needs to contain a valid credit card number";
 					break;
 				case 'validate_valid_name':
-					$resp[$e['field']]	 = "The $field field needs to contain a valid human name";
+					$resp[ $e['field'] ]	 = "The $field field needs to contain a valid human name";
 					break;
 				case 'validate_contains':
-					$resp[$e['field']]	 = "The $field field needs to contain one of these values: " . implode( ', ', $param );
+					$resp[ $e['field'] ]	 = "The $field field needs to contain one of these values: " . implode( ', ', $param );
 					break;
 				case 'validate_street_address':
-					$resp[$e['field']]	 = "The $field field needs to be a valid street address";
+					$resp[ $e['field'] ]	 = "The $field field needs to be a valid street address";
 					break;
 				case 'validate_date':
-					$resp[$e['field']]	 = "The $field field needs to be a valid date";
+					$resp[ $e['field'] ]	 = "The $field field needs to be a valid date";
 					break;
 				case 'validate_min_numeric':
-					$resp[$e['field']]	 = "The $field field needs to be a numeric value, equal to, or higher than $param";
+					$resp[ $e['field'] ]	 = "The $field field needs to be a numeric value, equal to, or higher than $param";
 					break;
 				case 'validate_max_numeric':
-					$resp[$e['field']]	 = "The $field field needs to be a numeric value, equal to, or lower than $param";
+					$resp[ $e['field'] ]	 = "The $field field needs to be a numeric value, equal to, or lower than $param";
 					break;
 				case 'validate_min_age':
-					$resp[$e['field']]	 = "The $field field needs to have an age greater than or equal to $param";
+					$resp[ $e['field'] ]	 = "The $field field needs to have an age greater than or equal to $param";
 					break;
 				default:
-					$resp[$e['field']]	 = "The $field field is invalid";
+					$resp[ $e['field'] ]	 = "The $field field is invalid";
 			}
 		}
 
 		return $resp;
 	}
-
 }

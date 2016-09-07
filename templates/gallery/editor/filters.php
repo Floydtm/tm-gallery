@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery editor filters
- * 
+ *
  * @package templates/gallery/editor
  */
 ?>

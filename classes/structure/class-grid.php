@@ -16,35 +16,35 @@ class Grid {
 
 	/**
 	 * Grid content
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $content;
 
 	/**
 	 * Grid pading
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $padding;
 
 	/**
 	 * Colums
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $colums;
 
 	/**
 	 * Grid type
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $type;
 
 	/**
-	 * Construct 
-	 * 
+	 * Construct
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id ) {
@@ -56,32 +56,31 @@ class Grid {
 
 	/**
 	 * Get padding
-	 * 
+	 *
 	 * @param type $id
 	 * @return int
 	 */
 	private function get_padding() {
-		return !empty( $this->content['padding'] ) ? (int) ($this->content['padding']) : 5;
+		return ! empty( $this->content['padding'] ) ? (int) ($this->content['padding']) : 5;
 	}
 
 	/**
 	 * Get colums
-	 * 
+	 *
 	 * @param type $id
 	 * @return int
 	 */
-	private function get_colums(  ) {
-		return !empty( $this->content['colums'] ) ? (int) ($this->content['colums']) : 3;
+	private function get_colums() {
+		return ! empty( $this->content['colums'] ) ? (int) ($this->content['colums']) : 3;
 	}
 
 	/**
 	 * Get type
-	 * 
+	 *
 	 * @param type $id
 	 * @return type
 	 */
-	private function get_type(  ) {
-		return !empty( $this->content['type'] ) ? $this->content['type'] : 'grid';
+	private function get_type() {
+		return ! empty( $this->content['type'] ) ? $this->content['type'] : 'grid';
 	}
-
 }

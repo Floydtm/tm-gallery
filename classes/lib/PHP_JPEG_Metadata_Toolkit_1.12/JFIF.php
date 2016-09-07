@@ -70,9 +70,9 @@ function get_JFIF( $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP0 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP0' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP0' ) == 0 ) {
 			// And if it has the JFIF label,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "JFIF\x00", 5 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "JFIF\x00", 5 ) == 0 ) {
 				// Found a JPEG File Interchange Format (JFIF) Block
 				// unpack the JFIF data from the incoming string
 				// First is the JFIF label string
@@ -83,7 +83,7 @@ function get_JFIF( $jpeg_header_data ) {
 				// Then a byte X-Axis JFIF thumbnail size
 				// Then a byte Y-Axis JFIF thumbnail size
 				// Then the uncompressed RGB JFIF thumbnail data
-				$JFIF_data = unpack( 'a5JFIF/C2Version/CUnits/nXDensity/nYDensity/CThumbX/CThumbY/a*ThumbData', $jpeg_header_data[$i]['SegData'] );
+				$JFIF_data = unpack( 'a5JFIF/C2Version/CUnits/nXDensity/nYDensity/CThumbX/CThumbY/a*ThumbData', $jpeg_header_data[ $i ]['SegData'] );
 
 				return $JFIF_data;
 			}
@@ -127,11 +127,11 @@ function put_JFIF( $jpeg_header_data, $new_JFIF_array ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP0 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP0' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP0' ) == 0 ) {
 			// And if it has the JFIF label,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "JFIF\x00", 5 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "JFIF\x00", 5 ) == 0 ) {
 				// Found a preexisting JFIF block - Replace it with the new one and return.
-				$jpeg_header_data[$i]['SegData'] = $packed_data;
+				$jpeg_header_data[ $i ]['SegData'] = $packed_data;
 				return $jpeg_header_data;
 			}
 		}
@@ -241,15 +241,15 @@ function get_JFXX( $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP0 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP0' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP0' ) == 0 ) {
 			// And if it has the JFIF label,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "JFXX\x00", 5 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "JFXX\x00", 5 ) == 0 ) {
 				// Found a JPEG File Interchange Format Extension (JFXX) Block
 				// unpack the JFXX data from the incoming string
 				// First is the 5 byte JFXX label string
 				// Then a 1 byte Extension code, indicating Thumbnail Format
 				// Then the thumbnail data
-				$JFXX_data = unpack( 'a5JFXX/CExtension_Code/a*ThumbData', $jpeg_header_data[$i]['SegData'] );
+				$JFXX_data = unpack( 'a5JFXX/CExtension_Code/a*ThumbData', $jpeg_header_data[ $i ]['SegData'] );
 				return $JFXX_data;
 			}
 		}
@@ -294,16 +294,16 @@ function put_JFXX( $jpeg_header_data, $new_JFXX_array ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an APP0 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP0' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP0' ) == 0 ) {
 			// And if it has the JFXX label,
-			if ( strncmp( $jpeg_header_data[$i]['SegData'], "JFXX\x00", 5 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ]['SegData'], "JFXX\x00", 5 ) == 0 ) {
 				// Found a preexisting JFXX block - Replace it with the new one and return.
-				$jpeg_header_data[$i]['SegData'] = $packed_data;
+				$jpeg_header_data[ $i ]['SegData'] = $packed_data;
 				return $jpeg_header_data;
 			}
 
 			// if it has the JFIF label,
-			if ( strncmp( $jpeg_header_data[$i][SegData], "JFIF\x00", 5 ) == 0 ) {
+			if ( strncmp( $jpeg_header_data[ $i ][ SegData ], "JFIF\x00", 5 ) == 0 ) {
 				// Found a preexisting JFIF block - Mark it in case we need to insert the JFXX after it
 				$JFIF_pos = $i;
 			}

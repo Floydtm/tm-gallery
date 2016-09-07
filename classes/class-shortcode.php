@@ -18,29 +18,29 @@ class Shortcode extends Core {
 
 	/**
 	 * Version
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $version;
-	
+
 	/**
 	 * Plugin URL
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $pluginURL;
-	
+
 	/**
 	 * Plugin path
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $pluginPath;
-	
+
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
@@ -53,10 +53,10 @@ class Shortcode extends Core {
 		$this->pluginURL	 = TM_PG_PLUGIN_URL . 'shortcodes/';
 		$this->pluginPath	 = TM_PG_PLUGIN_PATH . 'shortcodes/';
 	}
-	
+
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -91,5 +91,4 @@ class Shortcode extends Core {
 		Media::get_instance()->init_shortcode( $params );
 		return Shortcode_Grid::get_instance()->show_shortcode( $params );
 	}
-
 }

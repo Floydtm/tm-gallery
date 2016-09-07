@@ -1,8 +1,8 @@
 <?php
 /**
  * Image slidebar
- * 
- * @package templates/photo-gallery/slidebar 
+ *
+ * @package templates/photo-gallery/slidebar
  */
 ?>
 <!-- Slidebar Clone -->
@@ -68,7 +68,7 @@
 	<div class="tm-pg_sidebar_image-categories_container">
 		<div class="tm-pg_sidebar_image-categories ui tm-pg_ui tm-pg_checkbox tm-pg_checkbox-group" 
 			 <?php echo empty( $data['categories'] ) ? 'style="display: none"' : 'style="display: block"' ?>>
-				 <?php if ( !empty( $data['categories'] ) ) : ?>
+				 <?php if ( ! empty( $data['categories'] ) ) : ?>
 					 <?php foreach ( $data['categories'] as $category ) : ?>
 					<div class="tm-pg_checkbox-item tm-pg_checkbox-item_categoty">
 						<input type="checkbox" id="image-category_<?php echo $category->term_id ?>" name="post_category[]" value="<?php echo $category->term_id ?>" />

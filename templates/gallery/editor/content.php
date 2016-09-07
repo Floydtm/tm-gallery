@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery editor content
- * 
+ *
  * @package templates\gallery\editor
  */
 ?>
@@ -16,7 +16,7 @@
 				<?php $this->render_html( 'photo-gallery/grid/sets', array( 'colums' => 3 ) ); ?>
 				<?php $this->render_html( 'photo-gallery/grid/albums', array( 'colums' => 4 ) ); ?>
 				<?php $this->render_html( 'photo-gallery/grid/photos', array( 'colums' => 6 ) ); ?>
-			</div>	
+			</div>  
 			<!-- Editor -->
 			<div id="tm-pg-editor"></div>
 		</div>

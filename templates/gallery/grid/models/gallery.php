@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery item
- * 
+ *
  * @package templates/gallery/grid/models
  */
 ?>

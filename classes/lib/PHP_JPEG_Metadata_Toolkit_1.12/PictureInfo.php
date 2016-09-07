@@ -71,18 +71,18 @@ function get_jpeg_App12_Pic_Info( $jpeg_header_data ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// Check if we have found an APP12 header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'APP12' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'APP12' ) == 0 ) {
 			// Found an APP12 segment
 			// Check if the APP12 has one of the correct labels (headers)
 			// for a picture info segment
-			if ( ( strncmp( $jpeg_header_data[$i]['SegData'], '[picture info]', 14 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "\x0a\x09\x09\x09\x09[picture info]", 19 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "SEIKO EPSON CORP.  \00", 20 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "Agfa Gevaert   \x00", 16 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "SanyoElectricDSC\x00", 17 ) == 0 ) ||
-			( strncmp( substr( $jpeg_header_data[$i]['SegData'], 1, 3 ), "\x00\x00\x00", 3 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], 'Type=', 5 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], 'OLYMPUS OPTICAL CO.,LTD.', 24 ) == 0 ) ) {
+			if ( ( strncmp( $jpeg_header_data[ $i ]['SegData'], '[picture info]', 14 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "\x0a\x09\x09\x09\x09[picture info]", 19 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "SEIKO EPSON CORP.  \00", 20 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "Agfa Gevaert   \x00", 16 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "SanyoElectricDSC\x00", 17 ) == 0 ) ||
+			( strncmp( substr( $jpeg_header_data[ $i ]['SegData'], 1, 3 ), "\x00\x00\x00", 3 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], 'Type=', 5 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], 'OLYMPUS OPTICAL CO.,LTD.', 24 ) == 0 ) ) {
 				// A Picture Info segment was found, mark this position
 				$App12_PI_Location = $i;
 			}
@@ -95,25 +95,25 @@ function get_jpeg_App12_Pic_Info( $jpeg_header_data ) {
 		// Determine the length of the header if there is one
 		$head_length = 0;
 
-		if ( strncmp( $jpeg_header_data[$App12_PI_Location]['SegData'], "App12 Gevaert   \x00", 16 ) == 0 ) {
+		if ( strncmp( $jpeg_header_data[ $App12_PI_Location ]['SegData'], "App12 Gevaert   \x00", 16 ) == 0 ) {
 			$head_length = 16;
-		} elseif ( strncmp( $jpeg_header_data[$App12_PI_Location]['SegData'], 'OLYMPUS OPTICAL CO.,LTD.', 24 ) == 0 ) {
+		} elseif ( strncmp( $jpeg_header_data[ $App12_PI_Location ]['SegData'], 'OLYMPUS OPTICAL CO.,LTD.', 24 ) == 0 ) {
 			$head_length = 25;
-		} elseif ( strncmp( $jpeg_header_data[$App12_PI_Location]['SegData'], "SEIKO EPSON CORP.  \00", 20 ) == 0 ) {
+		} elseif ( strncmp( $jpeg_header_data[ $App12_PI_Location ]['SegData'], "SEIKO EPSON CORP.  \00", 20 ) == 0 ) {
 			$head_length = 20;
-		} elseif ( strncmp( $jpeg_header_data[$App12_PI_Location]['SegData'], "\x0a\x09\x09\x09\x09[picture info]", 19 ) == 0 ) {
+		} elseif ( strncmp( $jpeg_header_data[ $App12_PI_Location ]['SegData'], "\x0a\x09\x09\x09\x09[picture info]", 19 ) == 0 ) {
 			$head_length = 5;
-		} elseif ( strncmp( substr( $jpeg_header_data[$App12_PI_Location]['SegData'], 1, 3 ), "\x00\x00\x00", 3 ) == 0 ) { // HP
+		} elseif ( strncmp( substr( $jpeg_header_data[ $App12_PI_Location ]['SegData'], 1, 3 ), "\x00\x00\x00", 3 ) == 0 ) { // HP
 			$head_length = 0;
-		} elseif ( strncmp( $jpeg_header_data[$App12_PI_Location]['SegData'], "SanyoElectricDSC\x00", 17 ) == 0 ) {
+		} elseif ( strncmp( $jpeg_header_data[ $App12_PI_Location ]['SegData'], "SanyoElectricDSC\x00", 17 ) == 0 ) {
 			$head_length = 17;
 		} else {
 			$head_length = 0;
 		}
 
 		// Extract the header and the Picture Info Text from the APP12 segment
-		$App12_PI_Head	 = substr( $jpeg_header_data[$App12_PI_Location]['SegData'], 0, $head_length );
-		$App12_PI_Text	 = substr( $jpeg_header_data[$App12_PI_Location]['SegData'], $head_length );
+		$App12_PI_Head	 = substr( $jpeg_header_data[ $App12_PI_Location ]['SegData'], 0, $head_length );
+		$App12_PI_Text	 = substr( $jpeg_header_data[ $App12_PI_Location ]['SegData'], $head_length );
 
 		// Return the text which was extracted
 		if ( ($pos = strpos( $App12_PI_Text, '[end]' ) ) !== false ) {
@@ -161,19 +161,19 @@ function put_jpeg_App12_Pic_Info( $jpeg_header_data, $new_Pic_Info_Text ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// Check if we have found an APP12 header,
-		if ( strcmp( $jpeg_header_data[$i][SegName], 'APP12' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ][ SegName ], 'APP12' ) == 0 ) {
 			// Found an APP12 segment
 			// Check if the APP12 has one of the correct labels (headers)
 			// for a picture info segment
-			if ( ( strncmp( $jpeg_header_data[$i]['SegData'], '[picture info]', 14 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "\x0a\x09\x09\x09\x09[picture info]", 19 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "SEIKO EPSON CORP.  \x00", 20 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "Agfa Gevaert   \x00", 16 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], "SanyoElectricDSC\x00", 17 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], 'Type=', 5 ) == 0 ) ||
-			( strncmp( $jpeg_header_data[$i]['SegData'], 'OLYMPUS OPTICAL CO.,LTD.', 24 ) == 0 ) ) {
+			if ( ( strncmp( $jpeg_header_data[ $i ]['SegData'], '[picture info]', 14 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "\x0a\x09\x09\x09\x09[picture info]", 19 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "SEIKO EPSON CORP.  \x00", 20 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "Agfa Gevaert   \x00", 16 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], "SanyoElectricDSC\x00", 17 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], 'Type=', 5 ) == 0 ) ||
+			( strncmp( $jpeg_header_data[ $i ]['SegData'], 'OLYMPUS OPTICAL CO.,LTD.', 24 ) == 0 ) ) {
 				// Found a preexisting Picture Info segment - Replace it with the new one and return.
-				$jpeg_header_data[$i][SegData] = $new_Pic_Info_Text;
+				$jpeg_header_data[ $i ][ SegData ] = $new_Pic_Info_Text;
 				return $jpeg_header_data;
 			}
 		}
@@ -187,7 +187,7 @@ function put_jpeg_App12_Pic_Info( $jpeg_header_data, $new_Pic_Info_Text ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// Check if we have found an APP segment at or below APP12,
-		if ( ( $jpeg_header_data[$i]['SegType'] >= 0xE0 ) && ( $jpeg_header_data[$i]['SegType'] <= 0xEC ) ) {
+		if ( ( $jpeg_header_data[ $i ]['SegType'] >= 0xE0 ) && ( $jpeg_header_data[ $i ]['SegType'] <= 0xEC ) ) {
 			// Found an APP segment at or below APP12
 			$highest_APP = $i;
 		}

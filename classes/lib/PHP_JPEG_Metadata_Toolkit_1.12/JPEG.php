@@ -75,7 +75,7 @@ function get_jpeg_header_data( $filename ) {
 	$filehnd = @fopen( $filename, 'rb' );
 
 	// Check if the file opened successfully
-	if ( !$filehnd ) {
+	if ( ! $filehnd ) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
 		return false;
@@ -108,7 +108,7 @@ function get_jpeg_header_data( $filename ) {
 	// Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
 	// 2) we have hit the compressed image data (no more headers are allowed after data)
 	// 3) or end of file is hit
-	while ( ( $data{1} != "\xD9" ) && (!$hit_compressed_image_data) && (!feof( $filehnd ) ) ) {
+	while ( ( $data{1} != "\xD9" ) && ( ! $hit_compressed_image_data) && ( ! feof( $filehnd ) ) ) {
 		// Found a segment to look at.
 		// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
 		if ( ( ord( $data{1} ) < 0xD0 ) || ( ord( $data{1} ) > 0xD7 ) ) {
@@ -128,8 +128,8 @@ function get_jpeg_header_data( $filename ) {
 			// Store the segment information in the output array
 			$headerdata[] = array(
 				'SegType'		 => ord( $data{1} ),
-				'SegName'		 => $GLOBALS['JPEG_Segment_Names'][ord( $data{1} )],
-				'SegDesc'		 => $GLOBALS['JPEG_Segment_Descriptions'][ord( $data{1} )],
+				'SegName'		 => $GLOBALS['JPEG_Segment_Names'][ ord( $data{1} ) ],
+				'SegDesc'		 => $GLOBALS['JPEG_Segment_Descriptions'][ ord( $data{1} ) ],
 				'SegDataStart'	 => $segdatastart,
 				'SegData'		 => $segdata,
 			);
@@ -227,7 +227,7 @@ function put_jpeg_header_data( $old_filename, $new_filename, $jpeg_header_data )
 	// Attempt to open the new jpeg file
 	$newfilehnd = @fopen( $new_filename, 'wb' );
 	// Check if the file opened successfully
-	if ( !$newfilehnd ) {
+	if ( ! $newfilehnd ) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $new_filename</p>\n";
 		return false;
@@ -290,14 +290,14 @@ function put_jpeg_header_data( $old_filename, $new_filename, $jpeg_header_data )
 function get_jpeg_Comment( $jpeg_header_data ) {
 	// Cycle through the header segments until COM is found or we run out of segments
 	$i = 0;
-	while ( ( $i < count( $jpeg_header_data ) ) && ( $jpeg_header_data[$i]['SegName'] != 'COM' ) ) {
+	while ( ( $i < count( $jpeg_header_data ) ) && ( $jpeg_header_data[ $i ]['SegName'] != 'COM' ) ) {
 		$i++;
 	}
 
 	// Check if a COM segment has been found
 	if ( $i < count( $jpeg_header_data ) ) {
 		// A COM segment was found, return it's contents
-		return $jpeg_header_data[$i]['SegData'];
+		return $jpeg_header_data[ $i ]['SegData'];
 	} else {
 		// No COM segment found
 		return false;
@@ -332,16 +332,16 @@ function put_jpeg_Comment( $jpeg_header_data, $new_Comment ) {
 	// Cycle through the header segments
 	for ( $i = 0; $i < count( $jpeg_header_data ); $i++ ) {
 		// If we find an COM header,
-		if ( strcmp( $jpeg_header_data[$i]['SegName'], 'COM' ) == 0 ) {
+		if ( strcmp( $jpeg_header_data[ $i ]['SegName'], 'COM' ) == 0 ) {
 			// Found a preexisting Comment block - Replace it with the new one and return.
-			$jpeg_header_data[$i]['SegData'] = $new_Comment;
+			$jpeg_header_data[ $i ]['SegData'] = $new_Comment;
 			return $jpeg_header_data;
 		}
 	}
 
 	// No preexisting Comment block found, find where to put it by searching for the highest app segment
 	$i = 0;
-	while ( ( $i < count( $jpeg_header_data ) ) && ( $jpeg_header_data[$i]['SegType'] >= 0xE0 ) ) {
+	while ( ( $i < count( $jpeg_header_data ) ) && ( $jpeg_header_data[ $i ]['SegType'] >= 0xE0 ) ) {
 		$i++;
 	}
 
@@ -427,14 +427,14 @@ function get_jpeg_intrinsic_values( $jpeg_header_data ) {
 
 	// Cycle through the header segments until Start Of Frame (SOF) is found or we run out of segments
 	$i = 0;
-	while ( ( $i < count( $jpeg_header_data ) ) && ( substr( $jpeg_header_data[$i]['SegName'], 0, 3 ) != 'SOF' ) ) {
+	while ( ( $i < count( $jpeg_header_data ) ) && ( substr( $jpeg_header_data[ $i ]['SegName'], 0, 3 ) != 'SOF' ) ) {
 		$i++;
 	}
 
 	// Check if a SOF segment has been found
-	if ( substr( $jpeg_header_data[$i]['SegName'], 0, 3 ) == 'SOF' ) {
+	if ( substr( $jpeg_header_data[ $i ]['SegName'], 0, 3 ) == 'SOF' ) {
 		// SOF segment was found, extract the information
-		$data = $jpeg_header_data[$i]['SegData'];
+		$data = $jpeg_header_data[ $i ]['SegData'];
 
 		// First byte is Bits per component
 		$Outputarray['Bits per Component'] = ord( $data{0} );
@@ -550,7 +550,7 @@ function get_jpeg_image_data( $filename ) {
 	$filehnd = @fopen( $filename, 'rb' );
 
 	// Check if the file opened successfully
-	if ( !$filehnd ) {
+	if ( ! $filehnd ) {
 		// Could't open the file - exit
 		return false;
 	}
@@ -581,7 +581,7 @@ function get_jpeg_image_data( $filename ) {
 	// Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
 	// 2) we have hit the compressed image data (no more headers are allowed after data)
 	// 3) or end of file is hit
-	while ( ( $data{1} != "\xD9" ) && (!$hit_compressed_image_data) && (!feof( $filehnd ) ) ) {
+	while ( ( $data{1} != "\xD9" ) && ( ! $hit_compressed_image_data) && ( ! feof( $filehnd ) ) ) {
 		// Found a segment to look at.
 		// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
 		if ( ( ord( $data{1} ) < 0xD0 ) || ( ord( $data{1} ) > 0xD7 ) ) {
@@ -608,7 +608,7 @@ function get_jpeg_image_data( $filename ) {
 			$compressed_data = '';
 			do {
 				$compressed_data .= network_safe_fread( $filehnd, 1048576 );
-			} while ( !feof( $filehnd ) );
+			} while ( ! feof( $filehnd ) );
 
 			// Strip off EOI and anything after
 			$EOI_pos		 = strpos( $compressed_data, "\xFF\xD9" );
@@ -748,7 +748,7 @@ function network_safe_fread( $file_handle, $length ) {
 
 	// Keep reading data from the file until either EOF occurs or we have
 	// retrieved the requested number of bytes
-	while ( (!feof( $file_handle ) ) && ( strlen( $data ) < $length ) ) {
+	while ( ( ! feof( $file_handle ) ) && ( strlen( $data ) < $length ) ) {
 		$data .= fread( $file_handle, $length - strlen( $data ) );
 	}
 

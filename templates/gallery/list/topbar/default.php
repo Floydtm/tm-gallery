@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery list topbar
- * 
+ *
  * @package templates/gallery/topbar
  */
 ?>

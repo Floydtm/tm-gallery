@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery editor display
- * 
+ *
  * @package templates/gallery/editor
  */
 ?>
@@ -21,7 +21,7 @@
 			<div class="tm-pg_gallery_display-type_image">
 				<img src="<?php echo TM_PG_MEDIA_URL ?>icons/display_masonry.svg">
 			</div>
-			<?php esc_attr_e( 'Masonry', 'tm_gallery' ); ?>		
+			<?php esc_attr_e( 'Masonry', 'tm_gallery' ); ?>     
 		</a>
 	</div>
 
@@ -30,7 +30,7 @@
 			<div class="tm-pg_gallery_display-type_image">
 				<img src="<?php echo TM_PG_MEDIA_URL ?>icons/display_masonry.svg">
 			</div>
-			<?php esc_attr_e( 'Justify', 'tm_gallery' ); ?>		
+			<?php esc_attr_e( 'Justify', 'tm_gallery' ); ?>     
 		</a>
 	</div>
 </div>

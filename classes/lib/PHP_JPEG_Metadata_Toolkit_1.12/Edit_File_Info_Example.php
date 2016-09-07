@@ -70,7 +70,7 @@
 
 		include 'Toolkit_Version.php'; // Change: added as of version 1.11
 		// Retrieve the JPEG image filename from the http url request
-		if ( (!array_key_exists( 'jpeg_fname', $_GET ) ) ||
+		if ( ( ! array_key_exists( 'jpeg_fname', $_GET ) ) ||
 		( $_GET['jpeg_fname'] == '' ) ) {
 			echo "<title>No image filename defined</title>\n";
 			echo "</head>\n";

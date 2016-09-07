@@ -1,7 +1,7 @@
 <?php
 /**
  * Popup dialog
- * 
+ *
  * @package templates/photo-gallery/popup
  */
 ?>

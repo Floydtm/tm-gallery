@@ -37,8 +37,8 @@ class Core {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
@@ -52,7 +52,7 @@ class Core {
 	 */
 	public function __construct() {
 
-		//include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		// include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$this->init_plugin_version();
 
 		// set post types
@@ -83,7 +83,7 @@ class Core {
 
 	/**
 	 * Get version
-	 * 
+	 *
 	 * @return type
 	 */
 	public function get_version() {
@@ -203,7 +203,7 @@ class Core {
 		if ( file_exists( $folder ) ) {
 			$includeArr = scandir( $folder );
 			foreach ( $includeArr as $include ) {
-				if ( !is_dir( $folder . '/' . $include ) ) {
+				if ( ! is_dir( $folder . '/' . $include ) ) {
 					include_once $folder . '/' . $include;
 				} else {
 					if ( $include != '.' && $include != '..' && $inFolder ) {
@@ -223,7 +223,7 @@ class Core {
 	 */
 	public function init_plugin_version() {
 		$filePath = TM_PG_PLUGIN_PATH . 'tm-photo-gallery.php';
-		if ( !$this->version && file_exists( $filePath ) && function_exists( 'get_plugin_data' ) ) {
+		if ( ! $this->version && file_exists( $filePath ) && function_exists( 'get_plugin_data' ) ) {
 			$pluginObject	 = get_plugin_data( $filePath );
 			$this->version	 = $pluginObject['Version'];
 		}
@@ -243,9 +243,9 @@ class Core {
 		// init error handler
 		ob_start( 'tm_photo_gallery\classes\Preprocessor::fatal_error_handler' );
 		// load text domain
-		load_plugin_textdomain( 'tm-gallery', FALSE, TM_PG_PLUGIN_PATH . 'languages/' );
+		load_plugin_textdomain( 'tm-gallery', false, TM_PG_PLUGIN_PATH . 'languages/' );
 		// run session
-		if ( !session_id() ) {
+		if ( ! session_id() ) {
 			session_start();
 		}
 		// Include structure
@@ -292,7 +292,7 @@ class Core {
 
 	/**
 	 * Add post meta
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $key
 	 * @param type $value
@@ -304,7 +304,7 @@ class Core {
 
 	/**
 	 * Delete post meta
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $key
 	 * @param type $value
@@ -331,7 +331,7 @@ class Core {
 			foreach ( $posts as $id ) {
 				$captured	 = $this->get_post_meta( $id, 'captured', true );
 				$uploaded	 = $this->get_post_meta( $id, 'uploaded', true );
-				if ( !$captured || !$uploaded ) {
+				if ( ! $captured || ! $uploaded ) {
 					$post = get_post( $id );
 					$this->update_post_meta( $id, 'captured', strtotime( $post->post_date ) );
 					$this->update_post_meta( $id, 'uploaded', strtotime( $post->post_date ) );
@@ -378,7 +378,7 @@ class Core {
 				$this->delete_post_meta( $id, 'favorite' );
 				$this( 'term' )->delete_term( array(
 					'type'	 => self::$tax_names['images'],
-					'value'	 => $id
+					'value'	 => $id,
 				) );
 			}
 		}
@@ -410,7 +410,7 @@ class Core {
 		$pages = get_posts( array(
 			'post_type'		 => array( 'post', 'page' ),
 			'post_status'	 => 'any',
-			'posts_per_page' => -1
+			'posts_per_page' => -1,
 		) );
 		foreach ( $pages as $post ) {
 			if ( preg_match( '/\[(.*)tm-gallery(.*)\]/', $post->post_content ) ) {
@@ -436,16 +436,16 @@ class Core {
 	 */
 	public function wp_admin_ajax_route_url() {
 		// check current_user_can
-		if ( !current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			die( 'Current user can`t use plugin!' );
 		}
 		// check ajax nonce
-		if ( !wp_verify_nonce( $_POST['tm_pg_nonce'], 'tm_pg_nonce' ) ) {
+		if ( ! wp_verify_nonce( $_POST['tm_pg_nonce'], 'tm_pg_nonce' ) ) {
 			die( 'Ajax nonce error!' );
 		}
 		$controller	 = isset( $_POST['controller'] ) ? $_POST['controller'] : null;
-		$action		 = isset( $_POST[self::ACTION] ) ? $_POST[self::ACTION] : null;
-		if ( !empty( $action ) ) {
+		$action		 = isset( $_POST[ self::ACTION ] ) ? $_POST[ self::ACTION ] : null;
+		if ( ! empty( $action ) ) {
 			// call controller
 			Preprocessor::get_instance()->call_controller( $controller );
 		}
@@ -456,12 +456,12 @@ class Core {
 	 */
 	public function wp_frontend_ajax_route_url() {
 		// check ajax nonce
-		if ( !wp_verify_nonce( $_POST['tm_pg_nonce'], 'tm_pg_nonce' ) ) {
+		if ( ! wp_verify_nonce( $_POST['tm_pg_nonce'], 'tm_pg_nonce' ) ) {
 			die( 'Ajax nonce error!' );
 		}
 		$controller	 = isset( $_POST['controller'] ) ? $_POST['controller'] : null;
-		$action		 = isset( $_POST[self::ACTION] ) ? $_POST[self::ACTION] : null;
-		if ( !empty( $action ) && 'grid' == $controller ) {
+		$action		 = isset( $_POST[ self::ACTION ] ) ? $_POST[ self::ACTION ] : null;
+		if ( ! empty( $action ) && 'grid' == $controller ) {
 			// call controller
 			Preprocessor::get_instance()->call_controller( $controller );
 		}
@@ -486,7 +486,7 @@ class Core {
 	 */
 	public static function add_action( $name, $function = false, $type = false,
 									$priority = 10, $accepted_args = 1 ) {
-		if ( !$function ) {
+		if ( ! $function ) {
 			$function = str_replace( '-', '_', $name );
 		}
 		if ( $type ) {
@@ -499,7 +499,7 @@ class Core {
 				$function = array( $type::get_instance(), $function );
 			}
 		}
-		if ( !is_array( $function ) && !function_exists( $function ) ) {
+		if ( ! is_array( $function ) && ! function_exists( $function ) ) {
 			$action = false;
 		} else {
 			$action = add_action( self::CSS_PREFIX . $name, $function, $priority, $accepted_args );
@@ -526,5 +526,4 @@ class Core {
 		}
 		return $return;
 	}
-
 }

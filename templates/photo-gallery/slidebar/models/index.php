@@ -1,7 +1,7 @@
 <?php
 /**
  * Slidebar models
- * 
+ *
  * @package photo-gallery/slidebar/models
  */
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Taxonomy module
- * 
+ *
  * @package classes/modules
  */
 
@@ -17,14 +17,14 @@ class Taxonomy extends Module {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -53,7 +53,7 @@ class Taxonomy extends Module {
 			'show_in_quick_edit'	 => true,
 			'hierarchical'			 => true,
 			'update_count_callback'	 => '',
-			'rewrite'				 => (!empty( $params['slug'] )) ? array(
+			'rewrite'				 => ( ! empty( $params['slug'] )) ? array(
 				'slug'			 => $params['slug'],
 				'with_front'	 => true,
 				'hierarchical'	 => true,
@@ -64,7 +64,7 @@ class Taxonomy extends Module {
 			'_builtin'				 => false,
 		);
 		$status	 = register_taxonomy( $params['taxonomy'], $params['object_type'], $args );
-		if ( !is_wp_error( $status ) ) {
+		if ( ! is_wp_error( $status ) ) {
 			return true;
 		}
 	}
@@ -85,17 +85,16 @@ class Taxonomy extends Module {
 			$data['filter_link'] = '/wp-admin/edit.php?post_type=' . $post->post_type . '&' . $tax->taxonomy . '=' . $tax->slug;
 			$taxonomies_html .= View::get_instance()->render_html( 'taxonomies/taxonomy-link', $data, false );
 		}
-		return (!empty( $taxonomies_html )) ? $taxonomies_html : '—';
+		return ( ! empty( $taxonomies_html )) ? $taxonomies_html : '—';
 	}
 
 	/**
 	 * Get terms
-	 * 
+	 *
 	 * @param type $name
 	 * @return type
 	 */
 	public function get_terms( $name ) {
 		return get_terms( $name );
 	}
-
 }

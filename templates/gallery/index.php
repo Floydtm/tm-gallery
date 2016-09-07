@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery index
- * 
+ *
  * @package templates\gallery
  */
 ?>

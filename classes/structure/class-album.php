@@ -2,7 +2,7 @@
 
 /*
  * Album structure
- * 
+ *
  * @package classes\structure
  */
 
@@ -19,8 +19,8 @@ class Album extends Structure {
 
 	/**
 	 * Default args
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $default_args = array(
 		'pagination',
@@ -31,57 +31,57 @@ class Album extends Structure {
 		'categories',
 		'sets',
 		'img_count',
-		'cover_id'
+		'cover_id',
 	);
 
 	/**
 	 * Cover images
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $cover_img = array();
 
 	/**
 	 * Childs
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $childs = array(
-		'img' => array()
+		'img' => array(),
 	);
 
 	/**
 	 * Posts
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	public $posts = array();
 
 	/**
 	 * Posts count
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $posts_count = 0;
 
 	/**
 	 * Tags
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $tags;
 
 	/**
 	 * Categories
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $categories;
 
 	/**
 	 * Sets
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $sets;
 
@@ -92,14 +92,14 @@ class Album extends Structure {
 
 	/**
 	 * Cover id
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $cover_id;
 
 	/**
 	 * Contruct
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id, $args ) {
@@ -112,11 +112,11 @@ class Album extends Structure {
 
 	/**
 	 * Init album
-	 * 
+	 *
 	 * @param type $args
 	 */
 	public function init( $args = false ) {
-		$args = !is_array( $args ) ? $this->default_args : $args;
+		$args = ! is_array( $args ) ? $this->default_args : $args;
 		// get cover images
 		if ( in_array( 'cover_img', $args ) ) {
 			$this->cover_img = $this->model( 'folder' )->get_images( $this->id, 'album' );
@@ -157,7 +157,7 @@ class Album extends Structure {
 
 	/**
 	 * Get cover
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_cover() {
@@ -166,23 +166,23 @@ class Album extends Structure {
 
 	/**
 	 * Get childs
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_childs() {
 		$ids	 = $this->get_posts();
 		$posts	 = array();
 		$return	 = array();
-		if ( !empty( $ids ) ) {
+		if ( ! empty( $ids ) ) {
 			$posts['img'] = get_posts( $this->model( 'media' )->get_content_params( array(
 				'fields'	 => 'ids',
-				'post__in'	 => $ids
+				'post__in'	 => $ids,
 			) ) );
-			if ( !is_wp_error( $posts['img'] ) ) {
+			if ( ! is_wp_error( $posts['img'] ) ) {
 				for ( $i = count( $ids ); $i >= 0; $i-- ) {
 					foreach ( $posts['img'] as $post_id ) {
-						if ( !empty( $ids[$i] ) && $post_id == $ids[$i] ) {
-							$return['img'][] = $ids[$i];
+						if ( ! empty( $ids[ $i ] ) && $post_id == $ids[ $i ] ) {
+							$return['img'][] = $ids[ $i ];
 						}
 					}
 				}
@@ -193,12 +193,11 @@ class Album extends Structure {
 
 	/**
 	 * Get all posts
-	 * 
+	 *
 	 * @param type $pagination
 	 * @return type
 	 */
 	public function get_posts() {
 		return array_map( 'intval', get_post_meta( $this->id, Core::$post_types['album'], false ) );
 	}
-
 }

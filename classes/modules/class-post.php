@@ -1,7 +1,7 @@
 <?php
 /**
- * Post module 
- * 
+ * Post module
+ *
  * @package classes/modules
  */
 
@@ -11,27 +11,27 @@ use tm_photo_gallery\classes\Module;
 use tm_photo_gallery\classes\lib\FB;
 
 /**
- * Post module 
+ * Post module
  */
 class Post extends Module {
 
 	/**
 	 * Instance
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Metaboxes
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $metaboxes;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -58,22 +58,22 @@ class Post extends Module {
 			'hierarchical'		 => false,
 			'rewrite'			 => array(
 				'slug'		 => $params['slug'],
-				'with_front' => false
+				'with_front' => false,
 			),
 			'query_var'			 => false,
 			'supports'			 => $params['supports'],
 			'show_in_admin_bar'	 => true,
-			'taxonomies'		 => !empty( $params['taxonomies'] ) ? $params['taxonomies'] : array(),
+			'taxonomies'		 => ! empty( $params['taxonomies'] ) ? $params['taxonomies'] : array(),
 		);
 		$status	 = register_post_type( $params['post_type'], $args );
-		if ( !is_wp_error( $status ) ) {
+		if ( ! is_wp_error( $status ) ) {
 			return true;
 		}
 	}
 
 	/**
 	 * Get theme image title
-	 * 
+	 *
 	 * @param type $id
 	 * @param type $size
 	 * @return type
@@ -87,7 +87,7 @@ class Post extends Module {
 
 	/**
 	 * Get post type
-	 * 
+	 *
 	 * @param type $id
 	 * @return type
 	 */
@@ -111,13 +111,13 @@ class Post extends Module {
 	 * Hook Add meta boxes
 	 */
 	public function add_meta_boxes() {
-		if ( !empty( $this->metaboxes ) && is_array( $this->metaboxes ) ) {
+		if ( ! empty( $this->metaboxes ) && is_array( $this->metaboxes ) ) {
 			foreach ( $this->metaboxes as $metabox ) {
 				// add metabox to current post type
-				$context		 = !empty( $metabox['context'] ) ? $metabox['context'] : 'advanced';
-				$callback		 = !empty( $metabox['callback'] ) ? $metabox['callback'] : array( $this, 'render_meta_box_content' );
-				$priority		 = !empty( $metabox['priority'] ) ? $metabox['priority'] : 'high';
-				$callback_args	 = !empty( $metabox['callback_args'] ) ? $metabox['callback_args'] : array();
+				$context		 = ! empty( $metabox['context'] ) ? $metabox['context'] : 'advanced';
+				$callback		 = ! empty( $metabox['callback'] ) ? $metabox['callback'] : array( $this, 'render_meta_box_content' );
+				$priority		 = ! empty( $metabox['priority'] ) ? $metabox['priority'] : 'high';
+				$callback_args	 = ! empty( $metabox['callback_args'] ) ? $metabox['callback_args'] : array();
 				$callback_args	 = array_merge( $callback_args, array( 'name' => $metabox['name'], 'title' => $metabox['title'] ) );
 				add_meta_box( $metabox['name'], $metabox['title'], $callback, $metabox['post_type'], $context, $priority, $callback_args );
 			}
@@ -133,13 +133,13 @@ class Post extends Module {
 	 */
 	public function save( $post_id ) {
 		// Check nonce.
-		if ( !isset( $_POST['tm_gallery_nonce_box'] ) ) {
+		if ( ! isset( $_POST['tm_gallery_nonce_box'] ) ) {
 			return $post_id;
 		}
 		$nonce = $_POST['tm_gallery_nonce_box'];
 
 		// Check correct nonce.
-		if ( !wp_verify_nonce( $nonce, 'tm_gallery_nonce' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'tm_gallery_nonce' ) ) {
 			return $post_id;
 		}
 
@@ -150,11 +150,11 @@ class Post extends Module {
 
 		// Cher user rules
 		if ( 'page' == $_POST['post_type'] ) {
-			if ( !current_user_can( 'edit_page', $post_id ) ) {
+			if ( ! current_user_can( 'edit_page', $post_id ) ) {
 				return $post_id;
 			}
 		} else {
-			if ( !current_user_can( 'edit_post', $post_id ) ) {
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
 				return $post_id;
 			}
 		}
@@ -162,7 +162,7 @@ class Post extends Module {
 		foreach ( $this->metaboxes as $metabox ) {
 			// update post if current post type
 			if ( $_POST['post_type'] == $metabox['post_type'] ) {
-				$value = $_POST[$metabox['name']];
+				$value = $_POST[ $metabox['name'] ];
 				if ( is_array( $value ) ) {
 					$mydata = $value;
 				} else {
@@ -178,7 +178,7 @@ class Post extends Module {
 	 */
 	public function edit_form_after_title() {
 		global $post, $wp_meta_boxes;
-		unset( $wp_meta_boxes[get_post_type( $post )]['normal']['core']['authordiv'] );
+		unset( $wp_meta_boxes[ get_post_type( $post ) ]['normal']['core']['authordiv'] );
 	}
 
 	/**
@@ -212,5 +212,4 @@ class Post extends Module {
 				break;
 		}
 	}
-
 }

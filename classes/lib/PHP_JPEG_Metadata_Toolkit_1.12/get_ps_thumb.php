@@ -62,7 +62,7 @@ $path_parts = pathinfo( $filename );
 
 // Check if the Extension is JPEG
 if ( ( strcasecmp( $path_parts['extension'], 'jpg' ) == 0 ) ||
- ( strcasecmp( $path_parts['extension'], 'jpeg' ) == 0 ) ) {
+	( strcasecmp( $path_parts['extension'], 'jpeg' ) == 0 ) ) {
 	// JPEG Extension
 	include 'JPEG.php';
 	include 'Photoshop_IRB.php';
@@ -86,8 +86,8 @@ if ( ( strcasecmp( $path_parts['extension'], 'jpg' ) == 0 ) ||
 	// there are no more resources
 	$i = 0;
 	while ( ( $i < count( $IRB_array ) ) &&
-	( $IRB_array[$i]['ResID'] != 0x0409 ) &&
-	( $IRB_array[$i]['ResID'] != 0x040C ) ) {
+	( $IRB_array[ $i ]['ResID'] != 0x0409 ) &&
+	( $IRB_array[ $i ]['ResID'] != 0x040C ) ) {
 		$i++;
 	}
 
@@ -97,12 +97,12 @@ if ( ( strcasecmp( $path_parts['extension'], 'jpg' ) == 0 ) ||
 		// A thumbnail was found, Display it
 		ob_end_clean();
 		header( 'Content-type: image/jpeg' );
-		print substr( $IRB_array[$i]['ResData'], 28 );
+		print substr( $IRB_array[ $i ]['ResData'], 28 );
 	}
 } // Change: Add support for TIFF Photoshop IRB thumbnails as of 1.11
 // Check if file has TIFF extension
 elseif ( ( strcasecmp( $path_parts['extension'], 'tif' ) == 0 ) ||
- ( strcasecmp( $path_parts['extension'], 'tiff' ) == 0 ) ) {
+	( strcasecmp( $path_parts['extension'], 'tiff' ) == 0 ) ) {
 	// TIFF Extension
 	include 'EXIF.php';
 
@@ -128,8 +128,8 @@ elseif ( ( strcasecmp( $path_parts['extension'], 'tif' ) == 0 ) ||
 		// there are no more resources
 		$i = 0;
 		while ( ( $i < count( $IRB_array ) ) &&
-		( $IRB_array[$i]['ResID'] != 0x0409 ) &&
-		( $IRB_array[$i]['ResID'] != 0x040C ) ) {
+		( $IRB_array[ $i ]['ResID'] != 0x0409 ) &&
+		( $IRB_array[ $i ]['ResID'] != 0x040C ) ) {
 			$i++;
 		}
 
@@ -139,7 +139,7 @@ elseif ( ( strcasecmp( $path_parts['extension'], 'tif' ) == 0 ) ||
 			// A thumbnail was found, Display it
 			ob_end_clean();
 			header( 'Content-type: image/jpeg' );
-			print substr( $IRB_array[$i]['ResData'], 28 );
+			print substr( $IRB_array[ $i ]['ResData'], 28 );
 		}
 	} else {
 		// Embedded Photoshop IRB block not found

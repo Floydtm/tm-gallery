@@ -1,7 +1,7 @@
 <?php
 /**
  * Frontend grid content
- * 
+ *
  * @package templates/frontend/grid/actions
  */
 ?>

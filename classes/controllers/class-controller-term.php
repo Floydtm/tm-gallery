@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Term controller 
- * 
+ * Term controller
+ *
  * @package classes/controllers
  */
 
@@ -17,14 +17,14 @@ class Controller_Term extends Controller {
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -56,7 +56,7 @@ class Controller_Term extends Controller {
 	public function action_remove_term() {
 		$return = $this( 'term', true )->remove_post_term( array(
 			'id'	 => $_POST['id'],
-			'type'	 => $_POST['type']
+			'type'	 => $_POST['type'],
 		) );
 		$this->send_json( $return );
 	}
@@ -85,5 +85,4 @@ class Controller_Term extends Controller {
 		$terms = $this( 'term' )->search_term( $_POST );
 		$this->send_json( $this( 'model' )->get_arr( $terms, true ) );
 	}
-
 }

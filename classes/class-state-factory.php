@@ -1,7 +1,7 @@
 <?php
 /**
  * State factory
- * 
+ *
  * @package classes
  */
 
@@ -20,13 +20,13 @@ class State_Factory {
 	/**
 	 * Instance
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -87,5 +87,4 @@ class State_Factory {
 		}
 		return $preprocessor;
 	}
-
 }

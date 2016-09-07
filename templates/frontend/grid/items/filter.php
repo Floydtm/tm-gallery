@@ -1,7 +1,7 @@
 <?php
 /**
  * Frontend grid filters
- * 
+ *
  * @package templates/frontend/grid/items
  */
 ?>
@@ -19,4 +19,3 @@
 		</a>
 	</li>
 <?php endforeach; ?>
-

@@ -1,7 +1,7 @@
 <?php
 /**
  * Default top bar
- * 
+ *
  * @package templates/photo-gallery/topbar
  */
 ?>
@@ -13,11 +13,11 @@
 		</a>
 		<a class="tm-pg_library-filter_add-album tm-pg_library-filter_add-media" href="#">
 			<i class="material-icons">add</i>
-			<?php esc_attr_e( 'Album', 'tm_gallery' ) ?>		
+			<?php esc_attr_e( 'Album', 'tm_gallery' ) ?>        
 		</a>
 		<a class="tm-pg_library-filter_add-set tm-pg_library-filter_add-media" href="#">
 			<i class="material-icons">add</i>
-			<?php esc_attr_e( 'Set', 'tm_gallery' ) ?>	
+			<?php esc_attr_e( 'Set', 'tm_gallery' ) ?>  
 		</a>
 	</div>
 

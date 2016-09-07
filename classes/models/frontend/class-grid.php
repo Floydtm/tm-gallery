@@ -1,7 +1,7 @@
 <?php
 /**
  * Grid model
- * 
+ *
  * @package classes/models/frontend
  */
 
@@ -24,22 +24,22 @@ class Grid extends Model {
 	const gallery_class = 'tm_photo_gallery\classes\structure\Gallery';
 
 	/**
-	 * Grid row 
-	 * 
-	 * @var type 
+	 * Grid row
+	 *
+	 * @var type
 	 */
 	private $row = array();
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -79,7 +79,7 @@ class Grid extends Model {
 
 	/**
 	 * Init action
-	 * 
+	 *
 	 * @param type $name
 	 * @param type $function
 	 * @param type $accepted_args
@@ -98,24 +98,24 @@ class Grid extends Model {
 
 	/**
 	 * Post type
-	 * 
+	 *
 	 * @param type $data
 	 */
 	public function the_post_link( $data ) {
 		$return = get_permalink( $data->ID );
 		if ( get_option( 'permalink_structure' ) ) {
-			$post_parent = get_option( self::PREFIX . "post_parent" );
+			$post_parent = get_option( self::PREFIX . 'post_parent' );
 		} else {
 			$post_parent = $_GET['parent'];
 		}
 		if ( isset( $data->parent ) ) {
-			if ( !empty( $post_parent ) ) {
+			if ( ! empty( $post_parent ) ) {
 				if ( get_option( 'permalink_structure' ) ) {
 					$return .= "{$post_parent}/{$data->parent}/";
 				} else {
 					$return = add_query_arg( array(
 						'parent'	 => $post_parent,
-						'set'	 => $data->parent
+						'set'	 => $data->parent,
 					), $return );
 				}
 			} else {
@@ -123,7 +123,7 @@ class Grid extends Model {
 					$return .= "{$data->parent}/";
 				} else {
 					$return = add_query_arg( array(
-						'parent' => $data->parent
+						'parent' => $data->parent,
 					), $return );
 				}
 			}
@@ -132,9 +132,9 @@ class Grid extends Model {
 	}
 
 	/**
-	 * Cherry breadcrumbs 
-	 * 
-	 * @param type $is_custom_breadcrumbs - default custom breadcrums trigger. 
+	 * Cherry breadcrumbs
+	 *
+	 * @param type $is_custom_breadcrumbs - default custom breadcrums trigger.
 	 * @param type $args
 	 */
 	public function cherry_breadcrumbs( $is_custom_breadcrumbs, $args ) {
@@ -142,7 +142,7 @@ class Grid extends Model {
 		// check if is gallery page
 		if ( $this->is_gallery() ) {
 			// inclide breadcrumbs class
-			if ( !class_exists( 'tm_photo_gallery\classes\extensions\Breadcrumbs' ) ) {
+			if ( ! class_exists( 'tm_photo_gallery\classes\extensions\Breadcrumbs' ) ) {
 				require_once TM_PG_CLASSES_PATH . 'extensions/class-cherry-breadcrumbs.php';
 			}
 			$breadcrums	 = new Breadcrumbs( false, $args );
@@ -162,7 +162,7 @@ class Grid extends Model {
 
 	/**
 	 * Render filter
-	 * 
+	 *
 	 * @param type $data
 	 */
 	public function render_filter( $data ) {
@@ -207,7 +207,7 @@ class Grid extends Model {
 
 	/**
 	 * Render justify rows
-	 * 
+	 *
 	 * @param type $data
 	 * @param type $colums
 	 */
@@ -219,7 +219,7 @@ class Grid extends Model {
 
 	/**
 	 * Render justify row
-	 * 
+	 *
 	 * @param type $data
 	 * @param type $colums
 	 * @param type $pos
@@ -237,15 +237,15 @@ class Grid extends Model {
 		$posts		 = array_values( $data->get_posts( true ) );
 		$row_posts	 = array();
 		while ( $i < $colums ) {
-			if ( !empty( $posts[$i] ) ) {
-				$row_posts[$i] = $posts[$i];
+			if ( ! empty( $posts[ $i ] ) ) {
+				$row_posts[ $i ] = $posts[ $i ];
 			}
 			$i++;
 		}
-		if ( !empty( $row_posts ) ) {
+		if ( ! empty( $row_posts ) ) {
 			$this->row[] = $this->get_view()->render_action_html( 'frontend/grid/items/justify/row', array(
 				'obj'	 => $data,
-				'posts'	 => array_values( $row_posts )
+				'posts'	 => array_values( $row_posts ),
 			), $output );
 			if ( $colums < count( $posts ) ) {
 				$this->render_justify_row( $data, $colums, $i );
@@ -254,8 +254,8 @@ class Grid extends Model {
 	}
 
 	/**
-	 * Render grid html 
-	 * 
+	 * Render grid html
+	 *
 	 * @param type $data
 	 * @param type $posts
 	 * @return type
@@ -281,7 +281,7 @@ class Grid extends Model {
 		// get pagination posts
 		$_ids	 = empty( $posts ) ? $data->get_posts( true ) : array_values( $posts );
 		// get images
-		if ( !empty( $_ids ) ) {
+		if ( ! empty( $_ids ) ) {
 			$_images = get_posts( $this( 'media' )->get_content_params( array( 'post__in' => $_ids ) ) );
 			// get albums
 			$_albums = get_posts( $this( 'album' )->get_content_params( array( 'post__in' => $_ids ) ) );
@@ -295,7 +295,7 @@ class Grid extends Model {
 		$end_key = key( $_posts );
 		// get view type
 		$type	 = $data->grid['type'];
-		// render grid items 
+		// render grid items
 		foreach ( $_posts as $key => $post ) {
 			$post->size		 = 12 / $data->grid['colums'];
 			$post->parent	 = $_post->ID;
@@ -321,7 +321,7 @@ class Grid extends Model {
 				$all_posts	 = $data->get_posts( true );
 				end( $all_posts );
 				$_end_key	 = key( $all_posts );
-				if ( $all_posts[$_end_key] == $posts[$key] ) {
+				if ( $all_posts[ $_end_key ] == $posts[ $key ] ) {
 					$return[] = $this->get_load_more_html( $data, $output, $post );
 				}
 			}
@@ -331,7 +331,7 @@ class Grid extends Model {
 
 	/**
 	 * Get load more html
-	 * 
+	 *
 	 * @param type $data
 	 * @param type $output
 	 * @param type $post
@@ -370,5 +370,4 @@ class Grid extends Model {
 		$data	 = new Single_Set( $id, array( 'cover', 'grid' ) );
 		$this->get_view()->render_action_html( 'frontend/grid/index', $data );
 	}
-
 }

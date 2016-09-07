@@ -1,7 +1,7 @@
 <?php
 /**
  * Preloader
- * 
+ *
  * @package templates/uploader
  */
 ?>

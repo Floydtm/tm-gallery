@@ -1,7 +1,7 @@
 <?php
 /**
  * Structure
- * 
+ *
  * @package classes
  */
 
@@ -21,50 +21,50 @@ use tm_photo_gallery\classes\lib\FB;
 class Structure {
 
 	/**
-	 * ID 
-	 * 
-	 * @var type 
+	 * ID
+	 *
+	 * @var type
 	 */
 	public $id;
 
 	/**
-	 * Date 
+	 * Date
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	public $date;
 
 	/**
 	 * Post
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $post;
 
 	/**
 	 * Grid
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $grid;
 
 	/**
 	 * Filter
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $filter;
 
 	/**
 	 * pagination
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $pagination;
 
 	/**
 	 * Construct
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id ) {
@@ -72,10 +72,10 @@ class Structure {
 		$this->post	 = get_object_vars( get_post( $id ) );
 		$this->date	 = $this->get_date();
 	}
-	
+
 	/**
 	 * Get pagination
-	 * 
+	 *
 	 * @return type
 	 */
 	protected function get_pagination() {
@@ -93,7 +93,7 @@ class Structure {
 
 	/**
 	 * Get date
-	 * 
+	 *
 	 * @return type
 	 */
 	protected function get_date() {
@@ -102,7 +102,7 @@ class Structure {
 
 	/**
 	 * Get grid
-	 * 
+	 *
 	 * @return type
 	 */
 	protected function get_grid() {
@@ -112,7 +112,7 @@ class Structure {
 
 	/**
 	 * Get model
-	 * 
+	 *
 	 * @param type $type
 	 * @return type
 	 */
@@ -122,7 +122,7 @@ class Structure {
 
 	/**
 	 * Get post meta
-	 * 
+	 *
 	 * @param type $key
 	 * @return type
 	 */
@@ -132,7 +132,7 @@ class Structure {
 
 	/**
 	 * Update post meta
-	 * 
+	 *
 	 * @param type $key
 	 * @param type $value
 	 * @return type
@@ -140,5 +140,4 @@ class Structure {
 	protected function update_post_meta( $key, $value ) {
 		return $this->model( 'model' )->$this->update_post_meta( $this->id, $key, $value );
 	}
-
 }

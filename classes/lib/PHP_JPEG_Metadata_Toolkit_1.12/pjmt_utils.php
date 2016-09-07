@@ -64,8 +64,8 @@
 function get_relative_path( $target, $fromdir ) {
 	// Check that the fromdir has a trailing slash, otherwise realpath will
 	// strip the last directory name off
-	if ( ( $fromdir[strlen( $fromdir ) - 1] != '\\' ) &&
-	( $fromdir[strlen( $fromdir ) - 1] != '/' ) ) {
+	if ( ( $fromdir[ strlen( $fromdir ) - 1 ] != '\\' ) &&
+	( $fromdir[ strlen( $fromdir ) - 1 ] != '/' ) ) {
 		$fromdir .= '/';
 	}
 
@@ -89,10 +89,10 @@ function get_relative_path( $target, $fromdir ) {
 	$posval	 = 0;
 	// Step through the paths until a difference is found (ignore slash, backslash differences
 	// or the end of one is found
-	while ( ( ( $from[$posval] == $to[$posval] ) ||
-	( ( $from[$posval] == '\\' ) && ( $to[$posval] == '/' ) ) ||
-	( ( $from[$posval] == '/' ) && ( $to[$posval] == '\\' ) ) ) &&
-	( $from[$posval] && $to[$posval] ) ) {
+	while ( ( ( $from[ $posval ] == $to[ $posval ] ) ||
+	( ( $from[ $posval ] == '\\' ) && ( $to[ $posval ] == '/' ) ) ||
+	( ( $from[ $posval ] == '/' ) && ( $to[ $posval ] == '\\' ) ) ) &&
+	( $from[ $posval ] && $to[ $posval ] ) ) {
 		$posval++;
 	}
 	// Save the position of the first difference
@@ -100,8 +100,8 @@ function get_relative_path( $target, $fromdir ) {
 
 	// Check if the directories are the same or
 	// the if target is in a subdirectory of the fromdir
-	if ( (!$from[$posval] ) &&
-	( $to[$posval] == '/' || $to[$posval] == '\\' || !$to[$posval] ) ) {
+	if ( ( ! $from[ $posval ] ) &&
+	( $to[ $posval ] == '/' || $to[ $posval ] == '\\' || ! $to[ $posval ] ) ) {
 		// target is in fromdir or a subdirectory
 		// Build relative path starting with a ./
 		return ( './' . substr( $target, $posval + 1, strlen( $target ) ) );
@@ -110,9 +110,9 @@ function get_relative_path( $target, $fromdir ) {
 		// find out how many "../"'s are necessary
 		// Step through the fromdir path, checking for slashes
 		// each slash encountered requires a "../"
-		while ( $from[++$posval] ) {
+		while ( $from[ ++$posval ] ) {
 			// Check for slash
-			if ( ( $from[$posval] == '/' ) || ( $from[$posval] == '\\' ) ) {
+			if ( ( $from[ $posval ] == '/' ) || ( $from[ $posval ] == '\\' ) ) {
 				// Found a slash, add a "../"
 				$path .= '../';
 			}
@@ -122,7 +122,7 @@ function get_relative_path( $target, $fromdir ) {
 		// as some letters in the first different directory names
 		// may have been the same
 		$diffpos--;
-		while ( ( $to[$diffpos] != '/' ) && ( $to[$diffpos] != '\\' ) && $to[$diffpos] ) {
+		while ( ( $to[ $diffpos ] != '/' ) && ( $to[ $diffpos ] != '\\' ) && $to[ $diffpos ] ) {
 			$diffpos--;
 		}
 		// Build relative path to return

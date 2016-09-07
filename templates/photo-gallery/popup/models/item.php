@@ -1,7 +1,7 @@
 <?php
 /**
  * Popup item
- * 
+ *
  * @package templates/photo-gallery/popup/models
  */
 ?>

@@ -33,7 +33,7 @@ return array(
 	'gallery'	 => array(
 		'width'	 => '450',
 		'height' => '450',
-		'type'	 => 'gallery'
+		'type'	 => 'gallery',
 	),
 	'album'		 => array(
 		'width'	 => '340',

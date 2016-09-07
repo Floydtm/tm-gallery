@@ -16,21 +16,21 @@ class Preprocessor_Folder extends Preprocessor {
 
 	/**
 	 * Model type
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $type = 'folder';
 
 	/**
 	 * Instance
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -86,16 +86,15 @@ class Preprocessor_Folder extends Preprocessor {
 
 	/**
 	 * Add to folder
-	 * 
+	 *
 	 * @param type $params
 	 */
 	public function set_folder_content( $params = array() ) {
 		$this->validation_rules( array(
 			'id'	 => 'required|numeric',
 			'value'	 => 'required|numeric',
-			'action' => 'required'
+			'action' => 'required',
 		) );
 		return $this->progress( $params, __FUNCTION__, $this->type );
 	}
-
 }

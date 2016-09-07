@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller frontend Grid
- * 
+ *
  * @package classes/controllers
  */
 
@@ -18,14 +18,14 @@ class Controller_Grid extends \tm_photo_gallery\classes\Controller {
 
 	/**
 	 * Intence
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected static $instance;
 
 	/**
 	 * Get instance
-	 * 
+	 *
 	 * @return type
 	 */
 	public static function get_instance() {
@@ -44,9 +44,9 @@ class Controller_Grid extends \tm_photo_gallery\classes\Controller {
 			'filter',
 			'grid',
 			'terms',
-			'img_count'
+			'img_count',
 		) );
-		if ( !empty( $_POST['term_id'] ) && $_POST['term_id'] != 'all' ) {
+		if ( ! empty( $_POST['term_id'] ) && $_POST['term_id'] != 'all' ) {
 			$gallery->posts = $gallery->sort_gallery_by_term_id( $_POST['term_id'], true );
 		}
 		// render justify
@@ -67,10 +67,10 @@ class Controller_Grid extends \tm_photo_gallery\classes\Controller {
 			'filter',
 			'grid',
 			'terms',
-			'img_count'
+			'img_count',
 		) );
 		$gallery->pagination['offset']	 = $_POST['offset'];
-		if ( !empty( $_POST['term_id'] ) && $_POST['term_id'] != 'all' ) {
+		if ( ! empty( $_POST['term_id'] ) && $_POST['term_id'] != 'all' ) {
 			$gallery->posts = $gallery->sort_gallery_by_term_id( $_POST['term_id'], true );
 		}
 		// render justify
@@ -91,9 +91,9 @@ class Controller_Grid extends \tm_photo_gallery\classes\Controller {
 			'filter',
 			'grid',
 			'terms',
-			'img_count'
+			'img_count',
 		) );
-		if ( !empty( $_POST['term_id'] ) && $_POST['term_id'] != 'all' ) {
+		if ( ! empty( $_POST['term_id'] ) && $_POST['term_id'] != 'all' ) {
 			$gallery->posts = $gallery->sort_gallery_by_term_id( $_POST['term_id'] );
 		}
 		// get pagination html
@@ -103,5 +103,4 @@ class Controller_Grid extends \tm_photo_gallery\classes\Controller {
 		), false );
 		$this->send_json( $this( 'model' )->get_arr( $html, true ) );
 	}
-
 }

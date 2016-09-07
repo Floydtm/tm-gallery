@@ -72,7 +72,7 @@ class View {
 			$includeFile = TM_PG_PLUGIN_PATH . 'templates/' . $template . '.php';
 		}
 		ob_start();
-		if ( !empty( $data ) ) {
+		if ( ! empty( $data ) ) {
 			$this->data = $data;
 		}
 		include( $includeFile );
@@ -85,8 +85,8 @@ class View {
 	}
 
 	/**
-	 * Render action html 
-	 * 
+	 * Render action html
+	 *
 	 * @param type $template
 	 * @param type $data
 	 * @param type $output
@@ -104,7 +104,7 @@ class View {
 
 	/**
 	 * Render template html
-	 * 
+	 *
 	 * @param type $template
 	 */
 	public function render_teplate_html( $template ) {
@@ -115,5 +115,4 @@ class View {
 			load_template( TM_PG_PLUGIN_PATH . 'templates/' . $template . '.php' );
 		}
 	}
-
 }

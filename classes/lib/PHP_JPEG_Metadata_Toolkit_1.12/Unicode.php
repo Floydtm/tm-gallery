@@ -894,12 +894,12 @@ function HTML_UTF8_UnEscape( $HTML_text ) {
 	preg_match_all( '/\&\#(\d+);/', $HTML_text, $matches );
 	preg_match_all( '/\&\#[x|X]([A|B|C|D|E|F|a|b|c|d|e|f|0-9]+);/', $HTML_text, $hexmatches );
 	foreach ( $hexmatches[1] as $index => $match ) {
-		$matches[0][]	 = $hexmatches[0][$index];
+		$matches[0][]	 = $hexmatches[0][ $index ];
 		$matches[1][]	 = hexdec( $match );
 	}
 
 	for ( $i = 0; $i < count( $matches[0] ); $i++ ) {
-		$trans = array( $matches[0][$i] => unicode_array_to_UTF8( array( $matches[1][$i] ) ) );
+		$trans = array( $matches[0][ $i ] => unicode_array_to_UTF8( array( $matches[1][ $i ] ) ) );
 
 		$HTML_text = strtr( $HTML_text, $trans );
 	}
@@ -1024,7 +1024,7 @@ function smart_HTML_Entities( $HTML_text ) {
 	$translation_table = get_html_translation_table( HTML_ENTITIES );
 
 	// Change the ampersand to translate to itself, to avoid getting &amp;
-	$translation_table[chr( 38 )] = '&';
+	$translation_table[ chr( 38 ) ] = '&';
 
 	// Perform replacements
 	// Regular expression says: find an ampersand, check the text after it,
@@ -1063,7 +1063,7 @@ function smart_htmlspecialchars( $HTML_text ) {
 	$translation_table = get_html_translation_table( HTML_SPECIALCHARS );
 
 	// Change the ampersand to translate to itself, to avoid getting &amp;
-	$translation_table[chr( 38 )] = '&';
+	$translation_table[ chr( 38 ) ] = '&';
 
 	// Perform replacements
 	// Regular expression says: find an ampersand, check the text after it,

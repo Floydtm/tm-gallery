@@ -1,7 +1,7 @@
 <?php
 /**
  * Module class
- * 
+ *
  * @package classes/modules
  */
 
@@ -23,9 +23,9 @@ class Module extends Core {
 	 */
 	public function get_labels( array $params ) {
 		$labels = array();
-		if ( !empty( $params['titles'] ) ) {
-			$many	 = !empty( $params['titles']['many'] ) ? $params['titles']['many'] : '';
-			$single	 = !empty( $params['titles']['single'] ) ? $params['titles']['single'] : '';
+		if ( ! empty( $params['titles'] ) ) {
+			$many	 = ! empty( $params['titles']['many'] ) ? $params['titles']['many'] : '';
+			$single	 = ! empty( $params['titles']['single'] ) ? $params['titles']['single'] : '';
 			$labels	 = array(
 				'name'				 => ucfirst( $many ),
 				'singular_name'		 => ucfirst( $single ),
@@ -36,8 +36,8 @@ class Module extends Core {
 				'all_items'			 => esc_attr__( 'All', 'tm_gallery' ) . ' ' . ucfirst( $single ),
 				'view_item'			 => esc_attr__( 'View', 'tm_gallery' ) . ' ' . ucfirst( $single ),
 				'search_items'		 => esc_attr__( 'Search', 'tm_gallery' ) . ' ' . ucfirst( $single ),
-				'not_found'			 => str_replace( '%many%', $many, esc_attr__( "No %many% found", 'tm_gallery' ) ),
-				'not_found_in_trash' => str_replace( '%many%', $many, esc_attr__( "No %many% found in Trash", 'tm_gallery' ) ),
+				'not_found'			 => str_replace( '%many%', $many, esc_attr__( 'No %many% found', 'tm_gallery' ) ),
+				'not_found_in_trash' => str_replace( '%many%', $many, esc_attr__( 'No %many% found in Trash', 'tm_gallery' ) ),
 				'parent_item_colon'	 => 'media',
 				'menu_name'			 => ucfirst( $many ),
 			);
@@ -52,5 +52,4 @@ class Module extends Core {
 		// include all core controllers
 		Core::include_all( TM_PG_MODULES_PATH );
 	}
-
 }

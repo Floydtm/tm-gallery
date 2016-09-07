@@ -14,21 +14,21 @@ class Point {
 
 	/**
 	 * Y coordinate
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $Y;
 
 	/**
 	 * X coordiate
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $X;
 
 	/**
 	 * Magic get value
-	 * 
+	 *
 	 * @param type $name
 	 * @return type
 	 */
@@ -40,7 +40,7 @@ class Point {
 
 	/**
 	 * Magic set value
-	 * 
+	 *
 	 * @param type $name
 	 * @param type $value
 	 */
@@ -52,7 +52,7 @@ class Point {
 
 	/**
 	 * Construct
-	 * 
+	 *
 	 * @param type $x
 	 * @param type $y
 	 */
@@ -60,5 +60,4 @@ class Point {
 		$this->X = (int) ($x);
 		$this->Y = (int) ($y);
 	}
-
 }

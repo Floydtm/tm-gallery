@@ -14,21 +14,21 @@ class Size {
 
 	/**
 	 * Width
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $width;
 
 	/**
 	 * Height
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $height;
 
 	/**
 	 * Magic get value
-	 * 
+	 *
 	 * @param type $name
 	 * @return type
 	 */
@@ -40,7 +40,7 @@ class Size {
 
 	/**
 	 * Magic set value
-	 * 
+	 *
 	 * @param type $name
 	 * @param type $value
 	 */
@@ -52,7 +52,7 @@ class Size {
 
 	/**
 	 * Construct
-	 * 
+	 *
 	 * @param type $width
 	 * @param type $y
 	 */
@@ -60,5 +60,4 @@ class Size {
 		$this->width	 = $width;
 		$this->height	 = $height;
 	}
-
 }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery pagination
- * 
+ *
  * @package classes\structure
  */
 
@@ -16,54 +16,54 @@ class Pagination {
 
 	/**
 	 * Filter content
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $content;
 
 	/**
 	 * Show filter
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $show;
 
 	/**
 	 * Show load more button
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $load_more_btn;
 
 	/**
 	 * Show load more grid
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $load_more_grid;
 
 	/**
 	 * Show pagination block
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $pagination_block;
 
 	/**
 	 * offset
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $offset;
 
 	/**
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	public $images_per_page;
 
 	/**
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id ) {
@@ -78,11 +78,11 @@ class Pagination {
 
 	/**
 	 * Get show
-	 * 
+	 *
 	 * @return int
 	 */
 	private function get_show() {
-		if ( !empty( $this->content ) && -1 !== (int) ($this->content['images_per_page']) ) {
+		if ( ! empty( $this->content ) && -1 !== (int) ($this->content['images_per_page']) ) {
 			$show = is_string( $this->content['show'] ) ? (int) ($this->content['show']) : 1;
 		} else {
 			$show = 0;
@@ -92,47 +92,46 @@ class Pagination {
 
 	/**
 	 * Get show
-	 * 
+	 *
 	 * @return int
 	 */
 	private function get_pagination_block() {
-		return !empty( $this->content ) && is_string( $this->content['pagination_block'] ) ? (int) ($this->content['pagination_block']) : 1;
+		return ! empty( $this->content ) && is_string( $this->content['pagination_block'] ) ? (int) ($this->content['pagination_block']) : 1;
 	}
 
 	/**
 	 * Get load more grid
-	 * 
+	 *
 	 * @return int
 	 */
 	private function get_load_more_grid() {
-		return !empty( $this->content ) && is_string( $this->content['load_more_grid'] ) ? (int) ($this->content['load_more_grid']) : 1;
+		return ! empty( $this->content ) && is_string( $this->content['load_more_grid'] ) ? (int) ($this->content['load_more_grid']) : 1;
 	}
 
 	/**
 	 * Get load more btn
-	 * 
+	 *
 	 * @return int
 	 */
 	private function get_load_more_btn() {
-		return !empty( $this->content ) && is_string( $this->content['load_more_btn'] ) ? (int) ($this->content['load_more_btn']) : 1;
+		return ! empty( $this->content ) && is_string( $this->content['load_more_btn'] ) ? (int) ($this->content['load_more_btn']) : 1;
 	}
 
 	/**
 	 * Get padding
-	 * 
+	 *
 	 * @return int
 	 */
 	private function get_offset() {
-		return !empty( $this->content ) && is_string( $this->content['offset'] ) ? (int) ($this->content['offset']) : 0;
+		return ! empty( $this->content ) && is_string( $this->content['offset'] ) ? (int) ($this->content['offset']) : 0;
 	}
 
 	/**
 	 * Get colums
-	 * 
+	 *
 	 * @return int
 	 */
 	private function get_images_per_page() {
-		return !empty( $this->content ) && is_string( $this->content['images_per_page'] ) ? (int) ($this->content['images_per_page']) : -1;
+		return ! empty( $this->content ) && is_string( $this->content['images_per_page'] ) ? (int) ($this->content['images_per_page']) : -1;
 	}
-
 }

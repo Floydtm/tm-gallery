@@ -1,7 +1,7 @@
 <?php
 /*
  * Set structure
- * 
+ *
  * @package classes\structure
  */
 
@@ -18,8 +18,8 @@ class Set extends Structure {
 
 	/**
 	 * Default args
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	private $default_args = array(
 		'pagination',
@@ -29,44 +29,44 @@ class Set extends Structure {
 		'tags',
 		'categories',
 		'img_count',
-		'cover_id'
+		'cover_id',
 	);
 
 	/**
 	 * Cover images
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $cover_img = array();
 
 	/**
 	 * Childs
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $childs = array(
 		'img'	 => array(),
-		'album'	 => array()
+		'album'	 => array(),
 	);
 
 	/**
 	 * Posts
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	public $posts = array();
 
 	/**
 	 * Posts count
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $posts_count = 0;
 
 	/**
 	 * Categories
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $categories;
 
@@ -77,14 +77,14 @@ class Set extends Structure {
 
 	/**
 	 * Cover id
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	public $cover_id;
 
 	/**
 	 * Contruct
-	 * 
+	 *
 	 * @param type $id
 	 */
 	public function __construct( $id, $args ) {
@@ -97,11 +97,11 @@ class Set extends Structure {
 
 	/**
 	 * Init album
-	 * 
+	 *
 	 * @param type $args
 	 */
 	public function init( $args = false ) {
-		$args = !is_array( $args ) ? $this->default_args : $args;
+		$args = ! is_array( $args ) ? $this->default_args : $args;
 		// get cover images
 		if ( in_array( 'cover_img', $args ) ) {
 			$this->cover_img = $this->model( 'folder' )->get_images( $this->id, 'set' );
@@ -138,7 +138,7 @@ class Set extends Structure {
 
 	/**
 	 * Get cover
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_cover() {
@@ -147,7 +147,7 @@ class Set extends Structure {
 
 	/**
 	 * Get childs
-	 * 
+	 *
 	 * @return type
 	 */
 	private function get_childs() {
@@ -155,25 +155,25 @@ class Set extends Structure {
 		$return	 = array();
 		$posts	 = array(
 			'img'	 => array(),
-			'album'	 => array()
+			'album'	 => array(),
 		);
-		if ( !empty( $ids ) ) {
+		if ( ! empty( $ids ) ) {
 			$params			 = array(
 				'fields'	 => 'ids',
-				'post__in'	 => $ids
+				'post__in'	 => $ids,
 			);
 			$posts['img']	 = get_posts( $this->model( 'media' )->get_content_params( $params ) );
 			$posts['album']	 = get_posts( $this->model( 'album' )->get_content_params( $params ) );
 		}
 		for ( $i = count( $ids ); $i >= 0; $i-- ) {
 			foreach ( $posts['img'] as $post_id ) {
-				if ( !empty($ids[$i]) && $post_id == $ids[$i] ) {
-					$return['img'][] = $ids[$i];
+				if ( ! empty( $ids[ $i ] ) && $post_id == $ids[ $i ] ) {
+					$return['img'][] = $ids[ $i ];
 				}
 			}
 			foreach ( $posts['album'] as $post_id ) {
-				if ( !empty($ids[$i]) && $post_id == $ids[$i] ) {
-					$return['album'][] = $ids[$i];
+				if ( ! empty( $ids[ $i ] ) && $post_id == $ids[ $i ] ) {
+					$return['album'][] = $ids[ $i ];
 				}
 			}
 		}
@@ -182,12 +182,11 @@ class Set extends Structure {
 
 	/**
 	 * Get all posts
-	 * 
+	 *
 	 * @param type $pagination
 	 * @return type
 	 */
 	public function get_posts() {
 		return array_map( 'intval', get_post_meta( $this->id, Core::$post_types['set'], false ) );
 	}
-
 }

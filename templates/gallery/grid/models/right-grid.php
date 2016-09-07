@@ -1,7 +1,7 @@
 <?php
 /**
  * Gallery editor sledebar grid
- * 
+ *
  * @package templates/gallery/grid/models
  */
 ?>

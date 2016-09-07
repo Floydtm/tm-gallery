@@ -40,5 +40,5 @@ return $language = array(
 	'public_gallery'			 => esc_attr__( 'You just restore selected gallery.', 'tm_gallery' ),
 	'trash_gallery'				 => esc_attr__( 'You just add to trash selected gallery.', 'tm_gallery' ),
 	'save_gallery'				 => esc_attr__( 'You just save "%name%" gallery.', 'tm_gallery' ),
-	'add_photo_gallery'			 => esc_attr__( 'Add TM photo gallery', 'tm_gallery' )
+	'add_photo_gallery'			 => esc_attr__( 'Add TM photo gallery', 'tm_gallery' ),
 );

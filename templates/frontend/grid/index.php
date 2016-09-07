@@ -1,7 +1,7 @@
 <?php
 /**
  * Index frontend grid
- * 
+ *
  * @package templates/frontend/grid
  */
 ?>
